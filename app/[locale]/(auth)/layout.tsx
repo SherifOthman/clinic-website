@@ -1,6 +1,7 @@
 'use client';
 
-import { ClinicIcon, ThemeSwitch } from '@/components';
+import { ClinicIcon } from '@/components/icons';
+import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { Button } from '@heroui/button';
 import NextLink from 'next/link';
 import { useParams, usePathname } from 'next/navigation';

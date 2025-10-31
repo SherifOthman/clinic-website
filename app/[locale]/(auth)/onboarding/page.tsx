@@ -1,6 +1,7 @@
 'use client';
 
-import { CheckIcon, Stepper } from '@/components';
+import { CheckIcon } from '@/components/icons';
+import { Stepper } from '@/components/Stepper';
 import { authTokenManager, mockAuthFunctions } from '@/lib/mockData';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';

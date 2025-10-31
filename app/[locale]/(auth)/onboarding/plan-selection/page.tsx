@@ -1,6 +1,7 @@
 'use client';
 
-import { CheckIcon, Stepper } from '@/components';
+import { CheckIcon } from '@/components/icons';
+import { Stepper } from '@/components/Stepper';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';
