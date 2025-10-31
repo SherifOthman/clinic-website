@@ -1,238 +1,246 @@
-# ClinicFlow - SaaS Clinic Management Platform
+# ClinicFlow - Clean SaaS Onboarding Website
 
-A modern, responsive clinic management platform built with Next.js 16, React 19, and Hero UI. This is the marketing website and user onboarding flow for healthcare practices.
+A clean, production-ready SaaS onboarding website built with Next.js 16, React 19, and Hero UI. Features a modular architecture with reusable components and placeholder server actions ready for backend integration.
 
-## 🚀 Features
+## 🎯 Project Overview
 
-### Landing Page
+This is a **UI-focused refactor** of an existing Next.js project. The goal was to create a clean, modular structure with:
 
-- Modern hero section with clear value proposition
-- Feature showcase with icons and descriptions
-- Customer testimonials
-- Pricing overview
-- Responsive design with blue theme
-
-### User Authentication
-
-- **Registration Flow**: Multi-step form with plan selection and clinic setup
-- **Login System**: Secure authentication with redirect to dashboard
-- **Password Reset**: Forgot password and reset functionality
-- **Cookie Management**: Secure token storage and management
-
-### Subscription Management
-
-- **Pricing Plans**: Dynamic plan fetching from API
-- **Plan Selection**: Interactive pricing cards with feature comparison
-- **Trial Registration**: Free trial signup with plan selection
-
-### Technical Features
-
-- **Next.js 16**: Latest features including Turbopack for fast development
-- **React 19**: Modern React with concurrent features
-- **Hero UI**: Beautiful, accessible component library
-- **TypeScript**: Full type safety throughout the application
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **API Integration**: RESTful API client with error handling
-
-## 🛠 Tech Stack
-
-- **Framework**: Next.js 16 with App Router
-- **UI Library**: Hero UI (NextUI successor)
-- **Styling**: Tailwind CSS with custom blue theme
-- **Language**: TypeScript
-- **State Management**: React hooks and context
-- **Authentication**: Cookie-based with secure storage
-- **API Client**: Custom fetch wrapper with error handling
+- Hero UI components with blue theme (#2563eb)
+- Reusable auth components
+- Placeholder server actions (no real API logic)
+- Clean navigation flow from landing → signup → dashboard
 
 ## 📁 Project Structure
 
 ```
-├── app/                    # Next.js App Router pages
-│   ├── login/             # Login page
-│   ├── register/          # Multi-step registration
-│   ├── pricing/           # Pricing plans page
-│   ├── forgot-password/   # Password reset request
-│   ├── reset-password/    # Password reset form
-│   └── page.tsx           # Landing page
-├── components/            # Reusable components
-│   ├── ui/               # Custom UI components
-│   ├── navbar.tsx        # Navigation component
-│   └── icons.tsx         # Icon components
-├── lib/                  # Utility libraries
-│   ├── api.ts           # API client
-│   └── auth.ts          # Authentication utilities
-├── hooks/               # Custom React hooks
-├── types/               # TypeScript type definitions
-└── config/              # Configuration files
+project/
+├── app/                          # Next.js App Router
+│   ├── page.tsx                 # Home page (hero, pricing CTA)
+│   ├── pricing/page.tsx         # Full pricing page
+│   ├── about/page.tsx           # About page
+│   ├── contact/page.tsx         # Contact page
+│   ├── login/page.tsx           # Login form
+│   ├── signup/page.tsx          # Signup form
+│   ├── verify-email/page.tsx    # Email verification instructions
+│   ├── verified/page.tsx        # Success page with dashboard redirect
+│   ├── forgot-password/page.tsx # Password reset request
+│   ├── reset-password/page.tsx  # Password reset form
+│   ├── not-found.tsx           # Clean 404 page
+│   └── layout.tsx              # Root layout with shared components
+├── features/auth/               # Auth-specific logic
+│   ├── actions/authActions.ts   # Placeholder server actions
+│   ├── components/              # Reusable auth components
+│   │   ├── AuthCard.tsx        # Form wrapper card
+│   │   ├── InputField.tsx      # Styled input component
+│   │   └── SubmitButton.tsx    # Loading-aware submit button
+│   └── hooks/useAuthForm.ts    # Auth form utilities
+├── components/                  # Shared components
+│   ├── Layout.tsx              # Main layout wrapper
+│   ├── Navbar.tsx              # Navigation with Hero UI
+│   ├── Footer.tsx              # Footer component
+│   └── Toast.tsx               # Toast notification component
+├── hooks/                      # Custom hooks
+│   ├── useToast.ts            # Toast management
+│   └── useTheme.ts            # Theme utilities
+├── lib/                        # Utilities
+│   ├── constants.ts           # Site config and data
+│   └── helpers.ts             # Helper functions
+└── styles/globals.css         # Global styles
 ```
 
-## 🚀 Getting Started
+## � Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
 - npm, yarn, or pnpm
 
-### Installation
+### Installation & Setup
 
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd clinic-website
-   ```
-
-2. **Install dependencies**
+1. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-3. **Set up environment variables**
+2. **Environment is already configured**
 
-   ```bash
-   cp .env.local.example .env.local
-   ```
+   - `.env.local` - Development settings
+   - `.env.production` - Production settings
 
-   Update `.env.local` with your API configuration:
-
-   ```env
-   NEXT_PUBLIC_API_URL=https://api.clinicflow.com
-   NEXT_PUBLIC_DASHBOARD_URL=https://dashboard.myapp.com
-   ```
-
-4. **Run the development server**
+3. **Run development server**
 
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+4. **Open browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 🎨 Design System
 
-### Color Palette
+### Color Theme
 
-- **Primary**: Blue (#2563eb) - Used for CTAs, links, and brand elements
-- **Success**: Green - For success states and confirmations
-- **Danger**: Red - For errors and warnings
-- **Default**: Gray scale - For text and neutral elements
-
-### Typography
-
-- **Headings**: Bold, clear hierarchy
-- **Body**: Readable font sizes with proper line height
-- **Interactive**: Hover states and transitions
+- **Primary**: #2563eb (Blue)
+- **Primary Light**: #3b82f6
+- **Primary Dark**: #1e40af
 
 ### Components
 
-- **Cards**: Clean, shadowed containers
-- **Buttons**: Primary, secondary, and bordered variants
-- **Forms**: Accessible inputs with validation
-- **Navigation**: Responsive navbar with mobile menu
+- **Hero UI**: Consistent component library throughout
+- **AuthCard**: Reusable form wrapper with title/description
+- **InputField**: Styled Hero UI Input with consistent styling
+- **SubmitButton**: Loading-aware button using useFormStatus()
 
-## 🔗 API Integration
+## 📱 User Flow
 
-The application integrates with a .NET API backend:
+1. **Landing Page** (`/`) → Hero section with "Get Started" CTA
+2. **Signup** (`/signup`) → Simple form → server action logs data → redirect to `/verify-email`
+3. **Verify Email** (`/verify-email`) → Instructions page
+4. **Verified** (`/verified`) → Success page with "Go to Dashboard" button
+5. **Login** (`/login`) → Form → server action logs data → redirect to dashboard
+6. **Password Reset** → Complete forgot/reset flow with placeholder actions
 
-### Endpoints
+## 🔧 Placeholder Server Actions
 
-- `GET /subscription-plans` - Fetch available plans
-- `POST /register` - User registration
-- `POST /login` - User authentication
-- `POST /forgot-password` - Password reset request
-- `POST /reset-password` - Password reset confirmation
+All forms use placeholder server actions in `features/auth/actions/authActions.ts`:
 
-### Authentication Flow
+```typescript
+export async function signupAction(formData: FormData) {
+  console.log('SIGNUP', Object.fromEntries(formData));
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
+  redirect('/verify-email');
+}
 
-1. User registers/logs in
-2. API returns access and refresh tokens
-3. Tokens stored in secure cookies
-4. User redirected to dashboard domain
+export async function loginAction(formData: FormData) {
+  console.log('LOGIN', Object.fromEntries(formData));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  redirect(
+    process.env.NEXT_PUBLIC_DASHBOARD_URL || 'https://dashboard.myapp.com',
+  );
+}
+```
 
-## 📱 Pages Overview
+### Ready for Backend Integration
 
-### Landing Page (`/`)
+- ✅ Actions log form data to console
+- ✅ Loading states with `useFormStatus()`
+- ✅ Proper redirects after submission
+- ✅ Error handling structure in place
 
-- Hero section with value proposition
-- Features showcase
-- How it works section
-- Customer testimonials
-- Call-to-action sections
+## 🧩 Reusable Components
 
-### Pricing (`/pricing`)
+### AuthCard
 
-- Dynamic plan loading from API
-- Interactive pricing cards
-- FAQ section
-- Plan comparison
+```tsx
+<AuthCard title="Create Account" description="Get started today">
+  <form>{/* Form content */}</form>
+</AuthCard>
+```
 
-### Registration (`/register`)
+### InputField
 
-- **Step 1**: Account information (name, email, password)
-- **Step 2**: Plan selection with plan details
-- **Step 3**: Clinic setup (name, phone, optional branch)
-- **Step 4**: Success confirmation and redirect
+```tsx
+<InputField
+  name="email"
+  label="Email Address"
+  type="email"
+  required
+  autoComplete="email"
+/>
+```
 
-### Login (`/login`)
+### SubmitButton
 
-- Email and password authentication
-- Forgot password link
-- Registration link for new users
+```tsx
+<SubmitButton>Create Account</SubmitButton>
+// Automatically shows loading state during form submission
+```
 
-### Password Reset (`/forgot-password`, `/reset-password`)
-
-- Email-based password reset flow
-- Token validation
-- New password confirmation
-
-## 🔧 Development
+## � ADevelopment
 
 ### Available Scripts
 
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+- `npm run dev` - Development server with Turbopack
+- `npm run build` - Production build
+- `npm run start` - Production server
+- `npm run lint` - ESLint with auto-fix
 
 ### Code Quality
 
-- **TypeScript**: Strict type checking
-- **ESLint**: Code linting with Next.js rules
-- **Prettier**: Code formatting
-- **Component Structure**: Modular, reusable components
+- **ESLint**: Next.js core web vitals rules
+- **Prettier**: Single quotes, semicolons, trailing commas
+- **TypeScript**: Full type safety
+- **Modular Structure**: Easy to extend and maintain
 
-## 🚀 Deployment
+## 🌐 Environment Configuration
 
-### Environment Variables
-
-Set the following in your production environment:
+### Development (.env.local)
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.clinicflow.com
-NEXT_PUBLIC_DASHBOARD_URL=https://dashboard.clinicflow.com
+NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_DASHBOARD_URL=https://dashboard.myapp.com
+NEXT_PUBLIC_PRIMARY_COLOR=blue
 ```
 
-### Build and Deploy
+### Production (.env.production)
 
-```bash
-npm run build
-npm run start
+```env
+NEXT_PUBLIC_API_URL=https://api.myapp.com
+NEXT_PUBLIC_DASHBOARD_URL=https://dashboard.myapp.com
+NEXT_PUBLIC_PRIMARY_COLOR=blue
 ```
 
-## 🤝 Contributing
+## 🔄 Next Steps for Backend Integration
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. **Replace Placeholder Actions**: Update server actions in `features/auth/actions/authActions.ts` with real API calls
+2. **Add Form Validation**: Implement client-side and server-side validation
+3. **Error Handling**: Add proper error states and toast notifications
+4. **Authentication State**: Add auth context and protected routes
+5. **API Integration**: Connect to your backend API endpoints
 
-## 📄 License
+## 📋 Features Implemented
+
+### ✅ Pages
+
+- [x] Home page with hero, features, pricing preview
+- [x] Full pricing page with FAQ
+- [x] About page
+- [x] Contact page with form
+- [x] Signup/login forms with placeholder actions
+- [x] Email verification flow
+- [x] Password reset flow
+- [x] Clean 404 page
+
+### ✅ Components
+
+- [x] Responsive navbar with Hero UI
+- [x] Footer with links
+- [x] Reusable auth components (AuthCard, InputField, SubmitButton)
+- [x] Toast notification system
+- [x] Loading states with useFormStatus
+
+### ✅ Architecture
+
+- [x] Clean folder structure with features/ organization
+- [x] Placeholder server actions ready for backend
+- [x] TypeScript throughout
+- [x] Hero UI with blue theme
+- [x] Mobile-responsive design
+
+## 🎯 Key Decisions Made
+
+1. **Features Structure**: Auth-related components live in `features/auth/` for modularity
+2. **Placeholder Actions**: All forms log data and redirect appropriately
+3. **Blue Theme**: Consistent #2563eb primary color throughout
+4. **No API Logic**: Pure UI focus as requested
+5. **Hero UI**: Leveraged existing component library for consistency
+
+## � License
 
 This project is licensed under the MIT License.
 
 ## 🆘 Support
 
-For support, email support@clinicflow.com or create an issue in the repository.
+For questions about this refactor or extending the functionality, check the code comments and component documentation.

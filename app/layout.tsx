@@ -1,53 +1,35 @@
-import "@/styles/globals.css";
-import clsx from "clsx";
-import { Metadata, Viewport } from "next";
+import { fontSans } from '@/config/fonts';
+import '@/styles/globals.css';
+import clsx from 'clsx';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { Providers } from './providers';
 
-import { Providers } from "./providers";
-
-import { fontSans } from "@/config/fonts";
-import { siteConfig } from "@/config/site";
-
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  icons: {
-    icon: "/favicon.ico",
-  },
+export const metadata = {
+  title: 'ClinicFlow - Complete Clinic Management Solution',
+  description: 'Streamline your healthcare practice with ClinicFlow.',
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Default to English for root layout
+  const messages = await getMessages({ locale: 'en' });
+
   return (
-    <html suppressHydrationWarning lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
         )}
       >
-        <Providers
-          themeProps={{
-            attribute: "class",
-            defaultTheme: "light",
-            enableSystem: false,
-          }}
-        >
-          {children}
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

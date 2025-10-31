@@ -1,0 +1,10 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-unused-vars": "off",
+    "react/prop-types": "off",
+    "no-console": "off",
+    "import/order": "off",
+    "import/newline-after-import": "off"
+  }
+}
