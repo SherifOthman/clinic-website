@@ -154,7 +154,8 @@ export default function DashboardPage() {
                   {t('dashboardTitle')}
                 </h1>
                 <p className="text-default-600">
-                  Welcome back, {user?.firstName}! Here's your clinic overview.
+                  Welcome back, {user?.firstName}! Here&apos;s your clinic
+                  overview.
                 </p>
               </div>
               <div className="text-right">

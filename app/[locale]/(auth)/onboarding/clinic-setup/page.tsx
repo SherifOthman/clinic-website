@@ -136,7 +136,7 @@ export default function ClinicSetupPage() {
                 Set Up Your Clinic
               </h1>
               <p className="text-default-600">
-                Let's configure your clinic information to get started
+                Let&apos;s configure your clinic information to get started
               </p>
             </div>
           </CardHeader>

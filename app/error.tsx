@@ -39,7 +39,7 @@ export default function Error({
             Something went wrong!
           </h1>
           <p className="text-default-600 mb-2">
-            We're sorry, but something unexpected happened.
+            We&apos;re sorry, but something unexpected happened.
           </p>
           {error.digest && (
             <p className="text-xs text-default-400 font-mono">
@@ -73,12 +73,12 @@ export default function Error({
             <div className="mt-6 text-sm text-default-500">
               <p>
                 If the problem persists,{' '}
-                <a
-                  href="/en/contact"
-                  className="text-primary hover:text-primary-600 font-medium"
+                <button
+                  onClick={() => (window.location.href = '/en/contact')}
+                  className="text-primary hover:text-primary-600 font-medium underline bg-transparent border-none cursor-pointer"
                 >
                   contact support
-                </a>
+                </button>
               </p>
             </div>
           </CardBody>
