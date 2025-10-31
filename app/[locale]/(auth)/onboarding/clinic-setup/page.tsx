@@ -1,6 +1,6 @@
 'use client';
 
-import { Stepper } from '@/components/Stepper';
+import { Stepper } from '@/components';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@heroui/button';
 import { Card, CardBody, CardHeader } from '@heroui/card';
