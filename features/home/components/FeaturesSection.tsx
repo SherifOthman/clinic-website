@@ -1,13 +1,13 @@
 'use client';
 
-import { Card, CardBody } from '@heroui/card';
-import { useTranslations } from 'next-intl';
 import {
   CalendarIcon,
   ChartIcon,
   ShieldIcon,
   UsersIcon,
-} from '../../../components/icons';
+} from '@/components/icons';
+import { Card, CardBody } from '@heroui/card';
+import { useTranslations } from 'next-intl';
 
 export function FeaturesSection() {
   const t = useTranslations('home');

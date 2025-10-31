@@ -1,10 +1,10 @@
 'use client';
 
+import { ClinicIcon } from '@/components/icons';
+import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { Button } from '@heroui/button';
 import NextLink from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
-import { ClinicIcon } from '../../../components/icons';
-import { ThemeSwitch } from '../../../components/ThemeSwitch';
 
 export default function AuthLayout({
   children,

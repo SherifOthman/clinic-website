@@ -1,12 +1,12 @@
 'use client';
 
+import { CheckIcon } from '@/components/icons';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';
 import { Chip } from '@heroui/chip';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { CheckIcon } from '../../../components/icons';
 import { PricingPlan } from '../data/plans';
 
 interface PricingCardProps {
