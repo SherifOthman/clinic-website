@@ -1,7 +1,5 @@
 'use client';
 
-import { CheckIcon } from '@/components/icons';
-import { Stepper } from '@/components/Stepper';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';
@@ -10,6 +8,8 @@ import { Spinner } from '@heroui/spinner';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { CheckIcon } from '../../../../../components/icons';
+import { Stepper } from '../../../../../components/Stepper';
 
 interface Plan {
   id: string;

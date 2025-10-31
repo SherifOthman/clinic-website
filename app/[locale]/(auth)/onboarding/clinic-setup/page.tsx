@@ -1,10 +1,10 @@
 'use client';
 
-import { Stepper } from '@/components/Stepper';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@heroui/button';
 import { Card, CardBody, CardHeader } from '@heroui/card';
 import { Input, Textarea } from '@heroui/input';
+import { Stepper } from '../../../../../components/Stepper';
 // Using custom select implementation
 import { Spinner } from '@heroui/spinner';
 import { useTranslations } from 'next-intl';
