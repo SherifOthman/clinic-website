@@ -1,0 +1,16 @@
+{
+  "name": "ClinicFlow",
+  "short_name": "ClinicFlow",
+  "description": "Complete clinic management platform for healthcare professionals",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "theme_color": "#006FEE",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}
