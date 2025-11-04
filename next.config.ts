@@ -24,18 +24,17 @@ const nextConfig: NextConfig = {
   experimental: {
     // Optimize package imports for better tree-shaking
     optimizePackageImports: [
-      "@heroui/button",
-      "@heroui/card",
-      "@heroui/input",
-      "@heroui/navbar",
-      "@heroui/avatar",
-      "@heroui/chip",
-      "@heroui/link",
-      "@heroui/select",
-      "@heroui/switch",
-      "@heroui/divider",
-      "@heroui/spinner",
       "lucide-react",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-icons",
+      "@radix-ui/react-label",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
     ],
 
     // CSS optimization (stable in Next.js 16)

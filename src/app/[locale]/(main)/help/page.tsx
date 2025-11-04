@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 import { useTranslations } from "next-intl";
 
 import { PageHeader } from "@/src/components/layout/PageHeader";
@@ -48,47 +48,42 @@ export default function HelpPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 mt-16">
         {helpSections.map((section, index) => (
-          <Card
-            key={index}
-            className="bg-content1 hover:shadow-md transition-shadow"
-          >
+          <Card key={index} className="hover:shadow-md transition-shadow">
             <CardHeader>
               <h3 className="text-xl font-bold">{section.title}</h3>
             </CardHeader>
-            <CardBody>
-              <p className="text-default-600 mb-6">{section.description}</p>
+            <CardContent>
+              <p className="text-muted-foreground mb-6">
+                {section.description}
+              </p>
               <ul className="space-y-3">
                 {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-sm text-default-700">
+                  <li key={itemIndex} className="text-sm">
                     • {item}
                   </li>
                 ))}
               </ul>
-            </CardBody>
+            </CardContent>
           </Card>
         ))}
       </div>
 
       <div className="text-center">
         <Card className="bg-primary/5 max-w-2xl mx-auto hover:shadow-md transition-shadow">
-          <CardBody className="p-10">
+          <CardContent className="p-10">
             <h3 className="text-3xl font-bold mb-4">{t("support.title")}</h3>
-            <p className="text-xl text-default-600 mb-8">
+            <p className="text-xl text-muted-foreground mb-8">
               {t("support.description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                color="primary"
-                size="lg"
-                className="font-semibold shadow-lg"
-              >
+              <Button size="lg" className="font-semibold shadow-lg">
                 {t("support.contact")}
               </Button>
-              <Button variant="flat" size="lg" className="font-semibold">
+              <Button variant="outline" size="lg" className="font-semibold">
                 {t("support.documentation")}
               </Button>
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button } from "@/src/components/ui/button";
 import { Activity, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -39,9 +39,9 @@ export default function AuthLayout({
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <Button
-            isIconOnly
-            variant="light"
-            onPress={toggleTheme}
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
             aria-label="Toggle theme"
             suppressHydrationWarning
           >
@@ -66,7 +66,7 @@ export default function AuthLayout({
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-sm text-default-600">
+      <footer className="text-center py-6 text-sm text-muted-foreground">
         © 2024 ClinicFlow. All rights reserved.
       </footer>
     </div>

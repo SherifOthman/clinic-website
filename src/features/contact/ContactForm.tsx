@@ -1,8 +1,10 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Input, Textarea } from "@heroui/input";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
+import { Input } from "@/src/components/ui/input";
+import { Label } from "@/src/components/ui/label";
+import { Textarea } from "@/src/components/ui/textarea";
 import { useTranslations } from "next-intl";
 
 export const ContactForm = () => {
@@ -13,44 +15,42 @@ export const ContactForm = () => {
       <CardHeader>
         <h2 className="text-2xl font-bold">{t("title")}</h2>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <form className="space-y-6">
-          <Input
-            label={t("name")}
-            variant="bordered"
-            placeholder={t("namePlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="name">{t("name")}</Label>
+            <Input id="name" placeholder={t("namePlaceholder")} />
+          </div>
 
-          <Input
-            type="email"
-            label={t("email")}
-            variant="bordered"
-            placeholder={t("emailPlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="email">{t("email")}</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder={t("emailPlaceholder")}
+            />
+          </div>
 
-          <Input
-            label={t("company")}
-            variant="bordered"
-            placeholder={t("companyPlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="company">{t("company")}</Label>
+            <Input id="company" placeholder={t("companyPlaceholder")} />
+          </div>
 
-          <Textarea
-            label={t("message")}
-            variant="bordered"
-            minRows={4}
-            placeholder={t("messagePlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="message">{t("message")}</Label>
+            <Textarea
+              id="message"
+              rows={4}
+              placeholder={t("messagePlaceholder")}
+            />
+          </div>
 
-          <Button
-            type="submit"
-            color="primary"
-            size="lg"
-            className="w-full font-semibold"
-          >
+          <Button type="submit" size="lg" className="w-full font-semibold">
             {t("submit")}
           </Button>
         </form>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };
+

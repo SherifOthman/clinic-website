@@ -26,10 +26,10 @@ export const Stepper = ({
                 className={cn(
                   "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300",
                   index < currentStep
-                    ? "bg-success border-success text-white shadow-lg shadow-success/30"
+                    ? "bg-green-600 dark:bg-green-500 border-green-600 dark:border-green-500 text-white shadow-lg shadow-green-600/30"
                     : index === currentStep
                       ? "bg-primary border-primary text-white shadow-lg shadow-primary/40 scale-110"
-                      : "bg-content1 border-default-300 text-default-400 shadow-sm"
+                      : "bg-card border-border text-muted-foreground shadow-sm"
                 )}
               >
                 {index < currentStep ? (
@@ -48,8 +48,8 @@ export const Stepper = ({
                   index === currentStep
                     ? "text-primary font-bold"
                     : index < currentStep
-                      ? "text-success font-semibold"
-                      : "text-default-400"
+                      ? "text-green-600 dark:text-green-400 font-semibold"
+                      : "text-muted-foreground"
                 )}
               >
                 {step}
@@ -59,14 +59,14 @@ export const Stepper = ({
             {/* Connecting Line */}
             {index < steps.length - 1 && (
               <div className="flex-1 px-2 md:px-4">
-                <div className="relative h-1 bg-default-200 rounded-full overflow-hidden">
+                <div className="relative h-1 bg-border rounded-full overflow-hidden">
                   <div
                     className={cn(
                       "h-full rounded-full transition-all duration-500 ease-out",
                       index < currentStep
-                        ? "bg-gradient-to-r from-success to-success w-full"
+                        ? "bg-gradient-to-r from-green-600 to-green-600 dark:from-green-500 dark:to-green-500 w-full"
                         : index === currentStep - 1
-                          ? "bg-gradient-to-r from-success to-primary w-full"
+                          ? "bg-gradient-to-r from-green-600 to-primary dark:from-green-500 w-full"
                           : "w-0"
                     )}
                   />

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -56,10 +56,10 @@ export default function OnboardingPage() {
         return (
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-4xl md:text-5xl mb-4">🎉</div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-success">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-green-600">
               {t("onboarding.step4.title")}
             </h2>
-            <p className="text-base md:text-lg text-default-600">
+            <p className="text-base md:text-lg text-muted-foreground">
               {t("onboarding.step4.subtitle")}
             </p>
           </div>
@@ -72,13 +72,13 @@ export default function OnboardingPage() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
-      <Card className="shadow-2xl border border-divider bg-content1 rounded-3xl overflow-hidden">
+      <Card className="shadow-2xl rounded-3xl overflow-hidden">
         <CardHeader className="flex flex-col gap-6 md:gap-8 px-6 md:px-10 pt-6 md:pt-8 pb-4 md:pb-6 bg-gradient-to-br from-primary/8 via-primary/4 to-transparent">
           <div className="text-center">
             <h1 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">
               {t("onboarding.title")}
             </h1>
-            <p className="text-sm md:text-base text-default-600">
+            <p className="text-sm md:text-base text-muted-foreground">
               {t("onboarding.subtitle")}
             </p>
           </div>
@@ -88,16 +88,16 @@ export default function OnboardingPage() {
           </div>
         </CardHeader>
 
-        <CardBody className="px-8 md:px-16 pb-6 md:pb-8">
+        <CardContent className="px-8 md:px-16 pb-6 md:pb-8">
           <div className="min-h-[500px] md:min-h-[600px] flex flex-col">
             <div className="flex-grow py-4 md:py-6">{renderStepContent()}</div>
 
-            <div className="flex justify-between items-center pt-6 md:pt-8 border-t border-divider">
+            <div className="flex justify-between items-center pt-6 md:pt-8 border-t">
               <Button
-                variant="flat"
+                variant="outline"
                 size="lg"
-                onPress={handlePrevious}
-                isDisabled={currentStep === 0}
+                onClick={handlePrevious}
+                disabled={currentStep === 0}
                 className="font-semibold min-w-24 md:min-w-32"
               >
                 {t("common.previous")}
@@ -105,25 +105,23 @@ export default function OnboardingPage() {
 
               {currentStep < steps.length - 1 ? (
                 <Button
-                  color="primary"
                   size="lg"
-                  onPress={handleNext}
+                  onClick={handleNext}
                   className="font-semibold shadow-lg min-w-24 md:min-w-32"
                 >
                   {t("common.next")}
                 </Button>
               ) : (
                 <Button
-                  color="success"
                   size="lg"
-                  className="font-semibold shadow-lg min-w-32 md:min-w-40"
+                  className="font-semibold shadow-lg min-w-32 md:min-w-40 bg-green-600 hover:bg-green-700 text-white"
                 >
                   {t("onboarding.completeSetup")}
                 </Button>
               )}
             </div>
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </div>
   );

@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-import { TestimonialCard } from "@/src/components/ui/TestimonialCard";
+import { TestimonialCard } from "@/src/components/TestimonialCard";
 import { Testimonial } from "@/src/types";
 
 const testimonials: Testimonial[] = [
@@ -54,15 +54,17 @@ const testimonials: Testimonial[] = [
 
 export const TestimonialsSection = () => {
   const t = useTranslations("testimonials");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
 
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-default-50 to-background dark:from-default-100 dark:to-background">
+    <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
         <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-foreground">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
             {t("title")}
           </h2>
-          <p className="text-lg md:text-xl text-default-600 max-w-2xl mx-auto px-4">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             {t("subtitle")}
           </p>
         </div>
@@ -74,9 +76,9 @@ export const TestimonialsSection = () => {
         </div>
 
         <div className="text-center mt-16">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-default-600">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-success rounded-full" />
+              <div className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full" />
               <span className="font-medium">{t("trustedBy")}</span>
             </div>
             <div className="flex items-center gap-2">

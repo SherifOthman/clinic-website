@@ -3,7 +3,7 @@
 import { BarChart3, Calendar, Shield, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { FeatureCard } from "@/src/components/ui/FeatureCard";
+import { FeatureCard } from "@/src/components/FeatureCard";
 
 export function FeaturesSection() {
   const t = useTranslations("home.features");
@@ -57,3 +57,4 @@ export function FeaturesSection() {
     </section>
   );
 }
+

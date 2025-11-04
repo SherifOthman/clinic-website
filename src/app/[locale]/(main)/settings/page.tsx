@@ -1,9 +1,15 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Select, SelectItem } from "@heroui/select";
-import { Switch } from "@heroui/switch";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
+import { Switch } from "@/src/components/ui/switch";
 import { useTranslations } from "next-intl";
 
 import { LanguageSwitcher } from "@/src/components/LanguageSwitcher";
@@ -23,11 +29,11 @@ export default function SettingsPage() {
           <CardHeader>
             <h2 className="text-xl font-semibold">{t("general.title")}</h2>
           </CardHeader>
-          <CardBody className="space-y-6">
+          <CardContent className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.language")}</h3>
-                <p className="text-sm text-default-600">
+                <p className="text-sm text-muted-foreground">
                   {t("general.languageDescription")}
                 </p>
               </div>
@@ -37,7 +43,7 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.theme")}</h3>
-                <p className="text-sm text-default-600">
+                <p className="text-sm text-muted-foreground">
                   {t("general.themeDescription")}
                 </p>
               </div>
@@ -47,13 +53,13 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.notifications")}</h3>
-                <p className="text-sm text-default-600">
+                <p className="text-sm text-muted-foreground">
                   {t("general.notificationsDescription")}
                 </p>
               </div>
-              <Switch defaultSelected />
+              <Switch defaultChecked />
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
 
         {/* Clinic Settings */}
@@ -61,42 +67,58 @@ export default function SettingsPage() {
           <CardHeader>
             <h2 className="text-xl font-semibold">{t("clinic.title")}</h2>
           </CardHeader>
-          <CardBody className="space-y-4">
-            <Select
-              label={t("clinic.timezone")}
-              placeholder={t("clinic.timezonePlaceholder")}
-              variant="bordered"
-              defaultSelectedKeys={["utc"]}
-            >
-              <SelectItem key="utc">
-                UTC (Coordinated Universal Time)
-              </SelectItem>
-              <SelectItem key="est">EST (Eastern Standard Time)</SelectItem>
-              <SelectItem key="pst">PST (Pacific Standard Time)</SelectItem>
-              <SelectItem key="gmt">GMT (Greenwich Mean Time)</SelectItem>
-            </Select>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                {t("clinic.timezone")}
+              </label>
+              <Select defaultValue="utc">
+                <SelectTrigger>
+                  <SelectValue placeholder={t("clinic.timezonePlaceholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="utc">
+                    UTC (Coordinated Universal Time)
+                  </SelectItem>
+                  <SelectItem value="est">
+                    EST (Eastern Standard Time)
+                  </SelectItem>
+                  <SelectItem value="pst">
+                    PST (Pacific Standard Time)
+                  </SelectItem>
+                  <SelectItem value="gmt">GMT (Greenwich Mean Time)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-            <Select
-              label={t("clinic.dateFormat")}
-              placeholder={t("clinic.dateFormatPlaceholder")}
-              variant="bordered"
-              defaultSelectedKeys={["mm-dd-yyyy"]}
-            >
-              <SelectItem key="mm-dd-yyyy">MM/DD/YYYY</SelectItem>
-              <SelectItem key="dd-mm-yyyy">DD/MM/YYYY</SelectItem>
-              <SelectItem key="yyyy-mm-dd">YYYY-MM-DD</SelectItem>
-            </Select>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                {t("clinic.dateFormat")}
+              </label>
+              <Select defaultValue="mm-dd-yyyy">
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={t("clinic.dateFormatPlaceholder")}
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="mm-dd-yyyy">MM/DD/YYYY</SelectItem>
+                  <SelectItem value="dd-mm-yyyy">DD/MM/YYYY</SelectItem>
+                  <SelectItem value="yyyy-mm-dd">YYYY-MM-DD</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("clinic.autoReminders")}</h3>
-                <p className="text-sm text-default-600">
+                <p className="text-sm text-muted-foreground">
                   {t("clinic.autoRemindersDescription")}
                 </p>
               </div>
-              <Switch defaultSelected />
+              <Switch defaultChecked />
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
 
         {/* Security Settings */}
@@ -104,22 +126,21 @@ export default function SettingsPage() {
           <CardHeader>
             <h2 className="text-xl font-semibold">{t("security.title")}</h2>
           </CardHeader>
-          <CardBody className="space-y-4">
-            <Button variant="bordered" className="w-full">
+          <CardContent className="space-y-4">
+            <Button variant="outline" className="w-full">
               {t("security.changePassword")}
             </Button>
-            <Button variant="bordered" className="w-full">
+            <Button variant="outline" className="w-full">
               {t("security.twoFactor")}
             </Button>
-            <Button variant="bordered" className="w-full">
+            <Button variant="outline" className="w-full">
               {t("security.loginHistory")}
             </Button>
-          </CardBody>
+          </CardContent>
         </Card>
 
-        {/* Save Changes */}
         <div className="flex justify-end">
-          <Button color="primary" size="lg" className="font-semibold">
+          <Button size="lg" className="font-semibold">
             {t("saveChanges")}
           </Button>
         </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Input } from "@heroui/input";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
+import { Input } from "@/src/components/ui/input";
+import { Label } from "@/src/components/ui/label";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/src/i18n/routing";
@@ -11,73 +12,76 @@ export const SignupForm = () => {
   const t = useTranslations("auth.signup");
 
   return (
-    <Card className="shadow-2xl border border-divider">
-      <CardHeader className="flex flex-col gap-3 pb-6">
+    <Card className="shadow-2xl">
+      <CardHeader className="space-y-3 pb-6">
         <h1 className="text-2xl font-bold text-center">{t("title")}</h1>
-        <p className="text-default-600 text-center">{t("subtitle")}</p>
+        <p className="text-muted-foreground text-center">{t("subtitle")}</p>
       </CardHeader>
-      <CardBody className="gap-6">
-        <form className="flex flex-col gap-4">
+      <CardContent className="space-y-6">
+        <form className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <Input
-              label={t("firstName")}
-              variant="bordered"
-              placeholder={t("firstNamePlaceholder")}
-            />
+            <div className="space-y-2">
+              <Label htmlFor="firstName">{t("firstName")}</Label>
+              <Input id="firstName" placeholder={t("firstNamePlaceholder")} />
+            </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="lastName">{t("lastName")}</Label>
+              <Input id="lastName" placeholder={t("lastNamePlaceholder")} />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">{t("email")}</Label>
             <Input
-              label={t("lastName")}
-              variant="bordered"
-              placeholder={t("lastNamePlaceholder")}
+              id="email"
+              type="email"
+              placeholder={t("emailPlaceholder")}
             />
           </div>
 
-          <Input
-            type="email"
-            label={t("email")}
-            variant="bordered"
-            placeholder={t("emailPlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="clinicName">{t("clinicName")}</Label>
+            <Input id="clinicName" placeholder={t("clinicNamePlaceholder")} />
+          </div>
 
-          <Input
-            label={t("clinicName")}
-            variant="bordered"
-            placeholder={t("clinicNamePlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="password">{t("password")}</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder={t("passwordPlaceholder")}
+            />
+          </div>
 
-          <Input
-            type="password"
-            label={t("password")}
-            variant="bordered"
-            placeholder={t("passwordPlaceholder")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder={t("confirmPasswordPlaceholder")}
+            />
+          </div>
 
-          <Input
-            type="password"
-            label={t("confirmPassword")}
-            variant="bordered"
-            placeholder={t("confirmPasswordPlaceholder")}
-          />
-
-          <Button
-            type="submit"
-            color="primary"
-            size="lg"
-            className="font-semibold"
-          >
+          <Button type="submit" size="lg" className="w-full font-semibold">
             {t("submit")}
           </Button>
         </form>
 
-        <div className="text-center">
-          <span className="text-default-600">{t("hasAccount")} </span>
-          <Link href="/login" className="text-primary font-medium">
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">{t("hasAccount")} </span>
+          <Link
+            href="/login"
+            className="text-primary font-medium hover:underline"
+          >
             {t("loginLink")}
           </Link>
         </div>
 
-        <p className="text-xs text-default-500 text-center">{t("terms")}</p>
-      </CardBody>
+        <p className="text-xs text-muted-foreground text-center">
+          {t("terms")}
+        </p>
+      </CardContent>
     </Card>
   );
 };

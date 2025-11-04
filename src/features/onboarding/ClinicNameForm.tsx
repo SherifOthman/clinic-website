@@ -1,6 +1,7 @@
 "use client";
 
-import { Input } from "@heroui/input";
+import { Input } from "@/src/components/ui/input";
+import { Label } from "@/src/components/ui/label";
 import { useTranslations } from "next-intl";
 
 export const ClinicNameForm = () => {
@@ -10,28 +11,24 @@ export const ClinicNameForm = () => {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-xl md:text-2xl font-bold mb-2 text-foreground">
-          {t("title")}
-        </h2>
-        <p className="text-sm md:text-base text-default-600">{t("subtitle")}</p>
+        <h2 className="text-xl md:text-2xl font-bold mb-2">{t("title")}</h2>
+        <p className="text-sm md:text-base text-muted-foreground">
+          {t("subtitle")}
+        </p>
       </div>
 
       <form className="space-y-6">
-        <div className="bg-content2/50 p-6 md:p-8 rounded-2xl border border-divider">
+        <div className="bg-muted/50 p-6 md:p-8 rounded-2xl border space-y-2">
+          <Label htmlFor="clinicName">{tForm("clinicName")}</Label>
           <Input
-            label={tForm("clinicName")}
+            id="clinicName"
             placeholder={tForm("clinicNamePlaceholder")}
-            variant="bordered"
-            size="lg"
-            classNames={{
-              input: "text-base md:text-lg",
-              inputWrapper: "h-14 md:h-16",
-            }}
+            className="h-14 md:h-16 text-base md:text-lg"
           />
         </div>
 
         <div className="text-center">
-          <p className="text-xs md:text-sm text-default-500">
+          <p className="text-xs md:text-sm text-muted-foreground">
             {tForm("clinicNameHelper")}
           </p>
         </div>
@@ -39,3 +36,4 @@ export const ClinicNameForm = () => {
     </div>
   );
 };
+

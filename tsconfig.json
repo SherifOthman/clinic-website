@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,6 +15,7 @@
     "incremental": true,
     // React 19 and Next.js 16 optimizations
     "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
     "plugins": [
       {
         "name": "next"
@@ -26,12 +23,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/src/*": [
-        "./src/*"
-      ]
+      "@/*": ["./*"],
+      "@/src/*": ["./src/*"]
     }
   },
   "include": [
@@ -43,7 +36,5 @@
     ".next\\dev/types/**/*.ts",
     ".next\\dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button } from "@/src/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -17,17 +17,22 @@ export const ThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  if (!mounted) {
+    return (
+      <Button variant="ghost" size="icon" aria-label="Toggle theme">
+        <Moon size={20} />
+      </Button>
+    );
+  }
+
   return (
     <Button
-      isIconOnly
-      variant="light"
-      onPress={toggleTheme}
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
       aria-label="Toggle theme"
-      suppressHydrationWarning
     >
-      <span suppressHydrationWarning>
-        {mounted && theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-      </span>
+      {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
     </Button>
   );
 };

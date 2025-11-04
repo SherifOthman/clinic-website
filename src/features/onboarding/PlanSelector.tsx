@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardBody } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { useTranslations } from "next-intl";
+import { Badge } from "@/src/components/ui/badge";
+import { Card, CardContent } from "@/src/components/ui/card";
+import { useLocale, useTranslations } from "next-intl";
 
 interface Plan {
   id: "starter" | "professional" | "enterprise";
@@ -24,6 +24,8 @@ export const PlanSelector = ({
 }: PlanSelectorProps) => {
   const t = useTranslations("pricing.plans");
   const tOnboarding = useTranslations("onboarding.step1");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
 
   const plans: Plan[] = [
     {
@@ -75,10 +77,10 @@ export const PlanSelector = ({
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h2 className="text-xl md:text-2xl font-bold mb-2 text-foreground">
+        <h2 className="text-xl md:text-2xl font-bold mb-2">
           {tOnboarding("title")}
         </h2>
-        <p className="text-sm md:text-base text-default-600 max-w-3xl mx-auto">
+        <p className="text-sm md:text-base text-muted-foreground max-w-3xl mx-auto">
           {tOnboarding("subtitle")}
         </p>
       </div>
@@ -89,46 +91,39 @@ export const PlanSelector = ({
             key={plan.id}
             className={`cursor-pointer transition-all duration-200 hover:scale-[1.02] relative h-full ${
               selectedPlan === plan.id
-                ? "border-2 border-primary bg-primary/8 shadow-xl ring-4 ring-primary/20"
-                : "border border-divider hover:border-primary/40 hover:shadow-lg hover:bg-primary/2"
+                ? "border-2 border-primary bg-primary/5 shadow-xl ring-4 ring-primary/20"
+                : "hover:border-primary/40 hover:shadow-lg hover:bg-primary/5"
             }`}
-            isPressable
-            onPress={() => onPlanSelect(plan.id)}
+            onClick={() => onPlanSelect(plan.id)}
           >
             {plan.popular && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                <Chip
-                  color="primary"
-                  size="sm"
-                  variant="solid"
-                  className="text-xs font-bold px-3 shadow-lg"
-                >
+                <Badge className="text-xs font-bold px-3 shadow-lg">
                   Most Popular
-                </Chip>
+                </Badge>
               </div>
             )}
 
-            <CardBody className="p-5 md:p-6 text-center flex flex-col h-full">
+            <CardContent className="p-5 md:p-6 text-center flex flex-col h-full">
               <div className="mb-4">
-                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">
+                <h3 className="text-lg md:text-xl font-bold mb-2">
                   {plan.name}
                 </h3>
                 <div className="flex items-baseline justify-center gap-1 mb-4">
                   <span className="text-2xl md:text-3xl font-bold text-primary">
                     {plan.price}
                   </span>
-                  <span className="text-sm text-default-500">
+                  <span className="text-sm text-muted-foreground">
                     {plan.period}
                   </span>
                 </div>
 
-                {/* Selection indicator */}
                 <div className="flex justify-center mb-4">
                   <div
                     className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                       selectedPlan === plan.id
                         ? "bg-primary border-primary scale-110"
-                        : "border-default-300"
+                        : "border-border"
                     }`}
                   >
                     {selectedPlan === plan.id && (
@@ -138,11 +133,13 @@ export const PlanSelector = ({
                 </div>
               </div>
 
-              <ul className="space-y-2 text-left flex-grow">
+              <ul
+                className={`space-y-2 flex-grow ${isRTL ? "text-right" : "text-left"}`}
+              >
                 {plan.features.map((feature, index) => (
                   <li
                     key={index}
-                    className="text-default-700 flex items-start gap-2 text-sm"
+                    className={`text-foreground/80 flex items-start gap-2 text-sm ${isRTL ? "flex-row-reverse" : ""}`}
                   >
                     <span className="text-primary font-bold mt-0.5 flex-shrink-0">
                       ✓
@@ -151,7 +148,7 @@ export const PlanSelector = ({
                   </li>
                 ))}
               </ul>
-            </CardBody>
+            </CardContent>
           </Card>
         ))}
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Card, CardBody } from "@heroui/card";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent } from "@/src/components/ui/card";
 import { useTranslations } from "next-intl";
 
 import { PageHeader } from "@/src/components/layout/PageHeader";
@@ -45,37 +45,32 @@ export default function ContactPage() {
         <div className="space-y-8">
           <div>
             <h2 className="text-2xl font-bold mb-6">{t("getInTouch")}</h2>
-            <p className="text-default-600 mb-8">{t("description")}</p>
+            <p className="text-muted-foreground mb-8">{t("description")}</p>
           </div>
 
           {contactInfo.map((info, index) => (
-            <Card
-              key={index}
-              className="bg-content1 hover:shadow-md transition-shadow"
-            >
-              <CardBody className="p-8">
+            <Card key={index} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-8">
                 <h3 className="text-xl font-bold mb-3">{info.title}</h3>
-                <p className="text-default-600 mb-6">{info.description}</p>
+                <p className="text-muted-foreground mb-6">{info.description}</p>
                 <div className="space-y-2">
                   <p className="font-medium">{info.contact}</p>
-                  <p className="text-default-600">{info.phone}</p>
+                  <p className="text-muted-foreground">{info.phone}</p>
                 </div>
-              </CardBody>
+              </CardContent>
             </Card>
           ))}
 
           <Card className="bg-primary/5 hover:shadow-md transition-shadow">
-            <CardBody className="p-8">
+            <CardContent className="p-8">
               <h3 className="text-xl font-bold mb-3">{t("demo.title")}</h3>
-              <p className="text-default-600 mb-6">{t("demo.description")}</p>
-              <Button
-                color="primary"
-                size="lg"
-                className="font-semibold shadow-lg"
-              >
+              <p className="text-muted-foreground mb-6">
+                {t("demo.description")}
+              </p>
+              <Button size="lg" className="font-semibold shadow-lg">
                 {t("demo.button")}
               </Button>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>
