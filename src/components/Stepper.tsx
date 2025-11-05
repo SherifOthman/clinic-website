@@ -29,7 +29,7 @@ export const Stepper = ({
                     ? "bg-green-600 dark:bg-green-500 border-green-600 dark:border-green-500 text-white shadow-lg shadow-green-600/30"
                     : index === currentStep
                       ? "bg-primary border-primary text-white shadow-lg shadow-primary/40 scale-110"
-                      : "bg-card border-border text-muted-foreground shadow-sm"
+                      : "bg-content1 border-divider text-default-500 shadow-sm"
                 )}
               >
                 {index < currentStep ? (
@@ -49,7 +49,7 @@ export const Stepper = ({
                     ? "text-primary font-bold"
                     : index < currentStep
                       ? "text-green-600 dark:text-green-400 font-semibold"
-                      : "text-muted-foreground"
+                      : "text-default-500"
                 )}
               >
                 {step}

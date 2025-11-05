@@ -62,20 +62,20 @@ export function PricingPreviewSection() {
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
             {t("pricingTitle")}
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-xl text-default-500 max-w-2xl mx-auto mb-10">
             {t("pricingDescription")}
           </p>
 
           <div className="flex items-center justify-center gap-4 mb-4">
             <span
-              className={`text-sm font-medium ${!isYearly ? "text-foreground" : "text-muted-foreground"}`}
+              className={`text-sm font-medium ${!isYearly ? "text-foreground" : "text-default-500"}`}
             >
               {tPricing("monthly")}
             </span>
             <button
               onClick={() => setIsYearly(!isYearly)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-                isYearly ? "bg-primary" : "bg-muted"
+                isYearly ? "bg-primary" : "bg-default-200"
               }`}
               role="switch"
               aria-checked={isYearly}
@@ -94,7 +94,7 @@ export function PricingPreviewSection() {
               />
             </button>
             <span
-              className={`text-sm font-medium ${isYearly ? "text-foreground" : "text-muted-foreground"}`}
+              className={`text-sm font-medium ${isYearly ? "text-foreground" : "text-default-500"}`}
             >
               {tPricing("yearly")}
             </span>
@@ -133,7 +133,7 @@ export function PricingPreviewSection() {
                 </div>
 
                 <h3 className="text-2xl font-bold mb-3">{plan.name}</h3>
-                <p className="text-muted-foreground mb-8 min-h-[48px]">
+                <p className="text-default-500 mb-8 min-h-[48px]">
                   {plan.description}
                 </p>
 
@@ -142,7 +142,7 @@ export function PricingPreviewSection() {
                     <span className="text-5xl font-bold">
                       ${calculatePrice(plan.price)}
                     </span>
-                    <span className="text-muted-foreground text-lg">
+                    <span className="text-default-500 text-lg">
                       /{isYearly ? tPricing("perYear") : tPricing("perMonth")}
                     </span>
                   </div>
@@ -181,7 +181,7 @@ export function PricingPreviewSection() {
         </div>
 
         <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">
+          <p className="text-default-500 mb-4">
             {tPricing("customPlanQuestion")}
           </p>
           <Button

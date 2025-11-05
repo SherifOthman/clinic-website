@@ -80,7 +80,7 @@ export const PlanSelector = ({
         <h2 className="text-xl md:text-2xl font-bold mb-2">
           {tOnboarding("title")}
         </h2>
-        <p className="text-sm md:text-base text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-sm md:text-base text-default-500 max-w-3xl mx-auto">
           {tOnboarding("subtitle")}
         </p>
       </div>
@@ -116,7 +116,7 @@ export const PlanSelector = ({
                   <span className="text-2xl md:text-3xl font-bold text-primary">
                     {plan.price}
                   </span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-default-500">
                     {plan.period}
                   </span>
                 </div>
@@ -126,7 +126,7 @@ export const PlanSelector = ({
                     className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                       selectedPlan === plan.id
                         ? "bg-primary border-primary scale-110"
-                        : "border-border"
+                        : "border-divider"
                     }`}
                   >
                     {selectedPlan === plan.id && (

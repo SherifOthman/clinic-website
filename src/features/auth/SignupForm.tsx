@@ -24,7 +24,7 @@ export const SignupForm = () => {
             {t("title")}
           </h1>
           <p
-            className="text-muted-foreground w-full"
+            className="text-default-500 w-full"
             style={{ textAlign: "center" }}
           >
             {t("subtitle")}
@@ -58,7 +58,7 @@ export const SignupForm = () => {
         </form>
 
         <div className="text-center text-sm">
-          <span className="text-muted-foreground">{t("hasAccount")} </span>
+          <span className="text-default-500">{t("hasAccount")} </span>
           <Link
             href="/login"
             className="text-primary font-medium hover:underline"
@@ -67,9 +67,7 @@ export const SignupForm = () => {
           </Link>
         </div>
 
-        <p className="text-xs text-muted-foreground text-center">
-          {t("terms")}
-        </p>
+        <p className="text-xs text-default-500 text-center">{t("terms")}</p>
       </CardBody>
     </Card>
   );

@@ -22,7 +22,7 @@ export default function NotFound() {
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
           Page Not Found
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-lg mx-auto">
+        <p className="text-lg sm:text-xl text-default-500 mb-10 max-w-lg mx-auto">
           The page you're looking for doesn't exist or has been moved.
         </p>
 
@@ -48,27 +48,30 @@ export default function NotFound() {
         </div>
 
         <div className="mt-12 pt-8 border-t">
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="text-sm text-default-500 mb-4">
             You might be looking for:
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <a href="en/" className="text-sm text-primary hover:underline">
+            <a href="/en/" className="text-sm text-primary hover:underline">
               Home
             </a>
-            <span className="text-muted-foreground">•</span>
-            <a href="en/about" className="text-sm text-primary hover:underline">
+            <span className="text-default-500">•</span>
+            <a
+              href="/en/about"
+              className="text-sm text-primary hover:underline"
+            >
               About
             </a>
-            <span className="text-muted-foreground">•</span>
+            <span className="text-default-500">•</span>
             <a
               href="/en#pricing"
               className="text-sm text-primary hover:underline"
             >
               Pricing
             </a>
-            <span className="text-muted-foreground">•</span>
+            <span className="text-default-500">•</span>
             <a
-              href="en/contact"
+              href="/en/contact"
               className="text-sm text-primary hover:underline"
             >
               Contact

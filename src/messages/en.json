@@ -1,4 +1,6 @@
 {
+  "profile": "Profile",
+  "settings": "Settings",
   "common": {
     "clinicFlow": "ClinicFlow"
   },
@@ -227,7 +229,11 @@
     "viewDetailedAnalytics": "View Detailed Analytics",
     "needFullAccess": "Need full access to patient management, scheduling, and reports?",
     "launchFullDashboard": "Launch Full Management Dashboard",
-    "satisfaction": "Satisfaction"
+    "satisfaction": "Satisfaction",
+    "role": "Administrator",
+    "clinicName": "ClinicFlow Demo Clinic",
+    "noAppointments": "No appointments scheduled for today",
+    "planName": "Professional Plan"
   },
   "footer": {
     "description": "Streamline your healthcare practice with our comprehensive clinic management platform. Trusted by healthcare professionals worldwide.",
@@ -419,5 +425,49 @@
         "author": "Dr. Sarah Johnson, Family Medicine"
       }
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your account information and preferences",
+    "personalInfo": "Personal Information",
+    "edit": "Edit",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "clinicName": "Clinic Name",
+    "accountStatus": "Account Status",
+    "memberSince": "Member Since",
+    "lastLogin": "Last Login",
+    "status": "Status",
+    "active": "Active"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your ClinicFlow experience",
+    "general": {
+      "title": "General Settings",
+      "language": "Language",
+      "languageDescription": "Choose your preferred language for the interface",
+      "theme": "Theme",
+      "themeDescription": "Choose between light and dark mode",
+      "notifications": "Notifications",
+      "notificationsDescription": "Manage your notification preferences"
+    },
+    "clinic": {
+      "title": "Clinic Settings",
+      "timezone": "Timezone",
+      "timezonePlaceholder": "Select your timezone",
+      "dateFormat": "Date Format",
+      "dateFormatPlaceholder": "Select date format",
+      "autoReminders": "Automatic Reminders",
+      "autoRemindersDescription": "Send automatic appointment reminders to patients"
+    },
+    "security": {
+      "title": "Security Settings",
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "loginHistory": "Login History"
+    },
+    "saveChanges": "Save Changes"
   }
 }

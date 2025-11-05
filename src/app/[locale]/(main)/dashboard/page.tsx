@@ -31,8 +31,8 @@ export default function DashboardPage() {
           />
           <div>
             <h1 className="text-2xl md:text-3xl font-bold">{t("welcome")}</h1>
-            <p className="text-muted-foreground">{t("role")}</p>
-            <p className="text-sm text-muted-foreground">{t("clinicName")}</p>
+            <p className="text-default-500">{t("role")}</p>
+            <p className="text-sm text-default-500">{t("clinicName")}</p>
           </div>
         </div>
 
@@ -51,7 +51,7 @@ export default function DashboardPage() {
                 <Calendar className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-default-500">
                   {t("todayAppointments")}
                 </p>
                 <p className="text-lg md:text-2xl font-bold text-primary">--</p>
@@ -67,7 +67,7 @@ export default function DashboardPage() {
                 <CheckCircle className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-default-500">
                   {t("completed")}
                 </p>
                 <p className="text-lg md:text-2xl font-bold text-green-600">
@@ -85,7 +85,7 @@ export default function DashboardPage() {
                 <Users className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-default-500">
                   {t("newPatients")}
                 </p>
                 <p className="text-lg md:text-2xl font-bold text-blue-600">
@@ -103,7 +103,7 @@ export default function DashboardPage() {
                 <Star className="w-5 h-5 text-yellow-600" />
               </div>
               <div>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-default-500">
                   {t("satisfaction")}
                 </p>
                 <p className="text-lg md:text-2xl font-bold text-yellow-600">
@@ -127,7 +127,7 @@ export default function DashboardPage() {
                 {t("viewAll")}
               </Button>
             </div>
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-default-500">
               {t("noAppointments")}
             </div>
           </CardBody>
@@ -146,11 +146,9 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-default-100 rounded-lg">
                 <div>
-                  <p className="text-sm text-muted-foreground">
-                    {t("currentPlan")}
-                  </p>
+                  <p className="text-sm text-default-500">{t("currentPlan")}</p>
                   <p className="font-semibold">{t("planName")}</p>
                 </div>
                 <Button size="sm" variant="bordered">

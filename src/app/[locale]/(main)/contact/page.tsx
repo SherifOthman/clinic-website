@@ -42,9 +42,7 @@ export default async function ContactPage({ params }: Props) {
       {/* Header Section */}
       <div className="mb-16">
         <h1 className="text-3xl lg:text-4xl font-bold mb-4">{t("title")}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl">
-          {t("subtitle")}
-        </p>
+        <p className="text-xl text-default-500 max-w-2xl">{t("subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
@@ -57,17 +55,17 @@ export default async function ContactPage({ params }: Props) {
         <div className="space-y-8">
           <div>
             <h2 className="text-2xl font-bold mb-6">{t("getInTouch")}</h2>
-            <p className="text-muted-foreground mb-8">{t("description")}</p>
+            <p className="text-default-500 mb-8">{t("description")}</p>
           </div>
 
           {contactInfo.map((info, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow">
               <CardBody className="p-8">
                 <h3 className="text-xl font-bold mb-3">{info.title}</h3>
-                <p className="text-muted-foreground mb-6">{info.description}</p>
+                <p className="text-default-500 mb-6">{info.description}</p>
                 <div className="space-y-2">
                   <p className="font-medium">{info.contact}</p>
-                  <p className="text-muted-foreground">{info.phone}</p>
+                  <p className="text-default-500">{info.phone}</p>
                 </div>
               </CardBody>
             </Card>
@@ -76,9 +74,7 @@ export default async function ContactPage({ params }: Props) {
           <Card className="bg-primary/5 hover:shadow-md transition-shadow">
             <CardBody className="p-8">
               <h3 className="text-xl font-bold mb-3">{t("demo.title")}</h3>
-              <p className="text-muted-foreground mb-6">
-                {t("demo.description")}
-              </p>
+              <p className="text-default-500 mb-6">{t("demo.description")}</p>
               <Button
                 color="primary"
                 size="lg"

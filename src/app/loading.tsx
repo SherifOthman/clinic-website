@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <Spinner size="lg" className="text-primary" />
-        <p className="mt-4 text-muted-foreground">Loading...</p>
+        <p className="mt-4 text-default-500">Loading...</p>
       </div>
     </div>
   );

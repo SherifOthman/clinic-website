@@ -47,12 +47,12 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
       )}
       <CardBody className="p-8">
         <h3 className="text-2xl font-bold mb-2">{planData?.name || plan.id}</h3>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-default-500 mb-4">
           {planData?.description || `Perfect for ${plan.id} practices`}
         </p>
         <div className="mb-6">
           <span className="text-4xl font-bold">${displayPrice}</span>
-          <span className="text-muted-foreground">/{priceLabel}</span>
+          <span className="text-default-500">/{priceLabel}</span>
           {isYearly && (
             <div className="mt-2">
               <span className="text-sm text-green-600 dark:text-green-400 font-medium">
@@ -65,7 +65,7 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
           {features.map((feature: string, index: number) => (
             <li key={index} className="flex items-center gap-3">
               <Check className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
-              <span className="text-muted-foreground text-sm">{feature}</span>
+              <span className="text-default-500 text-sm">{feature}</span>
             </li>
           ))}
         </ul>

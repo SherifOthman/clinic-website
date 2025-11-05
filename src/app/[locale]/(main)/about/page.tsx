@@ -41,7 +41,7 @@ export default async function AboutPage({ params }: Props) {
       {/* Hero Section */}
       <div className="mb-20">
         <h1 className="text-5xl lg:text-6xl font-bold mb-6">{t("title")}</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-xl text-default-500 max-w-3xl leading-relaxed">
           {t("subtitle")}
         </p>
       </div>
@@ -49,7 +49,7 @@ export default async function AboutPage({ params }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
         <div>
           <h2 className="text-3xl font-bold mb-6">{t("story.title")}</h2>
-          <div className="space-y-4 text-muted-foreground leading-relaxed">
+          <div className="space-y-4 text-default-500 leading-relaxed">
             <p>{t("story.paragraph1")}</p>
             <p>{t("story.paragraph2")}</p>
             <p>{t("story.paragraph3")}</p>
@@ -58,15 +58,11 @@ export default async function AboutPage({ params }: Props) {
         <div className="bg-gradient-to-br from-primary/10 to-primary/20 rounded-2xl p-8 flex items-center justify-center">
           <div className="text-center">
             <div className="text-4xl font-bold text-primary mb-2">1000+</div>
-            <div className="text-muted-foreground mb-6">
-              {t("stats.practices")}
-            </div>
+            <div className="text-default-500 mb-6">{t("stats.practices")}</div>
             <div className="text-4xl font-bold text-primary mb-2">50,000+</div>
-            <div className="text-muted-foreground mb-6">
-              {t("stats.patients")}
-            </div>
+            <div className="text-default-500 mb-6">{t("stats.patients")}</div>
             <div className="text-4xl font-bold text-primary mb-2">99.9%</div>
-            <div className="text-muted-foreground">{t("stats.uptime")}</div>
+            <div className="text-default-500">{t("stats.uptime")}</div>
           </div>
         </div>
       </div>
@@ -74,7 +70,7 @@ export default async function AboutPage({ params }: Props) {
       <div className="mb-20">
         <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4">{t("values.title")}</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl">
+          <p className="text-xl text-default-500 max-w-2xl">
             {t("values.subtitle")}
           </p>
         </div>
@@ -84,7 +80,7 @@ export default async function AboutPage({ params }: Props) {
               <CardBody className="p-8 text-center">
                 <div className="flex justify-center mb-6">{value.icon}</div>
                 <h3 className="text-xl font-bold mb-3">{value.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-default-500 leading-relaxed">
                   {value.description}
                 </p>
               </CardBody>
@@ -95,14 +91,14 @@ export default async function AboutPage({ params }: Props) {
 
       <div>
         <h2 className="text-3xl font-bold mb-6">{t("team.title")}</h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mb-8 leading-relaxed">
+        <p className="text-xl text-default-500 max-w-3xl mb-8 leading-relaxed">
           {t("team.description")}
         </p>
-        <div className="bg-muted/50 rounded-2xl p-8 max-w-4xl mx-auto">
+        <div className="bg-default-50 rounded-2xl p-8 max-w-4xl mx-auto">
           <p className="text-lg font-medium italic mb-4">
             "{t("team.testimonial.quote")}"
           </p>
-          <p className="text-muted-foreground font-medium">
+          <p className="text-default-500 font-medium">
             - {t("team.testimonial.author")}
           </p>
         </div>

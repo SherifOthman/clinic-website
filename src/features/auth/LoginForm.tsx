@@ -25,7 +25,7 @@ export const LoginForm = () => {
             {t("title")}
           </h1>
           <p
-            className="text-muted-foreground w-full"
+            className="text-default-500 w-full"
             style={{ textAlign: "center" }}
           >
             {t("subtitle")}
@@ -57,7 +57,7 @@ export const LoginForm = () => {
         <Divider />
 
         <div className="text-center text-sm">
-          <span className="text-muted-foreground">{t("noAccount")} </span>
+          <span className="text-default-500">{t("noAccount")} </span>
           <Link
             href="/signup"
             className="text-primary font-medium hover:underline"

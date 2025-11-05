@@ -88,8 +88,8 @@ export default function ProfilePage() {
               <h3 className="text-lg font-semibold mb-1">
                 {user.firstName} {user.lastName}
               </h3>
-              <p className="text-muted-foreground mb-2">{user.clinicName}</p>
-              <p className="text-sm text-muted-foreground capitalize">
+              <p className="text-default-500 mb-2">{user.clinicName}</p>
+              <p className="text-sm text-default-500 capitalize">
                 {user.plan} Plan
               </p>
             </CardBody>

@@ -41,7 +41,7 @@ export const TestimonialCard = ({
                   <p className="text-primary font-medium text-sm md:text-base">
                     {testimonial.role}
                   </p>
-                  <p className="text-xs md:text-sm text-muted-foreground">
+                  <p className="text-xs md:text-sm text-default-500">
                     {testimonial.clinic}
                   </p>
                 </div>
@@ -68,7 +68,7 @@ export const TestimonialCard = ({
                   <p className="text-primary font-medium text-sm md:text-base">
                     {testimonial.role}
                   </p>
-                  <p className="text-xs md:text-sm text-muted-foreground">
+                  <p className="text-xs md:text-sm text-default-500">
                     {testimonial.clinic}
                   </p>
                 </div>

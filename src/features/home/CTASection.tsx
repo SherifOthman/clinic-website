@@ -12,7 +12,7 @@ export function CTASection() {
     <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative">
       <div className="container mx-auto max-w-4xl px-6 lg:px-8 text-center relative z-10">
         <h2 className="text-4xl sm:text-5xl font-bold mb-6">{t("ctaTitle")}</h2>
-        <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-xl text-default-500 mb-12 max-w-2xl mx-auto">
           {t("ctaDescription")}
         </p>
         <Button
@@ -24,7 +24,7 @@ export function CTASection() {
         >
           {t("startFreeTrial")}
         </Button>
-        <p className="text-sm text-muted-foreground mt-8">{t("ctaFooter")}</p>
+        <p className="text-sm text-default-500 mt-8">{t("ctaFooter")}</p>
       </div>
     </section>
   );

@@ -53,9 +53,7 @@ export default function HelpPage() {
               <h3 className="text-xl font-bold">{section.title}</h3>
             </CardHeader>
             <CardBody>
-              <p className="text-muted-foreground mb-6">
-                {section.description}
-              </p>
+              <p className="text-default-500 mb-6">{section.description}</p>
               <ul className="space-y-3">
                 {section.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="text-sm">
@@ -72,7 +70,7 @@ export default function HelpPage() {
         <Card className="bg-primary/5 max-w-2xl mx-auto hover:shadow-md transition-shadow">
           <CardBody className="p-10">
             <h3 className="text-3xl font-bold mb-4">{t("support.title")}</h3>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl text-default-500 mb-8">
               {t("support.description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

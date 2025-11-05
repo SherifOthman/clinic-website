@@ -27,7 +27,7 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.language")}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-default-500">
                   {t("general.languageDescription")}
                 </p>
               </div>
@@ -37,7 +37,7 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.theme")}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-default-500">
                   {t("general.themeDescription")}
                 </p>
               </div>
@@ -47,7 +47,7 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("general.notifications")}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-default-500">
                   {t("general.notificationsDescription")}
                 </p>
               </div>
@@ -96,7 +96,7 @@ export default function SettingsPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{t("clinic.autoReminders")}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-default-500">
                   {t("clinic.autoRemindersDescription")}
                 </p>
               </div>

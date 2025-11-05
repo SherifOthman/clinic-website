@@ -112,7 +112,7 @@ export const TestimonialsSection = async () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
             {t("title")}
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
+          <p className="text-lg md:text-xl text-default-500 max-w-2xl mx-auto px-4">
             {t("subtitle")}
           </p>
         </div>
@@ -128,7 +128,7 @@ export const TestimonialsSection = async () => {
         </div>
 
         <div className="text-center mt-16">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-default-500">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full" />
               <span className="font-medium">{t("trustedBy")}</span>

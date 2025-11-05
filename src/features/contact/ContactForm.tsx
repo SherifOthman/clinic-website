@@ -14,7 +14,7 @@ export const ContactForm = () => {
       <CardHeader className="px-8 pt-8 pb-6">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{tContact("title")}</h2>
-          <p className="text-muted-foreground">{tContact("subtitle")}</p>
+          <p className="text-default-500">{tContact("subtitle")}</p>
         </div>
       </CardHeader>
       <CardBody className="px-8 pb-8">

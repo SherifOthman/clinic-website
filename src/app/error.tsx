@@ -31,7 +31,7 @@ export default function Error({
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
           Something Went Wrong!
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-lg mx-auto">
+        <p className="text-lg sm:text-xl text-default-500 mb-10 max-w-lg mx-auto">
           We encountered an unexpected error. Please try again or contact
           support if the problem persists.
         </p>
@@ -58,7 +58,7 @@ export default function Error({
         </div>
 
         <div className="mt-12 pt-8 border-t">
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="text-sm text-default-500 mb-4">
             Need help? We're here for you
           </p>
           <Button
@@ -77,7 +77,7 @@ export default function Error({
             <p className="text-xs font-mono text-destructive mb-2">
               Development Error Details:
             </p>
-            <p className="text-xs font-mono text-muted-foreground break-all">
+            <p className="text-xs font-mono text-default-500 break-all">
               {error.message}
             </p>
           </div>

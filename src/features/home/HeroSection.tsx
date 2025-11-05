@@ -20,7 +20,7 @@ export function HeroSection() {
             {t("heroTitle")}
             <span className="text-primary block mt-2">{t("heroSubtitle")}</span>
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl text-default-500 mb-12 max-w-3xl mx-auto leading-relaxed">
             {t("heroDescription")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -45,7 +45,7 @@ export function HeroSection() {
               {t("viewPricing")}
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">{t("noCardRequired")}</p>
+          <p className="text-sm text-default-500">{t("noCardRequired")}</p>
         </div>
       </div>
     </section>

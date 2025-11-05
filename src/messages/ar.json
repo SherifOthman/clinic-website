@@ -1,4 +1,6 @@
 {
+  "profile": "الملف الشخصي",
+  "settings": "الإعدادات",
   "common": {
     "clinicFlow": "ClinicFlow"
   },
@@ -227,7 +229,11 @@
     "viewDetailedAnalytics": "عرض التحليلات التفصيلية",
     "needFullAccess": "تحتاج وصولاً كاملاً لإدارة المرضى والجدولة والتقارير؟",
     "launchFullDashboard": "تشغيل لوحة الإدارة الكاملة",
-    "satisfaction": "الرضا"
+    "satisfaction": "الرضا",
+    "role": "المدير",
+    "clinicName": "عيادة ClinicFlow التجريبية",
+    "noAppointments": "لا توجد مواعيد مجدولة لهذا اليوم",
+    "planName": "الخطة المحترفة"
   },
   "footer": {
     "description": "اجعل إدارة ممارستك الصحية أكثر سهولة مع منصة إدارة العيادات الشاملة. موثوق من قبل المهنيين الصحيين حول العالم.",
@@ -425,5 +431,49 @@
         "author": "د. سارة جونسون، طب الأسرة"
       }
     }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "subtitle": "إدارة معلومات حسابك وتفضيلاتك",
+    "personalInfo": "المعلومات الشخصية",
+    "edit": "تعديل",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "clinicName": "اسم العيادة",
+    "accountStatus": "حالة الحساب",
+    "memberSince": "عضو منذ",
+    "lastLogin": "آخر تسجيل دخول",
+    "status": "الحالة",
+    "active": "نشط"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "subtitle": "خصص تجربة ClinicFlow الخاصة بك",
+    "general": {
+      "title": "الإعدادات العامة",
+      "language": "اللغة",
+      "languageDescription": "اختر لغتك المفضلة للواجهة",
+      "theme": "المظهر",
+      "themeDescription": "اختر بين الوضع الفاتح والداكن",
+      "notifications": "الإشعارات",
+      "notificationsDescription": "إدارة تفضيلات الإشعارات الخاصة بك"
+    },
+    "clinic": {
+      "title": "إعدادات العيادة",
+      "timezone": "المنطقة الزمنية",
+      "timezonePlaceholder": "اختر منطقتك الزمنية",
+      "dateFormat": "تنسيق التاريخ",
+      "dateFormatPlaceholder": "اختر تنسيق التاريخ",
+      "autoReminders": "التذكيرات التلقائية",
+      "autoRemindersDescription": "إرسال تذكيرات تلقائية للمواعيد للمرضى"
+    },
+    "security": {
+      "title": "إعدادات الأمان",
+      "changePassword": "تغيير كلمة المرور",
+      "twoFactor": "المصادقة الثنائية",
+      "loginHistory": "تاريخ تسجيل الدخول"
+    },
+    "saveChanges": "حفظ التغييرات"
   }
 }

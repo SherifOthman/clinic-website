@@ -59,7 +59,7 @@ export default function OnboardingPage() {
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-green-600">
               {t("onboarding.step4.title")}
             </h2>
-            <p className="text-base md:text-lg text-muted-foreground">
+            <p className="text-base md:text-lg text-default-500">
               {t("onboarding.step4.subtitle")}
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function OnboardingPage() {
             <h1 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">
               {t("onboarding.title")}
             </h1>
-            <p className="text-sm md:text-base text-muted-foreground">
+            <p className="text-sm md:text-base text-default-500">
               {t("onboarding.subtitle")}
             </p>
           </div>
