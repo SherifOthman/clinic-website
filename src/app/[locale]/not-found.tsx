@@ -112,12 +112,12 @@ export default function NotFound() {
               {t.about}
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link
-              href="/pricing"
+            <a
+              href="/#pricing"
               className="text-sm text-primary hover:underline"
             >
               {t.pricing}
-            </Link>
+            </a>
             <span className="text-muted-foreground">•</span>
             <Link
               href="/contact"

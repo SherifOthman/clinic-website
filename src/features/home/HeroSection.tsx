@@ -34,11 +34,13 @@ export function HeroSection() {
               {t("getStartedFree")}
             </Button>
             <Button
-              as={Link}
-              href="/pricing"
               variant="bordered"
               size="lg"
               className="font-semibold px-10"
+              onPress={() => {
+                const pricingSection = document.getElementById("pricing");
+                pricingSection?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               {t("viewPricing")}
             </Button>

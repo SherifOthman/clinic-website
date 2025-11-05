@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/src/components/Label";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Input } from "@heroui/input";
@@ -13,55 +12,40 @@ export const SignupForm = () => {
 
   return (
     <Card className="shadow-2xl">
-      <CardHeader className="space-y-3 pb-6">
-        <h1 className="text-2xl font-bold text-center">{t("title")}</h1>
-        <p className="text-muted-foreground text-center">{t("subtitle")}</p>
+      <CardHeader className="px-8 pt-8 pb-6" style={{ textAlign: "center" }}>
+        <div
+          className="space-y-4 flex flex-col items-center justify-center w-full"
+          style={{ textAlign: "center" }}
+        >
+          <h1
+            className="text-2xl font-bold w-full"
+            style={{ textAlign: "center" }}
+          >
+            {t("title")}
+          </h1>
+          <p
+            className="text-muted-foreground w-full"
+            style={{ textAlign: "center" }}
+          >
+            {t("subtitle")}
+          </p>
+        </div>
       </CardHeader>
-      <CardBody className="space-y-6">
+      <CardBody className="px-8 pb-8 space-y-6">
         <form className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="firstName">{t("firstName")}</Label>
-              <Input id="firstName" placeholder={t("firstNamePlaceholder")} />
-            </div>
+            <Input label={t("firstName")} />
 
-            <div className="space-y-2">
-              <Label htmlFor="lastName">{t("lastName")}</Label>
-              <Input id="lastName" placeholder={t("lastNamePlaceholder")} />
-            </div>
+            <Input label={t("lastName")} />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">{t("email")}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t("emailPlaceholder")}
-            />
-          </div>
+          <Input label={t("email")} type="email" />
 
-          <div className="space-y-2">
-            <Label htmlFor="clinicName">{t("clinicName")}</Label>
-            <Input id="clinicName" placeholder={t("clinicNamePlaceholder")} />
-          </div>
+          <Input label={t("clinicName")} />
 
-          <div className="space-y-2">
-            <Label htmlFor="password">{t("password")}</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder={t("passwordPlaceholder")}
-            />
-          </div>
+          <Input label={t("password")} type="password" />
 
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              placeholder={t("confirmPasswordPlaceholder")}
-            />
-          </div>
+          <Input label={t("confirmPassword")} type="password" />
 
           <Button
             type="submit"

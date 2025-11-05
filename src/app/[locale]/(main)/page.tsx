@@ -1,4 +1,3 @@
-import { TestimonialsSection } from "@/src/components/TestimonialsSection";
 import { CTASection } from "@/src/features/home/CTASection";
 import { FeaturesSection } from "@/src/features/home/FeaturesSection";
 import { HeroSection } from "@/src/features/home/HeroSection";
@@ -9,7 +8,6 @@ export default function HomePage() {
     <div className="min-h-screen">
       <HeroSection />
       <FeaturesSection />
-      <TestimonialsSection />
       <PricingPreviewSection />
       <CTASection />
     </div>

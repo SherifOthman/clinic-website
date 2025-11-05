@@ -1,7 +1,6 @@
 "use client";
 
 import { HeroUIProvider } from "@heroui/system";
-import { SSRProvider } from "@react-aria/ssr";
 import type { ThemeProviderProps } from "next-themes";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -24,19 +23,17 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <SSRProvider>
-      <HeroUIProvider navigate={router.push}>
-        <NextThemesProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="clinicflow-theme"
-          {...themeProps}
-        >
-          {children}
-        </NextThemesProvider>
-      </HeroUIProvider>
-    </SSRProvider>
+    <HeroUIProvider navigate={router.push}>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        storageKey="clinicflow-theme"
+        {...themeProps}
+      >
+        {children}
+      </NextThemesProvider>
+    </HeroUIProvider>
   );
 }

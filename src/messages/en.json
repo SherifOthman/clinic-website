@@ -1,34 +1,6 @@
 {
   "common": {
-    "clinicFlow": "ClinicFlow",
-    "loading": "Loading...",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "save": "Save",
-    "edit": "Edit",
-    "delete": "Delete",
-    "confirm": "Confirm",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "notProvided": "Not provided",
-    "close": "Close",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "export": "Export",
-    "import": "Import",
-    "print": "Print",
-    "refresh": "Refresh",
-    "settings": "Settings",
-    "help": "Help",
-    "support": "Support",
-    "documentation": "Documentation",
-    "contact": "Contact",
-    "about": "About",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "copyright": "© 2024 ClinicFlow. All rights reserved."
+    "clinicFlow": "ClinicFlow"
   },
   "navigation": {
     "home": "Home",
@@ -49,15 +21,10 @@
       "subtitle": "Sign in to your ClinicFlow account",
       "email": "Email Address",
       "password": "Password",
-      "emailPlaceholder": "Enter your email address",
-      "passwordPlaceholder": "Enter your password",
       "forgotPassword": "Forgot Password?",
       "submit": "Sign In",
       "noAccount": "Don't have an account?",
-      "signupLink": "Sign up here",
-      "demoCredentials": "Demo Credentials",
-      "demoEmail": "demo@clinicflow.com",
-      "demoPassword": "demo123"
+      "signupLink": "Sign up here"
     },
     "signup": {
       "title": "Get Started",
@@ -68,22 +35,10 @@
       "clinicName": "Clinic Name",
       "password": "Password",
       "confirmPassword": "Confirm Password",
-      "firstNamePlaceholder": "Enter your first name",
-      "lastNamePlaceholder": "Enter your last name",
-      "emailPlaceholder": "Enter your email address",
-      "clinicNamePlaceholder": "Enter your clinic name",
-      "passwordPlaceholder": "Create a strong password",
-      "confirmPasswordPlaceholder": "Confirm your password",
       "submit": "Create Account",
       "hasAccount": "Already have an account?",
       "loginLink": "Sign in here",
       "terms": "By creating an account, you agree to our Terms of Service and Privacy Policy"
-    },
-    "validation": {
-      "required": "This field is required",
-      "email": "Please enter a valid email address",
-      "passwordMatch": "Passwords do not match",
-      "minLength": "Must be at least {min} characters"
     }
   },
   "home": {
@@ -325,16 +280,10 @@
     },
     "clinicForm": {
       "clinicName": "Clinic Name",
-      "clinicNamePlaceholder": "Enter your clinic name",
       "clinicNameHelper": "This will be displayed on your clinic's profile and documents",
       "address": "Clinic Address",
-      "addressPlaceholder": "Enter your clinic address",
       "phone": "Phone Number",
-      "phonePlaceholder": "Enter your clinic phone number",
-      "specialization": "Primary Specialization",
-      "specializationPlaceholder": "Select your primary specialization",
       "description": "Clinic Description (Optional)",
-      "descriptionPlaceholder": "Brief description of your clinic services",
       "clinicInfoHelper": "This information will help patients find and contact your clinic",
       "specializations": {
         "general": "General Practice",
@@ -354,18 +303,11 @@
     "getInTouch": "Get in touch",
     "description": "Choose the best way to reach us based on your needs. Our team is ready to help you get the most out of ClinicFlow.",
     "form": {
-      "title": "Send us a message",
       "name": "Full Name",
       "email": "Email Address",
       "company": "Company/Practice Name",
       "message": "Message",
-      "namePlaceholder": "Enter your full name",
-      "emailPlaceholder": "Enter your email address",
-      "companyPlaceholder": "Enter your company or practice name",
-      "messagePlaceholder": "Tell us how we can help you...",
-      "submit": "Send Message",
-      "successMessage": "Thank you for your message! We'll get back to you soon.",
-      "errorMessage": "An error occurred. Please try again."
+      "submit": "Send Message"
     },
     "info": {
       "sales": {
@@ -427,13 +369,7 @@
       "documentation": "View Documentation"
     }
   },
-  "testimonials": {
-    "title": "Trusted by Healthcare Professionals",
-    "subtitle": "See what doctors and clinic administrators are saying about ClinicFlow",
-    "trustedBy": "Trusted by 1000+ practices",
-    "rating": "4.9/5 average rating",
-    "practices": "50+ countries worldwide"
-  },
+
   "about": {
     "title": "About ClinicFlow",
     "subtitle": "We're on a mission to transform healthcare practice management through innovative technology that puts patients first and empowers healthcare professionals.",
@@ -475,19 +411,6 @@
         "quote": "ClinicFlow has transformed how we manage our practice. What used to take hours now takes minutes, and our patients love the streamlined experience.",
         "author": "Dr. Sarah Johnson, Family Medicine"
       }
-    }
-  },
-  "notFound": {
-    "title": "Page Not Found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "goHome": "Go Home",
-    "contactSupport": "Contact Support",
-    "helpfulLinks": "You might be looking for:",
-    "links": {
-      "home": "Home",
-      "about": "About",
-      "pricing": "Pricing",
-      "contact": "Contact"
     }
   }
 }

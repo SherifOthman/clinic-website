@@ -60,7 +60,10 @@ export default function NotFound() {
               About
             </a>
             <span className="text-muted-foreground">•</span>
-            <a href="/pricing" className="text-sm text-primary hover:underline">
+            <a
+              href="/#pricing"
+              className="text-sm text-primary hover:underline"
+            >
               Pricing
             </a>
             <span className="text-muted-foreground">•</span>

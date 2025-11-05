@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/src/components/Label";
 import { Input, Textarea } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
@@ -20,42 +19,14 @@ export const ClinicInfoForm = () => {
       <form className="space-y-6">
         <div className="bg-muted/50 p-6 md:p-8 rounded-2xl border space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="clinicName">{tForm("clinicName")}</Label>
-              <Input
-                id="clinicName"
-                placeholder={tForm("clinicNamePlaceholder")}
-                className="h-12 md:h-14"
-              />
-            </div>
+            <Input label={tForm("clinicName")} className="h-12 md:h-14" />
 
-            <div className="space-y-2">
-              <Label htmlFor="phone">{tForm("phone")}</Label>
-              <Input
-                id="phone"
-                placeholder={tForm("phonePlaceholder")}
-                className="h-12 md:h-14"
-              />
-            </div>
+            <Input label={tForm("phone")} className="h-12 md:h-14" />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="address">{tForm("address")}</Label>
-            <Textarea
-              id="address"
-              placeholder={tForm("addressPlaceholder")}
-              rows={3}
-            />
-          </div>
+          <Textarea label={tForm("address")} rows={3} />
 
-          <div className="space-y-2">
-            <Label htmlFor="description">{tForm("description")}</Label>
-            <Textarea
-              id="description"
-              placeholder={tForm("descriptionPlaceholder")}
-              rows={4}
-            />
-          </div>
+          <Textarea label={tForm("description")} rows={4} />
         </div>
 
         <div className="text-center">

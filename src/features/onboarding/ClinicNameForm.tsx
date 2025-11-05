@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/src/components/Label";
 import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
@@ -18,11 +17,9 @@ export const ClinicNameForm = () => {
       </div>
 
       <form className="space-y-6">
-        <div className="bg-muted/50 p-6 md:p-8 rounded-2xl border space-y-2">
-          <Label htmlFor="clinicName">{tForm("clinicName")}</Label>
+        <div className="bg-muted/50 p-6 md:p-8 rounded-2xl border">
           <Input
-            id="clinicName"
-            placeholder={tForm("clinicNamePlaceholder")}
+            label={tForm("clinicName")}
             className="h-14 md:h-16 text-base md:text-lg"
           />
         </div>

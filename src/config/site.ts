@@ -11,7 +11,7 @@ export const siteConfig = {
     },
     {
       label: "Pricing",
-      href: "/pricing",
+      href: "#pricing",
     },
     {
       label: "About",
@@ -51,4 +51,3 @@ export const siteConfig = {
     support: "https://support.clinicflow.com",
   },
 };
-

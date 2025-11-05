@@ -1,34 +1,6 @@
 {
   "common": {
-    "clinicFlow": "ClinicFlow",
-    "loading": "جاري التحميل...",
-    "submit": "إرسال",
-    "cancel": "إلغاء",
-    "save": "حفظ",
-    "edit": "تعديل",
-    "delete": "حذف",
-    "confirm": "تأكيد",
-    "back": "رجوع",
-    "next": "التالي",
-    "previous": "السابق",
-    "notProvided": "غير محدد",
-    "close": "إغلاق",
-    "search": "بحث",
-    "filter": "تصفية",
-    "sort": "ترتيب",
-    "export": "تصدير",
-    "import": "استيراد",
-    "print": "طباعة",
-    "refresh": "تحديث",
-    "settings": "الإعدادات",
-    "help": "مساعدة",
-    "support": "الدعم",
-    "documentation": "التوثيق",
-    "contact": "اتصل بنا",
-    "about": "حول",
-    "privacy": "سياسة الخصوصية",
-    "terms": "شروط الخدمة",
-    "copyright": "© 2024 ClinicFlow. جميع الحقوق محفوظة."
+    "clinicFlow": "ClinicFlow"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -49,15 +21,10 @@
       "subtitle": "سجل دخولك إلى حساب ClinicFlow",
       "email": "عنوان البريد الإلكتروني",
       "password": "كلمة المرور",
-      "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
-      "passwordPlaceholder": "أدخل كلمة المرور",
       "forgotPassword": "نسيت كلمة المرور؟",
       "submit": "تسجيل الدخول",
       "noAccount": "ليس لديك حساب؟",
-      "signupLink": "سجل هنا",
-      "demoCredentials": "بيانات التجربة",
-      "demoEmail": "demo@clinicflow.com",
-      "demoPassword": "demo123"
+      "signupLink": "سجل هنا"
     },
     "signup": {
       "title": "ابدأ الآن",
@@ -68,22 +35,10 @@
       "clinicName": "اسم العيادة",
       "password": "كلمة المرور",
       "confirmPassword": "تأكيد كلمة المرور",
-      "firstNamePlaceholder": "أدخل اسمك الأول",
-      "lastNamePlaceholder": "أدخل اسم العائلة",
-      "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
-      "clinicNamePlaceholder": "أدخل اسم عيادتك",
-      "passwordPlaceholder": "أنشئ كلمة مرور قوية",
-      "confirmPasswordPlaceholder": "أكد كلمة المرور",
       "submit": "إنشاء حساب",
       "hasAccount": "لديك حساب بالفعل؟",
       "loginLink": "سجل دخولك هنا",
       "terms": "بإنشاء حساب، فإنك توافق على شروط الخدمة وسياسة الخصوصية"
-    },
-    "validation": {
-      "required": "هذا الحقل مطلوب",
-      "email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
-      "passwordMatch": "كلمات المرور غير متطابقة",
-      "minLength": "يجب أن يكون على الأقل {min} أحرف"
     }
   },
   "home": {
@@ -354,18 +309,11 @@
     "getInTouch": "تواصل معنا",
     "description": "اختر أفضل طريقة للوصول إلينا بناءً على احتياجاتك. فريقنا مستعد لمساعدتك في الحصول على أقصى استفادة من ClinicFlow.",
     "form": {
-      "title": "أرسل لنا رسالة",
       "name": "الاسم الكامل",
       "email": "عنوان البريد الإلكتروني",
       "company": "اسم الشركة/العيادة",
       "message": "الرسالة",
-      "namePlaceholder": "أدخل اسمك الكامل",
-      "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
-      "companyPlaceholder": "أدخل اسم شركتك أو عيادتك",
-      "messagePlaceholder": "أخبرنا كيف يمكننا مساعدتك...",
-      "submit": "إرسال الرسالة",
-      "successMessage": "شكراً لك على رسالتك! سنتواصل معك قريباً.",
-      "errorMessage": "حدث خطأ. يرجى المحاولة مرة أخرى."
+      "submit": "إرسال الرسالة"
     },
     "info": {
       "sales": {
@@ -427,13 +375,7 @@
       "documentation": "عرض التوثيق"
     }
   },
-  "testimonials": {
-    "title": "موثوق من قبل المهنيين الصحيين",
-    "subtitle": "اطلع على ما يقوله الأطباء ومديرو العيادات حول ClinicFlow",
-    "trustedBy": "موثوق من قبل أكثر من 1000 عيادة",
-    "rating": "تقييم 4.9/5 في المتوسط",
-    "practices": "أكثر من 50 دولة حول العالم"
-  },
+
   "about": {
     "title": "حول ClinicFlow",
     "subtitle": "نحن في مهمة لتحويل إدارة الممارسات الصحية من خلال التكنولوجيا المبتكرة التي تضع المرضى أولاً وتمكن المهنيين الصحيين.",
@@ -475,19 +417,6 @@
         "quote": "لقد غيرت ClinicFlow طريقة إدارتنا لممارستنا. ما كان يستغرق ساعات أصبح الآن يستغرق دقائق، ومرضانا يحبون التجربة المبسطة.",
         "author": "د. سارة جونسون، طب الأسرة"
       }
-    }
-  },
-  "notFound": {
-    "title": "الصفحة غير موجودة",
-    "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
-    "goHome": "العودة للرئيسية",
-    "contactSupport": "اتصل بالدعم",
-    "helpfulLinks": "قد تبحث عن:",
-    "links": {
-      "home": "الرئيسية",
-      "about": "حولنا",
-      "pricing": "الأسعار",
-      "contact": "اتصل بنا"
     }
   }
 }

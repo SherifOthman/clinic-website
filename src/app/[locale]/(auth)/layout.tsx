@@ -29,9 +29,9 @@ export default function AuthLayout({
   const isOnboardingPage = pathname === "/onboarding";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       {/* Header */}
-      <header className="flex justify-between items-center p-6">
+      <header className="flex justify-between items-center p-6 flex-shrink-0">
         <Link href="/" className="flex items-center gap-2">
           <Activity className="text-primary" size={32} />
           <span className="font-bold text-xl">ClinicFlow</span>
@@ -58,17 +58,12 @@ export default function AuthLayout({
 
       {/* Main Content */}
       <main
-        className={`flex-grow flex items-center justify-center ${isOnboardingPage ? "px-2 py-2" : "px-6 py-12"}`}
+        className={`flex-1 flex items-center justify-center ${isOnboardingPage ? "px-2 py-2" : "px-6"}`}
       >
         <div className={`w-full ${isOnboardingPage ? "" : "max-w-md"}`}>
           {children}
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center py-6 text-sm text-muted-foreground">
-        © 2024 ClinicFlow. All rights reserved.
-      </footer>
     </div>
   );
 }

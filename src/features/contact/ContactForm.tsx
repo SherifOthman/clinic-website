@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/src/components/Label";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Input, Textarea } from "@heroui/input";
@@ -8,41 +7,25 @@ import { useTranslations } from "next-intl";
 
 export const ContactForm = () => {
   const t = useTranslations("contact.form");
+  const tContact = useTranslations("contact");
 
   return (
     <Card className="shadow-xl">
-      <CardHeader>
-        <h2 className="text-2xl font-bold">{t("title")}</h2>
+      <CardHeader className="px-8 pt-8 pb-6">
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">{tContact("title")}</h2>
+          <p className="text-muted-foreground">{tContact("subtitle")}</p>
+        </div>
       </CardHeader>
-      <CardBody>
+      <CardBody className="px-8 pb-8">
         <form className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="name">{t("name")}</Label>
-            <Input id="name" placeholder={t("namePlaceholder")} />
-          </div>
+          <Input label={t("name")} />
 
-          <div className="space-y-2">
-            <Label htmlFor="email">{t("email")}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t("emailPlaceholder")}
-            />
-          </div>
+          <Input label={t("email")} type="email" />
 
-          <div className="space-y-2">
-            <Label htmlFor="company">{t("company")}</Label>
-            <Input id="company" placeholder={t("companyPlaceholder")} />
-          </div>
+          <Input label={t("company")} />
 
-          <div className="space-y-2">
-            <Label htmlFor="message">{t("message")}</Label>
-            <Textarea
-              id="message"
-              rows={4}
-              placeholder={t("messagePlaceholder")}
-            />
-          </div>
+          <Textarea label={t("message")} rows={4} />
 
           <Button
             type="submit"

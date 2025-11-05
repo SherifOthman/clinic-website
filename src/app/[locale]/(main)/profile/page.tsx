@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/src/components/Label";
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardHeader } from "@heroui/card";
@@ -39,23 +38,27 @@ export default function ProfilePage() {
             </CardHeader>
             <CardBody className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>{t("firstName")}</Label>
-                  <Input value={user.firstName} readOnly={!isEditing} />
-                </div>
-                <div className="space-y-2">
-                  <Label>{t("lastName")}</Label>
-                  <Input value={user.lastName} readOnly={!isEditing} />
-                </div>
+                <Input
+                  label={t("firstName")}
+                  value={user.firstName}
+                  readOnly={!isEditing}
+                />
+                <Input
+                  label={t("lastName")}
+                  value={user.lastName}
+                  readOnly={!isEditing}
+                />
               </div>
-              <div className="space-y-2">
-                <Label>{t("email")}</Label>
-                <Input value={user.email} readOnly={!isEditing} />
-              </div>
-              <div className="space-y-2">
-                <Label>{t("clinicName")}</Label>
-                <Input value={user.clinicName} readOnly={!isEditing} />
-              </div>
+              <Input
+                label={t("email")}
+                value={user.email}
+                readOnly={!isEditing}
+              />
+              <Input
+                label={t("clinicName")}
+                value={user.clinicName}
+                readOnly={!isEditing}
+              />
               {isEditing && (
                 <div className="flex gap-4">
                   <Button color="primary" className="flex-1">
