@@ -4,9 +4,13 @@ import { Activity } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
+import { usePathname, useRouter } from "@/src/i18n/routing";
+
 export const Footer = () => {
   const t = useTranslations("footer");
   const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
   const isRTL = locale === "ar";
   return (
     <footer className="bg-muted/50 border-t">
@@ -34,12 +38,31 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#pricing"
-                  className="text-muted-foreground hover:text-foreground text-xs md:text-sm transition-colors"
+                <button
+                  onClick={() => {
+                    if (pathname === "/") {
+                      // If we're on home page, just scroll to pricing
+                      const pricingElement = document.getElementById("pricing");
+                      if (pricingElement) {
+                        pricingElement.scrollIntoView({ behavior: "smooth" });
+                      }
+                    } else {
+                      // If we're on another page, navigate to home first
+                      router.push("/");
+                      // Then scroll after navigation (with a small delay)
+                      setTimeout(() => {
+                        const pricingElement =
+                          document.getElementById("pricing");
+                        if (pricingElement) {
+                          pricingElement.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }, 100);
+                    }
+                  }}
+                  className="text-muted-foreground hover:text-foreground text-xs md:text-sm transition-colors cursor-pointer bg-transparent border-none p-0"
                 >
                   {t("pricing")}
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -95,4 +118,3 @@ export const Footer = () => {
     </footer>
   );
 };
-

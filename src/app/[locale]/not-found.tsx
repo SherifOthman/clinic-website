@@ -5,10 +5,12 @@ import { Home, Mail, Search } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { Link } from "@/src/i18n/routing";
+import { Link, usePathname, useRouter } from "@/src/i18n/routing";
 
 export default function NotFound() {
   const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -112,12 +114,20 @@ export default function NotFound() {
               {t.about}
             </Link>
             <span className="text-muted-foreground">•</span>
-            <a
-              href="/#pricing"
-              className="text-sm text-primary hover:underline"
+            <button
+              onClick={() => {
+                router.push("/");
+                setTimeout(() => {
+                  const pricingElement = document.getElementById("pricing");
+                  if (pricingElement) {
+                    pricingElement.scrollIntoView({ behavior: "smooth" });
+                  }
+                }, 100);
+              }}
+              className="text-sm text-primary hover:underline bg-transparent border-none p-0 cursor-pointer"
             >
               {t.pricing}
-            </a>
+            </button>
             <span className="text-muted-foreground">•</span>
             <Link
               href="/contact"

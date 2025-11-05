@@ -63,7 +63,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+      <Providers>
         <div
           lang={locale}
           dir={isRTL ? "rtl" : "ltr"}

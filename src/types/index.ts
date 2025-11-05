@@ -21,3 +21,8 @@ export interface Testimonial {
   rating: number;
 }
 
+export interface PricingPlan {
+  id: "starter" | "professional" | "enterprise";
+  price: number;
+  popular?: boolean;
+}

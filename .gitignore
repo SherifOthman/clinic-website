@@ -113,8 +113,7 @@ Thumbs.db
 *.tmp
 *.temp
 
-# Lock files (keep only one)
+# Lock files (keep only npm's package-lock.json)
 pnpm-lock.yaml
 yarn.lock
-package-lock.json
 bun.lockb

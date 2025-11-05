@@ -1,14 +1,18 @@
-"use client";
-
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-import { useTranslations } from "next-intl";
 
-import { PageHeader } from "@/src/components/layout/PageHeader";
 import { ContactForm } from "@/src/features/contact/ContactForm";
+import { getTranslations } from "next-intl/server";
 
-export default function ContactPage() {
-  const t = useTranslations("contact");
+export const dynamic = "force-dynamic";
+
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function ContactPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "contact" });
 
   const contactInfo = [
     {
@@ -32,8 +36,14 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="container mx-auto max-w-7xl py-24">
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
+    <div className="container mx-auto max-w-7xl py-24" data-locale={locale}>
+      {/* Header Section */}
+      <div className="mb-16">
+        <h1 className="text-3xl lg:text-4xl font-bold mb-4">{t("title")}</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl">
+          {t("subtitle")}
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
         {/* Contact Form */}

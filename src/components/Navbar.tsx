@@ -19,11 +19,12 @@ import { Logo } from "@/src/components/Logo";
 import { NavigationLinks } from "@/src/components/NavigationLinks";
 import { ThemeSwitch } from "@/src/components/ThemeSwitch";
 import { UserMenu } from "@/src/components/UserMenu";
-import { Link as I18nLink, usePathname } from "@/src/i18n/routing";
+import { Link as I18nLink, usePathname, useRouter } from "@/src/i18n/routing";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations("navigation");
 
   useEffect(() => {
@@ -76,14 +77,36 @@ export const Navbar = () => {
             const isActive = pathname === item.href;
 
             if ("isScroll" in item && item.isScroll) {
-              const href = pathname !== "/" ? `/${item.href}` : item.href;
               return (
                 <NavbarMenuItem key={index}>
                   <Link
                     color="foreground"
-                    href={href}
                     size="lg"
-                    onPress={() => setIsMenuOpen(false)}
+                    className="cursor-pointer"
+                    onPress={() => {
+                      setIsMenuOpen(false);
+                      if (pathname === "/") {
+                        // If we're on home page, just scroll to pricing
+                        const pricingElement =
+                          document.getElementById("pricing");
+                        if (pricingElement) {
+                          pricingElement.scrollIntoView({ behavior: "smooth" });
+                        }
+                      } else {
+                        // If we're on another page, navigate to home first
+                        router.push("/");
+                        // Then scroll after navigation (with a small delay)
+                        setTimeout(() => {
+                          const pricingElement =
+                            document.getElementById("pricing");
+                          if (pricingElement) {
+                            pricingElement.scrollIntoView({
+                              behavior: "smooth",
+                            });
+                          }
+                        }, 100);
+                      }
+                    }}
                   >
                     {item.label}
                   </Link>

@@ -1,10 +1,11 @@
 import { Link as HeroUILink } from "@heroui/link";
 import { useTranslations } from "next-intl";
 
-import { Link, usePathname } from "@/src/i18n/routing";
+import { Link, usePathname, useRouter } from "@/src/i18n/routing";
 
 export const NavigationLinks = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations("navigation");
 
   const navigationLinks = [
@@ -20,13 +21,30 @@ export const NavigationLinks = () => {
         const isActive = pathname === item.href;
 
         if ("isScroll" in item && item.isScroll) {
-          const href = pathname !== "/" ? `/${item.href}` : item.href;
           return (
             <HeroUILink
               key={index}
-              href={href}
               color="foreground"
-              className="font-medium"
+              className="font-medium cursor-pointer"
+              onClick={() => {
+                if (pathname === "/") {
+                  // If we're on home page, just scroll to pricing
+                  const pricingElement = document.getElementById("pricing");
+                  if (pricingElement) {
+                    pricingElement.scrollIntoView({ behavior: "smooth" });
+                  }
+                } else {
+                  // If we're on another page, navigate to home first
+                  router.push("/");
+                  // Then scroll after navigation (with a small delay)
+                  setTimeout(() => {
+                    const pricingElement = document.getElementById("pricing");
+                    if (pricingElement) {
+                      pricingElement.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }, 100);
+                }
+              }}
             >
               {item.label}
             </HeroUILink>

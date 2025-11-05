@@ -6,10 +6,9 @@ import { Chip } from "@heroui/chip";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { PricingPlan } from "./data/plans";
-
 import { Link } from "@/src/i18n/routing";
 import { cn } from "@/src/lib/utils";
+import { PricingPlan } from "@/src/types";
 
 interface PricingCardProps {
   plan: PricingPlan;

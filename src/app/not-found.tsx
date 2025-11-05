@@ -61,7 +61,7 @@ export default function NotFound() {
             </a>
             <span className="text-muted-foreground">•</span>
             <a
-              href="/#pricing"
+              href="/en#pricing"
               className="text-sm text-primary hover:underline"
             >
               Pricing

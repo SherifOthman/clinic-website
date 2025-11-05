@@ -1,11 +1,16 @@
-"use client";
-
 import { Card, CardBody } from "@heroui/card";
 import { BarChart3, Calendar, Shield, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function AboutPage() {
-  const t = useTranslations("about");
+export const dynamic = "force-dynamic";
+
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "about" });
 
   const values = [
     {
@@ -31,11 +36,14 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="container mx-auto max-w-7xl px-6 py-24">
+    <div
+      className="container mx-auto max-w-7xl px-6 py-24"
+      data-locale={locale}
+    >
       {/* Hero Section */}
-      <div className="text-center mb-20">
+      <div className="mb-20">
         <h1 className="text-5xl lg:text-6xl font-bold mb-6">{t("title")}</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
           {t("subtitle")}
         </p>
       </div>
@@ -66,9 +74,9 @@ export default function AboutPage() {
       </div>
 
       <div className="mb-20">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4">{t("values.title")}</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl">
             {t("values.subtitle")}
           </p>
         </div>
@@ -87,9 +95,9 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="text-center">
+      <div>
         <h2 className="text-3xl font-bold mb-6">{t("team.title")}</h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
+        <p className="text-xl text-muted-foreground max-w-3xl mb-8 leading-relaxed">
           {t("team.description")}
         </p>
         <div className="bg-muted/50 rounded-2xl p-8 max-w-4xl mx-auto">

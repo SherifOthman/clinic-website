@@ -28,6 +28,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         attribute="class"
         defaultTheme="system"
         enableSystem
+        enableColorScheme
         disableTransitionOnChange
         storageKey="clinicflow-theme"
         {...themeProps}

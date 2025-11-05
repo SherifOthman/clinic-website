@@ -84,4 +84,3 @@ export const LanguageSwitcher = () => {
     </Button>
   );
 };
-

@@ -52,19 +52,14 @@ export default [
       },
     },
     rules: {
-      // Core rules
       "no-console": "warn",
       "no-unused-vars": "off",
-      
-      // React rules
       "react/prop-types": "off",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "warn",
       "react-hooks/exhaustive-deps": "warn",
       "react-hooks/rules-of-hooks": "error",
-      
-      // TypeScript rules
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
@@ -73,17 +68,11 @@ export default [
           argsIgnorePattern: "^_.*?$",
         },
       ],
-      
-      // Import rules
       "unused-imports/no-unused-imports": "warn",
       "unused-imports/no-unused-vars": "off",
       "import/order": "off",
-      
-      // Accessibility rules
       "jsx-a11y/click-events-have-key-events": "warn",
       "jsx-a11y/interactive-supports-focus": "warn",
-      
-      // Prettier
       "prettier/prettier": [
         "warn",
         {
