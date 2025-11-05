@@ -2,7 +2,6 @@
 
 import { Button } from "@heroui/button";
 import { AlertTriangle, Home, Mail, RefreshCw } from "lucide-react";
-import { useEffect } from "react";
 
 export default function Error({
   error,
@@ -11,12 +10,6 @@ export default function Error({
   error: Error;
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    /* eslint-disable no-console */
-    console.error(error);
-  }, [error]);
-
   return (
     <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-background to-muted/50">
       <div className="max-w-2xl w-full text-center">
@@ -71,7 +64,7 @@ export default function Error({
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => (window.location.href = "/contact")}
+            onPress={() => (window.location.href = "/contact")}
             className="text-primary"
           >
             <Mail className="w-4 h-4 mr-2" />

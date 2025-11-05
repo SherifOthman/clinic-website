@@ -44,10 +44,4 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
-  links: {
-    github: "https://github.com/clinicflow/clinicflow",
-    twitter: "https://twitter.com/clinicflow",
-    docs: "https://docs.clinicflow.com",
-    support: "https://support.clinicflow.com",
-  },
 };

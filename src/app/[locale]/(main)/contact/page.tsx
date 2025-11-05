@@ -1,14 +1,16 @@
+import { ContactForm } from "@/src/features/contact/ContactForm";
+import { routing } from "@/src/i18n/routing";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-
-import { ContactForm } from "@/src/features/contact/ContactForm";
 import { getTranslations } from "next-intl/server";
-
-export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;

@@ -2,8 +2,6 @@ import { Card, CardBody } from "@heroui/card";
 import { BarChart3, Calendar, Shield, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-export const dynamic = "force-dynamic";
-
 type Props = {
   params: Promise<{ locale: string }>;
 };
@@ -38,7 +36,7 @@ export default async function AboutPage({ params }: Props) {
   return (
     <div
       className="container mx-auto max-w-7xl px-6 py-24"
-      data-locale={locale}
+      // data-locale={locale}
     >
       {/* Hero Section */}
       <div className="mb-20">

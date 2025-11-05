@@ -28,7 +28,7 @@ export default function NotFound() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
-            onClick={() => (window.location.href = "/")}
+            onClick={() => (window.location.href = "/en")}
             color="primary"
             size="lg"
             className="min-w-[180px]"
@@ -37,7 +37,7 @@ export default function NotFound() {
             Go Home
           </Button>
           <Button
-            onClick={() => (window.location.href = "/contact")}
+            onPress={() => (window.location.href = "en/contact")}
             variant="bordered"
             size="lg"
             className="min-w-[180px]"
@@ -52,11 +52,11 @@ export default function NotFound() {
             You might be looking for:
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/" className="text-sm text-primary hover:underline">
+            <a href="en/" className="text-sm text-primary hover:underline">
               Home
             </a>
             <span className="text-muted-foreground">•</span>
-            <a href="/about" className="text-sm text-primary hover:underline">
+            <a href="en/about" className="text-sm text-primary hover:underline">
               About
             </a>
             <span className="text-muted-foreground">•</span>
@@ -67,7 +67,10 @@ export default function NotFound() {
               Pricing
             </a>
             <span className="text-muted-foreground">•</span>
-            <a href="/contact" className="text-sm text-primary hover:underline">
+            <a
+              href="en/contact"
+              className="text-sm text-primary hover:underline"
+            >
               Contact
             </a>
           </div>
