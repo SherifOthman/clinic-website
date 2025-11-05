@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Card, CardBody } from "@heroui/card";
 import { BarChart3, Calendar, Shield, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -75,13 +75,13 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((value, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-8 text-center">
+              <CardBody className="p-8 text-center">
                 <div className="flex justify-center mb-6">{value.icon}</div>
                 <h3 className="text-xl font-bold mb-3">{value.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   {value.description}
                 </p>
-              </CardContent>
+              </CardBody>
             </Card>
           ))}
         </div>

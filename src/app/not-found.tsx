@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { Home, Mail, Search } from "lucide-react";
 
 export default function NotFound() {
@@ -29,6 +29,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             onClick={() => (window.location.href = "/")}
+            color="primary"
             size="lg"
             className="min-w-[180px]"
           >
@@ -37,7 +38,7 @@ export default function NotFound() {
           </Button>
           <Button
             onClick={() => (window.location.href = "/contact")}
-            variant="outline"
+            variant="bordered"
             size="lg"
             className="min-w-[180px]"
           >
@@ -72,4 +73,3 @@ export default function NotFound() {
     </div>
   );
 }
-

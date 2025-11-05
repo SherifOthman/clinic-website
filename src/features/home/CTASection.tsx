@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/src/i18n/routing";
@@ -15,12 +15,17 @@ export function CTASection() {
         <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
           {t("ctaDescription")}
         </p>
-        <Button asChild size="lg" className="font-semibold px-12 shadow-lg">
-          <Link href="/signup">{t("startFreeTrial")}</Link>
+        <Button
+          as={Link}
+          href="/signup"
+          color="primary"
+          size="lg"
+          className="font-semibold px-12 shadow-lg"
+        >
+          {t("startFreeTrial")}
         </Button>
         <p className="text-sm text-muted-foreground mt-8">{t("ctaFooter")}</p>
       </div>
     </section>
   );
 }
-

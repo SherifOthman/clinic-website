@@ -1,7 +1,7 @@
+import { Link as HeroUILink } from "@heroui/link";
 import { useTranslations } from "next-intl";
 
 import { Link, usePathname } from "@/src/i18n/routing";
-import { cn } from "@/src/lib/utils";
 
 export const NavigationLinks = () => {
   const pathname = usePathname();
@@ -19,31 +19,29 @@ export const NavigationLinks = () => {
       {navigationLinks.map((item, index) => {
         const isActive = pathname === item.href;
 
-        if (item.isScroll) {
+        if ("isScroll" in item && item.isScroll) {
           const href = pathname !== "/" ? `/${item.href}` : item.href;
           return (
-            <a
+            <HeroUILink
               key={index}
               href={href}
-              className="transition-colors font-medium text-foreground/70 hover:text-foreground"
+              color="foreground"
+              className="font-medium"
             >
               {item.label}
-            </a>
+            </HeroUILink>
           );
         }
 
         return (
-          <Link
-            key={index}
-            href={item.href as any}
-            className={cn(
-              "transition-colors font-medium",
-              isActive
-                ? "text-primary font-semibold"
-                : "text-foreground/70 hover:text-foreground"
-            )}
-          >
-            {item.label}
+          <Link key={index} href={item.href as any}>
+            <HeroUILink
+              color={isActive ? "primary" : "foreground"}
+              className={isActive ? "font-semibold" : "font-medium"}
+              as="span"
+            >
+              {item.label}
+            </HeroUILink>
           </Link>
         );
       })}

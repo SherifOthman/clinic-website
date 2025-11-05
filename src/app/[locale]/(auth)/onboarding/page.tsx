@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -88,16 +88,16 @@ export default function OnboardingPage() {
           </div>
         </CardHeader>
 
-        <CardContent className="px-8 md:px-16 pb-6 md:pb-8">
+        <CardBody className="px-8 md:px-16 pb-6 md:pb-8">
           <div className="min-h-[500px] md:min-h-[600px] flex flex-col">
             <div className="flex-grow py-4 md:py-6">{renderStepContent()}</div>
 
             <div className="flex justify-between items-center pt-6 md:pt-8 border-t">
               <Button
-                variant="outline"
+                variant="bordered"
                 size="lg"
-                onClick={handlePrevious}
-                disabled={currentStep === 0}
+                onPress={handlePrevious}
+                isDisabled={currentStep === 0}
                 className="font-semibold min-w-24 md:min-w-32"
               >
                 {t("common.previous")}
@@ -105,23 +105,25 @@ export default function OnboardingPage() {
 
               {currentStep < steps.length - 1 ? (
                 <Button
+                  color="primary"
                   size="lg"
-                  onClick={handleNext}
+                  onPress={handleNext}
                   className="font-semibold shadow-lg min-w-24 md:min-w-32"
                 >
                   {t("common.next")}
                 </Button>
               ) : (
                 <Button
+                  color="success"
                   size="lg"
-                  className="font-semibold shadow-lg min-w-32 md:min-w-40 bg-green-600 hover:bg-green-700 text-white"
+                  className="font-semibold shadow-lg min-w-32 md:min-w-40"
                 >
                   {t("onboarding.completeSetup")}
                 </Button>
               )}
             </div>
           </div>
-        </CardContent>
+        </CardBody>
       </Card>
     </div>
   );

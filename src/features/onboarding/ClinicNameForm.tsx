@@ -1,7 +1,7 @@
 "use client";
 
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Label } from "@/src/components/Label";
+import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
 export const ClinicNameForm = () => {
@@ -36,4 +36,3 @@ export const ClinicNameForm = () => {
     </div>
   );
 };
-

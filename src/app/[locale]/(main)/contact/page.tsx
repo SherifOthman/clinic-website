@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
 import { useTranslations } from "next-intl";
 
 import { PageHeader } from "@/src/components/layout/PageHeader";
@@ -50,27 +50,31 @@ export default function ContactPage() {
 
           {contactInfo.map((info, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-8">
+              <CardBody className="p-8">
                 <h3 className="text-xl font-bold mb-3">{info.title}</h3>
                 <p className="text-muted-foreground mb-6">{info.description}</p>
                 <div className="space-y-2">
                   <p className="font-medium">{info.contact}</p>
                   <p className="text-muted-foreground">{info.phone}</p>
                 </div>
-              </CardContent>
+              </CardBody>
             </Card>
           ))}
 
           <Card className="bg-primary/5 hover:shadow-md transition-shadow">
-            <CardContent className="p-8">
+            <CardBody className="p-8">
               <h3 className="text-xl font-bold mb-3">{t("demo.title")}</h3>
               <p className="text-muted-foreground mb-6">
                 {t("demo.description")}
               </p>
-              <Button size="lg" className="font-semibold shadow-lg">
+              <Button
+                color="primary"
+                size="lg"
+                className="font-semibold shadow-lg"
+              >
                 {t("demo.button")}
               </Button>
-            </CardContent>
+            </CardBody>
           </Card>
         </div>
       </div>

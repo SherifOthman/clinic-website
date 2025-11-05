@@ -7,95 +7,30 @@ const nextConfig: NextConfig = {
   // React Compiler (stable in Next.js 16)
   reactCompiler: true,
 
-  // Turbopack configuration
-  turbopack: {
-    rules: {
-      "*.svg": {
-        loaders: ["@svgr/webpack"],
-        as: "*.js",
-      },
-    },
-  },
-
-  // Server external packages
-  serverExternalPackages: [],
-
   // Experimental features
   experimental: {
     // Optimize package imports for better tree-shaking
     optimizePackageImports: [
       "lucide-react",
-      "@radix-ui/react-avatar",
-      "@radix-ui/react-dialog",
-      "@radix-ui/react-dropdown-menu",
-      "@radix-ui/react-icons",
-      "@radix-ui/react-label",
-      "@radix-ui/react-navigation-menu",
-      "@radix-ui/react-select",
-      "@radix-ui/react-separator",
-      "@radix-ui/react-slot",
-      "@radix-ui/react-switch",
+      "@heroui/avatar",
+      "@heroui/button",
+      "@heroui/card",
+      "@heroui/chip",
+      "@heroui/divider",
+      "@heroui/input",
+      "@heroui/navbar",
+      "@heroui/select",
+      "@heroui/spinner",
+      "@heroui/switch",
     ],
 
     // CSS optimization (stable in Next.js 16)
     optimizeCss: true,
-
-    // Partial Prerendering (Next.js 16 feature - enable when ready)
-    ppr: false,
-
-    // Optimize server components
-    serverComponentsHmrCache: true,
-  },
-
-  // Logging configuration
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
   },
 
   // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  },
-
-  // Compiler options
-  compiler: {
-    // Remove console logs in production
-    removeConsole: process.env.NODE_ENV === "production" ? {
-      exclude: ["error", "warn"],
-    } : false,
-  },
-
-  // Headers for security and performance
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "X-DNS-Prefetch-Control",
-            value: "on",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
-          },
-        ],
-      },
-    ];
   },
 };
 

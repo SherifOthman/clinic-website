@@ -1,8 +1,8 @@
 "use client";
 
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
+import { Chip } from "@heroui/chip";
 import { Building2, Check, Sparkles, Zap } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -56,9 +56,9 @@ export function PricingPreviewSection() {
     >
       <div className="container mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-6 text-base px-4 py-2">
+          <Chip variant="flat" className="mb-6 text-base px-4 py-2">
             {tPricing("title")}
-          </Badge>
+          </Chip>
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
             {t("pricingTitle")}
           </h2>
@@ -120,14 +120,14 @@ export function PricingPreviewSection() {
                 <div
                   className={`absolute top-4 z-20 ${isRTL ? "left-4" : "right-4"}`}
                 >
-                  <Badge className="font-semibold">
+                  <Chip color="primary" className="font-semibold">
                     <Sparkles className="w-3 h-3 mr-1" />
                     {tPricing("mostPopular")}
-                  </Badge>
+                  </Chip>
                 </div>
               )}
 
-              <CardContent className="p-10">
+              <CardBody className="p-10">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                   {plan.icon}
                 </div>
@@ -166,14 +166,16 @@ export function PricingPreviewSection() {
                 </ul>
 
                 <Button
-                  asChild
-                  variant={plan.popular ? "default" : "outline"}
+                  as={Link}
+                  href="/signup"
+                  color={plan.popular ? "primary" : "default"}
+                  variant={plan.popular ? "solid" : "bordered"}
                   size="lg"
                   className="w-full font-semibold"
                 >
-                  <Link href="/signup">{tPricing("getStarted")}</Link>
+                  {tPricing("getStarted")}
                 </Button>
-              </CardContent>
+              </CardBody>
             </Card>
           ))}
         </div>
@@ -182,8 +184,14 @@ export function PricingPreviewSection() {
           <p className="text-muted-foreground mb-4">
             {tPricing("customPlanQuestion")}
           </p>
-          <Button asChild variant="outline" size="lg" className="font-semibold">
-            <Link href="/contact">{tPricing("contactSales")}</Link>
+          <Button
+            as={Link}
+            href="/contact"
+            variant="bordered"
+            size="lg"
+            className="font-semibold"
+          >
+            {tPricing("contactSales")}
           </Button>
         </div>
       </div>

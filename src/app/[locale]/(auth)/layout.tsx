@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { Activity, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -39,9 +39,9 @@ export default function AuthLayout({
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
+            variant="light"
+            isIconOnly
+            onPress={toggleTheme}
             aria-label="Toggle theme"
             suppressHydrationWarning
           >

@@ -13,3 +13,4 @@ export const fontArabic = Cairo({
   display: "swap",
   weight: ["300", "400", "500", "700"],
 });
+

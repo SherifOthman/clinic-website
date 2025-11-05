@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { useLocale } from "next-intl";
 import { useParams } from "next/navigation";
 import { useTransition } from "react";
@@ -72,11 +72,11 @@ export const LanguageSwitcher = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="light"
       size="sm"
       className="h-8 px-3 gap-2"
-      onClick={handleLanguageChange}
-      disabled={isPending}
+      onPress={handleLanguageChange}
+      isDisabled={isPending}
       title={`Switch to ${oppositeLanguage.fullName}`}
     >
       <FlagComponent />
@@ -84,3 +84,4 @@ export const LanguageSwitcher = () => {
     </Button>
   );
 };
+

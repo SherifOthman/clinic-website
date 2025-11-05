@@ -51,3 +51,4 @@ export const siteConfig = {
     support: "https://support.clinicflow.com",
   },
 };
+

@@ -1,8 +1,16 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import {
+  Navbar as HeroUINavbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@heroui/navbar";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -12,7 +20,6 @@ import { NavigationLinks } from "@/src/components/NavigationLinks";
 import { ThemeSwitch } from "@/src/components/ThemeSwitch";
 import { UserMenu } from "@/src/components/UserMenu";
 import { Link as I18nLink, usePathname } from "@/src/i18n/routing";
-import { cn } from "@/src/lib/utils";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,87 +38,98 @@ export const Navbar = () => {
   ] as const;
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/70 backdrop-blur-lg">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-6">
+    <HeroUINavbar
+      maxWidth="xl"
+      position="sticky"
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+        <NavbarBrand className="gap-3 max-w-fit">
           <Logo />
+        </NavbarBrand>
+        <div className="hidden sm:flex">
           <NavigationLinks />
         </div>
+      </NavbarContent>
 
-        <div className="hidden sm:flex items-center gap-2">
+      <NavbarContent
+        className="hidden sm:flex basis-1/5 sm:basis-full"
+        justify="end"
+      >
+        <NavbarItem className="flex gap-2">
           <LanguageSwitcher />
           <ThemeSwitch />
           <UserMenu />
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <LanguageSwitcher />
+        <ThemeSwitch />
+        <NavbarMenuToggle />
+      </NavbarContent>
+
+      <NavbarMenu>
+        <div className="mx-4 mt-2 flex flex-col gap-2">
+          {mobileMenuLinks.map((item, index) => {
+            const isActive = pathname === item.href;
+
+            if ("isScroll" in item && item.isScroll) {
+              const href = pathname !== "/" ? `/${item.href}` : item.href;
+              return (
+                <NavbarMenuItem key={index}>
+                  <Link
+                    color="foreground"
+                    href={href}
+                    size="lg"
+                    onPress={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </NavbarMenuItem>
+              );
+            }
+
+            return (
+              <NavbarMenuItem key={index}>
+                <I18nLink
+                  className={isActive ? "text-primary font-semibold" : ""}
+                  href={item.href as any}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Link
+                    color={isActive ? "primary" : "foreground"}
+                    size="lg"
+                    as="span"
+                  >
+                    {item.label}
+                  </Link>
+                </I18nLink>
+              </NavbarMenuItem>
+            );
+          })}
+
+          <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-divider">
+            <Button
+              variant="bordered"
+              as={I18nLink}
+              href="/login"
+              className="w-full"
+            >
+              {t("login")}
+            </Button>
+            <Button
+              color="primary"
+              as={I18nLink}
+              href="/signup"
+              className="w-full"
+            >
+              {t("signup")}
+            </Button>
+          </div>
         </div>
-
-        <div className="flex sm:hidden items-center gap-2">
-          <LanguageSwitcher />
-          <ThemeSwitch />
-          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Toggle menu">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col gap-4 mt-8">
-                {mobileMenuLinks.map((item, index) => {
-                  const isActive = pathname === item.href;
-
-                  if (item.isScroll) {
-                    const href = pathname !== "/" ? `/${item.href}` : item.href;
-                    return (
-                      <a
-                        key={index}
-                        className="text-lg font-medium text-foreground/70 hover:text-primary transition-colors"
-                        href={href}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.label}
-                      </a>
-                    );
-                  }
-
-                  return (
-                    <I18nLink
-                      key={index}
-                      className={cn(
-                        "text-lg font-medium transition-colors",
-                        isActive
-                          ? "text-primary font-semibold"
-                          : "text-foreground/70 hover:text-foreground"
-                      )}
-                      href={item.href as any}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.label}
-                    </I18nLink>
-                  );
-                })}
-
-                <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
-                  <Button variant="outline" asChild className="w-full">
-                    <I18nLink
-                      href="/login"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {t("login")}
-                    </I18nLink>
-                  </Button>
-                  <Button asChild className="w-full">
-                    <I18nLink
-                      href="/signup"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {t("signup")}
-                    </I18nLink>
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </nav>
+      </NavbarMenu>
+    </HeroUINavbar>
   );
 };

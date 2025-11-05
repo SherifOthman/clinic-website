@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { Separator } from "@/src/components/ui/separator";
+import { Label } from "@/src/components/Label";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Divider } from "@heroui/divider";
+import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/src/i18n/routing";
@@ -18,7 +18,7 @@ export const LoginForm = () => {
         <h1 className="text-2xl font-bold text-center">{t("title")}</h1>
         <p className="text-muted-foreground text-center">{t("subtitle")}</p>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardBody className="space-y-6">
         <form className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">{t("email")}</Label>
@@ -44,12 +44,17 @@ export const LoginForm = () => {
             </a>
           </div>
 
-          <Button type="submit" size="lg" className="w-full font-semibold">
+          <Button
+            type="submit"
+            color="primary"
+            size="lg"
+            className="w-full font-semibold"
+          >
             {t("submit")}
           </Button>
         </form>
 
-        <Separator />
+        <Divider />
 
         <div className="text-center text-sm">
           <span className="text-muted-foreground">{t("noAccount")} </span>
@@ -60,7 +65,7 @@ export const LoginForm = () => {
             {t("signupLink")}
           </Link>
         </div>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 };

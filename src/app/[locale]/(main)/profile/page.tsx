@@ -1,10 +1,10 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Label } from "@/src/components/Label";
+import { Avatar } from "@heroui/avatar";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -33,11 +33,11 @@ export default function ProfilePage() {
           <Card className="shadow-lg">
             <CardHeader className="flex justify-between">
               <h2 className="text-xl font-semibold">{t("personalInfo")}</h2>
-              <Button variant="ghost" onClick={() => setIsEditing(!isEditing)}>
+              <Button variant="light" onPress={() => setIsEditing(!isEditing)}>
                 {isEditing ? t("cancel") : t("edit")}
               </Button>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardBody className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>{t("firstName")}</Label>
@@ -58,30 +58,30 @@ export default function ProfilePage() {
               </div>
               {isEditing && (
                 <div className="flex gap-4">
-                  <Button className="flex-1">{t("save")}</Button>
+                  <Button color="primary" className="flex-1">
+                    {t("save")}
+                  </Button>
                   <Button
-                    variant="outline"
+                    variant="bordered"
                     className="flex-1"
-                    onClick={() => setIsEditing(false)}
+                    onPress={() => setIsEditing(false)}
                   >
                     {t("cancel")}
                   </Button>
                 </div>
               )}
-            </CardContent>
+            </CardBody>
           </Card>
         </div>
 
         {/* Profile Picture & Quick Info */}
         <div className="space-y-6">
           <Card className="shadow-lg">
-            <CardContent className="text-center p-8">
-              <Avatar className="mx-auto mb-4 h-16 w-16">
-                <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                  {user.firstName.charAt(0)}
-                  {user.lastName.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
+            <CardBody className="text-center p-8">
+              <Avatar
+                name={`${user.firstName} ${user.lastName}`}
+                className="mx-auto mb-4 h-16 w-16 bg-primary text-primary-foreground text-lg"
+              />
               <h3 className="text-lg font-semibold mb-1">
                 {user.firstName} {user.lastName}
               </h3>
@@ -89,14 +89,14 @@ export default function ProfilePage() {
               <p className="text-sm text-muted-foreground capitalize">
                 {user.plan} Plan
               </p>
-            </CardContent>
+            </CardBody>
           </Card>
 
           <Card className="shadow-lg">
             <CardHeader>
               <h3 className="text-lg font-semibold">{t("accountStatus")}</h3>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardBody className="space-y-3">
               <div className="flex justify-between">
                 <span>{t("memberSince")}:</span>
                 <span className="font-medium">Jan 2024</span>
@@ -111,7 +111,7 @@ export default function ProfilePage() {
                   {t("active")}
                 </span>
               </div>
-            </CardContent>
+            </CardBody>
           </Card>
         </div>
       </div>

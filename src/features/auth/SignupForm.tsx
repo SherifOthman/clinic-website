@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Label } from "@/src/components/Label";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/src/i18n/routing";
@@ -17,7 +17,7 @@ export const SignupForm = () => {
         <h1 className="text-2xl font-bold text-center">{t("title")}</h1>
         <p className="text-muted-foreground text-center">{t("subtitle")}</p>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardBody className="space-y-6">
         <form className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -63,7 +63,12 @@ export const SignupForm = () => {
             />
           </div>
 
-          <Button type="submit" size="lg" className="w-full font-semibold">
+          <Button
+            type="submit"
+            color="primary"
+            size="lg"
+            className="w-full font-semibold"
+          >
             {t("submit")}
           </Button>
         </form>
@@ -81,7 +86,7 @@ export const SignupForm = () => {
         <p className="text-xs text-muted-foreground text-center">
           {t("terms")}
         </p>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 };

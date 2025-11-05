@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { AlertTriangle, Home, Mail, RefreshCw } from "lucide-react";
 import { useEffect } from "react";
 
@@ -44,14 +44,19 @@ export default function Error({
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button size="lg" onClick={reset} className="min-w-[180px]">
+          <Button
+            color="primary"
+            size="lg"
+            onPress={reset}
+            className="min-w-[180px]"
+          >
             <RefreshCw className="w-5 h-5 mr-2" />
             Try Again
           </Button>
           <Button
-            variant="outline"
+            variant="bordered"
             size="lg"
-            onClick={() => (window.location.href = "/")}
+            onPress={() => (window.location.href = "/")}
             className="min-w-[180px]"
           >
             <Home className="w-5 h-5 mr-2" />
@@ -88,4 +93,3 @@ export default function Error({
     </div>
   );
 }
-

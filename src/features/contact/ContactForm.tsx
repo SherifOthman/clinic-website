@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { Textarea } from "@/src/components/ui/textarea";
+import { Label } from "@/src/components/Label";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Input, Textarea } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
 export const ContactForm = () => {
@@ -15,7 +14,7 @@ export const ContactForm = () => {
       <CardHeader>
         <h2 className="text-2xl font-bold">{t("title")}</h2>
       </CardHeader>
-      <CardContent>
+      <CardBody>
         <form className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="name">{t("name")}</Label>
@@ -45,12 +44,16 @@ export const ContactForm = () => {
             />
           </div>
 
-          <Button type="submit" size="lg" className="w-full font-semibold">
+          <Button
+            type="submit"
+            color="primary"
+            size="lg"
+            className="w-full font-semibold"
+          >
             {t("submit")}
           </Button>
         </form>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 };
-

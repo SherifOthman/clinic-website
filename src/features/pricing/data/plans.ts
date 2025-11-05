@@ -19,3 +19,4 @@ export const pricingPlans: PricingPlan[] = [
     price: 199,
   },
 ];
+

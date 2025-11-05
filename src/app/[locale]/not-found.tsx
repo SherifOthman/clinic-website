@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@heroui/button";
 import { Home, Mail, Search } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
@@ -76,17 +76,25 @@ export default function NotFound() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button asChild size="lg" className="min-w-[180px]">
-            <Link href="/">
-              <Home className="w-5 h-5 mr-2" />
-              {t.goHome}
-            </Link>
+          <Button
+            as={Link}
+            href="/"
+            color="primary"
+            size="lg"
+            className="min-w-[180px]"
+          >
+            <Home className="w-5 h-5 mr-2" />
+            {t.goHome}
           </Button>
-          <Button asChild variant="outline" size="lg" className="min-w-[180px]">
-            <Link href="/contact">
-              <Mail className="w-5 h-5 mr-2" />
-              {t.contactSupport}
-            </Link>
+          <Button
+            as={Link}
+            href="/contact"
+            variant="bordered"
+            size="lg"
+            className="min-w-[180px]"
+          >
+            <Mail className="w-5 h-5 mr-2" />
+            {t.contactSupport}
           </Button>
         </div>
 

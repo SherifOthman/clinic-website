@@ -1,4 +1,4 @@
-import { Spinner } from "@/src/components/ui/spinner";
+import { Spinner } from "@heroui/spinner";
 
 export default function Loading() {
   return (
@@ -10,4 +10,5 @@ export default function Loading() {
     </div>
   );
 }
+
 

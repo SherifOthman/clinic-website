@@ -1,11 +1,7 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Avatar } from "@heroui/avatar";
+import { Card, CardBody } from "@heroui/card";
 import { Star } from "lucide-react";
 import { useLocale } from "next-intl";
 
@@ -21,7 +17,7 @@ export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
 
   return (
     <Card className="h-full hover:shadow-lg transition-shadow">
-      <CardContent className="p-5 md:p-8">
+      <CardBody className="p-5 md:p-8">
         <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-6" dir="ltr">
           {isRTL ? (
             <>
@@ -47,18 +43,20 @@ export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
                 </p>
               </div>
               {/* Avatar on the right */}
-              <Avatar className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0">
-                <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <Avatar
+                src={testimonial.avatar}
+                name={testimonial.name}
+                className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0"
+              />
             </>
           ) : (
             <>
               {/* English: Avatar on left */}
-              <Avatar className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0">
-                <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <Avatar
+                src={testimonial.avatar}
+                name={testimonial.name}
+                className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0"
+              />
               {/* User info in the middle */}
               <div className="flex-1 text-left">
                 <h4 className="font-semibold text-base md:text-lg">
@@ -88,7 +86,7 @@ export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
         >
           "{testimonial.quote}"
         </blockquote>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 };

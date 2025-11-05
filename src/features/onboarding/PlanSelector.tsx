@@ -1,7 +1,7 @@
 "use client";
 
-import { Badge } from "@/src/components/ui/badge";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Card, CardBody } from "@heroui/card";
+import { Chip } from "@heroui/chip";
 import { useLocale, useTranslations } from "next-intl";
 
 interface Plan {
@@ -98,13 +98,16 @@ export const PlanSelector = ({
           >
             {plan.popular && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                <Badge className="text-xs font-bold px-3 shadow-lg">
+                <Chip
+                  color="primary"
+                  className="text-xs font-bold px-3 shadow-lg"
+                >
                   Most Popular
-                </Badge>
+                </Chip>
               </div>
             )}
 
-            <CardContent className="p-5 md:p-6 text-center flex flex-col h-full">
+            <CardBody className="p-5 md:p-6 text-center flex flex-col h-full">
               <div className="mb-4">
                 <h3 className="text-lg md:text-xl font-bold mb-2">
                   {plan.name}
@@ -148,7 +151,7 @@ export const PlanSelector = ({
                   </li>
                 ))}
               </ul>
-            </CardContent>
+            </CardBody>
           </Card>
         ))}
       </div>

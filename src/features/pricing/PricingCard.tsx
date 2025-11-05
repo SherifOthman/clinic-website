@@ -1,8 +1,8 @@
 "use client";
 
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
+import { Chip } from "@heroui/chip";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -38,12 +38,15 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
     >
       {plan.popular && (
         <div className="absolute -top-2 -left-8 z-10">
-          <Badge className="rotate-[-45deg] px-6 py-1 text-xs font-semibold shadow-lg">
+          <Chip
+            color="primary"
+            className="rotate-[-45deg] px-6 py-1 text-xs font-semibold shadow-lg"
+          >
             {t("mostPopular")}
-          </Badge>
+          </Chip>
         </div>
       )}
-      <CardContent className="p-8">
+      <CardBody className="p-8">
         <h3 className="text-2xl font-bold mb-2">{planData?.name || plan.id}</h3>
         <p className="text-muted-foreground mb-4">
           {planData?.description || `Perfect for ${plan.id} practices`}
@@ -68,14 +71,15 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
           ))}
         </ul>
         <Button
-          asChild
-          variant={plan.popular ? "default" : "outline"}
+          as={Link}
+          href="/signup"
+          color={plan.popular ? "primary" : "default"}
+          variant={plan.popular ? "solid" : "bordered"}
           className="w-full font-semibold"
         >
-          <Link href="/signup">{t("getStarted")}</Link>
+          {t("getStarted")}
         </Button>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 }
-

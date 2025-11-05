@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { useTranslations } from "next-intl";
 
 import { PageHeader } from "@/src/components/layout/PageHeader";
@@ -52,7 +52,7 @@ export default function HelpPage() {
             <CardHeader>
               <h3 className="text-xl font-bold">{section.title}</h3>
             </CardHeader>
-            <CardContent>
+            <CardBody>
               <p className="text-muted-foreground mb-6">
                 {section.description}
               </p>
@@ -63,27 +63,31 @@ export default function HelpPage() {
                   </li>
                 ))}
               </ul>
-            </CardContent>
+            </CardBody>
           </Card>
         ))}
       </div>
 
       <div className="text-center">
         <Card className="bg-primary/5 max-w-2xl mx-auto hover:shadow-md transition-shadow">
-          <CardContent className="p-10">
+          <CardBody className="p-10">
             <h3 className="text-3xl font-bold mb-4">{t("support.title")}</h3>
             <p className="text-xl text-muted-foreground mb-8">
               {t("support.description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="font-semibold shadow-lg">
+              <Button
+                color="primary"
+                size="lg"
+                className="font-semibold shadow-lg"
+              >
                 {t("support.contact")}
               </Button>
-              <Button variant="outline" size="lg" className="font-semibold">
+              <Button variant="bordered" size="lg" className="font-semibold">
                 {t("support.documentation")}
               </Button>
             </div>
-          </CardContent>
+          </CardBody>
         </Card>
       </div>
     </div>
