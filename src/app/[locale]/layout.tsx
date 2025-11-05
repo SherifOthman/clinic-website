@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { LocaleHandler } from "@/src/components/LocaleHandler";
@@ -48,10 +48,12 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
-
-  if (!routing.locales.includes(locale as any)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
+  // Enable static rendering
+  setRequestLocale(locale);
 
   const messages = await getMessages({ locale });
   const isRTL = locale === "ar";

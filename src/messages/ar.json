@@ -2,7 +2,9 @@
   "profile": "الملف الشخصي",
   "settings": "الإعدادات",
   "common": {
-    "clinicFlow": "ClinicFlow"
+    "clinicFlow": "ClinicFlow",
+    "previous": "السابق",
+    "next": "التالي"
   },
   "navigation": {
     "home": "الرئيسية",

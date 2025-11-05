@@ -1,4 +1,6 @@
-import { getLocale, getTranslations } from "next-intl/server";
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
 
 import { TestimonialCard } from "@/src/components/TestimonialCard";
 import { Testimonial } from "@/src/types";
@@ -101,12 +103,12 @@ const getTestimonials = (locale: string): Testimonial[] => {
   ];
 };
 
-export const TestimonialsSection = async () => {
-  const t = await getTranslations("testimonials");
-  const locale = await getLocale();
+export const TestimonialsSection = () => {
+  const t = useTranslations("testimonials");
+  const locale = useLocale();
 
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background">
+    <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-default-50 to-background">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
         <div className="text-center mb-12 md:mb-20">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">

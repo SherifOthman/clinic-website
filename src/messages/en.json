@@ -2,7 +2,9 @@
   "profile": "Profile",
   "settings": "Settings",
   "common": {
-    "clinicFlow": "ClinicFlow"
+    "clinicFlow": "ClinicFlow",
+    "previous": "Previous",
+    "next": "Next"
   },
   "navigation": {
     "home": "Home",
