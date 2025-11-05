@@ -4,7 +4,8 @@ import "./globals.css";
 import { fontArabic, fontSans } from "@/src/config/fonts";
 import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
-import { ThemeScript } from "./theme-script";
+
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: {
@@ -88,19 +89,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-      </head>
+    <html suppressHydrationWarning>
+      <head />
       <body
         className={cn(
           "min-h-screen text-foreground bg-background font-sans antialiased",
           fontSans.variable,
           fontArabic.variable
         )}
-        suppressHydrationWarning
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

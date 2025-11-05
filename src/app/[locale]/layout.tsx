@@ -3,8 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { Providers } from "../providers";
-
+import { LocaleHandler } from "@/src/components/LocaleHandler";
 import { siteConfig } from "@/src/config/site";
 import { routing } from "@/src/i18n/routing";
 
@@ -49,29 +48,19 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
-  // Ensure that the incoming `locale` is valid
+
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // Pass the locale to getMessages to load the correct translations
   const messages = await getMessages({ locale });
-
   const isRTL = locale === "ar";
   const fontClass = isRTL ? "font-arabic" : "font-sans";
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <Providers>
-        <div
-          lang={locale}
-          dir={isRTL ? "rtl" : "ltr"}
-          className={`min-h-screen ${fontClass}`}
-        >
-          {children}
-        </div>
-      </Providers>
+      <LocaleHandler locale={locale} />
+      <div className={fontClass}>{children}</div>
     </NextIntlClientProvider>
   );
 }
