@@ -49,7 +49,7 @@ export const Navbar = () => {
         <NavbarBrand className="gap-3 max-w-fit">
           <Logo />
         </NavbarBrand>
-        <div className="hidden sm:flex">
+        <div className="hidden sm:flex ltr:ml-4 rtl:mr-4">
           <NavigationLinks />
         </div>
       </NavbarContent>
@@ -65,7 +65,10 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+      <NavbarContent
+        className="sm:hidden basis-1 ltr:pl-4 rtl:pr-4"
+        justify="end"
+      >
         <LanguageSwitcher />
         <ThemeSwitch />
         <NavbarMenuToggle />
@@ -86,16 +89,13 @@ export const Navbar = () => {
                     onPress={() => {
                       setIsMenuOpen(false);
                       if (pathname === "/") {
-                        // If we're on home page, just scroll to pricing
                         const pricingElement =
                           document.getElementById("pricing");
                         if (pricingElement) {
                           pricingElement.scrollIntoView({ behavior: "smooth" });
                         }
                       } else {
-                        // If we're on another page, navigate to home first
                         router.push("/");
-                        // Then scroll after navigation (with a small delay)
                         setTimeout(() => {
                           const pricingElement =
                             document.getElementById("pricing");

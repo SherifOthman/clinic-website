@@ -4,10 +4,15 @@ import { FeaturesSection } from "@/src/features/home/FeaturesSection";
 import { HeroSection } from "@/src/features/home/HeroSection";
 import { PricingPreviewSection } from "@/src/features/home/PricingPreviewSection";
 
-export default function HomePage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
   return (
     <div className="min-h-screen">
-      <HeroSection />
+      <HeroSection locale={locale} />
       <FeaturesSection />
       <TestimonialsSection />
       <PricingPreviewSection />

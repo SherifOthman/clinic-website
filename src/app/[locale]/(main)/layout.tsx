@@ -9,7 +9,7 @@ export default async function MainLayout({
   return (
     <div className="relative flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-4">{children}</main>
+      <main className="flex-grow">{children}</main>
       <Footer />
     </div>
   );

@@ -15,3 +15,16 @@ html[dir="rtl"] * {
 html[dir="ltr"] * {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/* RTL Support - Let Tailwind handle most of it */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+}
+
+@theme {
+  --color-chip: #edf4fc;
+}

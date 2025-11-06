@@ -106,7 +106,7 @@ export function PricingPreviewSection() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto justify-items-center">
           {plans.map((plan) => (
             <Card
               key={plan.id}
@@ -114,26 +114,24 @@ export function PricingPreviewSection() {
                 plan.popular
                   ? "ring-2 ring-primary shadow-xl md:scale-105 z-10"
                   : "hover:shadow-md"
-              } relative overflow-hidden transition-all`}
+              } relative overflow-hidden transition-all w-full max-w-sm`}
             >
               {plan.popular && (
-                <div
-                  className={`absolute top-4 z-20 ${isRTL ? "left-4" : "right-4"}`}
-                >
+                <div className="absolute top-4 ltr:right-4 rtl:left-4 z-20">
                   <Chip color="primary" className="font-semibold">
-                    <Sparkles className="w-3 h-3 mr-1" />
+                    <Sparkles className="w-3 h-3 ltr:mr-1 rtl:ml-1" />
                     {tPricing("mostPopular")}
                   </Chip>
                 </div>
               )}
 
-              <CardBody className="p-10">
+              <CardBody className="p-8 text-start">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                   {plan.icon}
                 </div>
 
                 <h3 className="text-2xl font-bold mb-3">{plan.name}</h3>
-                <p className="text-default-500 mb-8 min-h-[48px]">
+                <p className="text-default-500 mb-8 min-h-[48px] leading-relaxed">
                   {plan.description}
                 </p>
 
@@ -157,10 +155,12 @@ export function PricingPreviewSection() {
                 <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-3 text-sm">
-                      <div className="mt-0.5">
+                      <div className="mt-0.5 ltr:mr-0 rtl:ml-0">
                         <Check className="w-5 h-5 text-primary flex-shrink-0" />
                       </div>
-                      <span className="text-foreground/80">{feature}</span>
+                      <span className="text-foreground/80 leading-relaxed">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>

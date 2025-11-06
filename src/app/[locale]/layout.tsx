@@ -61,6 +61,11 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.dir="${isRTL ? "rtl" : "ltr"}";document.documentElement.lang="${locale}";`,
+        }}
+      />
       <LocaleHandler locale={locale} />
       <div className={fontClass}>{children}</div>
     </NextIntlClientProvider>
