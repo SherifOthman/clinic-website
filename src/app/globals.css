@@ -25,6 +25,14 @@ html[dir="ltr"] * {
   direction: ltr;
 }
 
+/* default tokens (top-level) */
 @theme {
   --color-chip: #edf4fc;
+}
+
+/* runtime overrides — place in the theme layer */
+@layer theme {
+  .dark {
+    --color-chip: #1e293b;
+  }
 }

@@ -16,7 +16,7 @@ export const NavigationLinks = () => {
   ] as const;
 
   return (
-    <div className="hidden lg:flex gap-6 justify-start ml-8">
+    <div className="ml-8 hidden justify-start gap-6 lg:flex">
       {navigationLinks.map((item, index) => {
         const isActive = pathname === item.href;
 
@@ -25,7 +25,7 @@ export const NavigationLinks = () => {
             <HeroUILink
               key={index}
               color="foreground"
-              className="font-medium cursor-pointer"
+              className="cursor-pointer font-medium"
               onClick={() => {
                 if (pathname === "/") {
                   // If we're on home page, just scroll to pricing
