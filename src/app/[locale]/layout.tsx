@@ -56,18 +56,11 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages({ locale });
-  const isRTL = locale === "ar";
-  const fontClass = isRTL ? "font-arabic" : "font-sans";
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `document.documentElement.dir="${isRTL ? "rtl" : "ltr"}";document.documentElement.lang="${locale}";`,
-        }}
-      />
       <LocaleHandler locale={locale} />
-      <div className={fontClass}>{children}</div>
+      {children}
     </NextIntlClientProvider>
   );
 }

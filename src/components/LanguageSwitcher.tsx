@@ -5,10 +5,10 @@ import { useLocale } from "next-intl";
 import { useParams } from "next/navigation";
 import { useTransition } from "react";
 
-import { usePathname, useRouter } from "@/src/i18n/routing";
+import { usePathname, useRouter } from "@/src/i18n/navigation";
 
 const FlagUK = () => (
-  <svg className="w-5 h-4" viewBox="0 0 60 30">
+  <svg className="h-4 w-5" viewBox="0 0 60 30">
     <clipPath id="s">
       <path d="M0,0 v30 h60 v-30 z" />
     </clipPath>
@@ -31,7 +31,7 @@ const FlagUK = () => (
 );
 
 const FlagSA = () => (
-  <svg className="w-5 h-4" viewBox="0 0 900 600">
+  <svg className="h-4 w-5" viewBox="0 0 900 600">
     <rect width="900" height="600" fill="#165B33" />
     <g fill="#fff">
       <path d="M 150,300 Q 150,200 200,200 Q 250,200 250,250 L 250,350 Q 250,400 200,400 Q 150,400 150,300 M 200,230 Q 180,230 180,250 L 180,350 Q 180,370 200,370 Q 220,370 220,350 L 220,250 Q 220,230 200,230" />
@@ -74,7 +74,7 @@ export const LanguageSwitcher = () => {
     <Button
       variant="light"
       size="sm"
-      className="h-8 px-3 gap-2"
+      className="h-8 gap-2 px-3"
       onPress={handleLanguageChange}
       isDisabled={isPending}
       title={`Switch to ${oppositeLanguage.fullName}`}

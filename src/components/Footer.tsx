@@ -1,30 +1,29 @@
 "use client";
 
 import { Activity } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
-import { Link, usePathname, useRouter } from "@/src/i18n/routing";
+import { useRTL } from "@/src/hooks/useRTL";
+import { Link } from "@/src/i18n/navigation";
 
 export const Footer = () => {
   const t = useTranslations("footer");
-  const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
-  const isRTL = locale === "ar";
+  const isRTL = useRTL();
+
   return (
-    <footer className="bg-default-50 border-t border-divider">
-      <div className="container mx-auto max-w-7xl px-4 md:px-8 py-8 md:py-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-2xl md:max-w-none mx-auto">
+    <footer className="bg-default-50 border-divider border-t">
+      <div className="container mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
+        <div className="mx-auto grid max-w-2xl grid-cols-2 gap-6 md:max-w-none md:grid-cols-3 md:gap-8">
           <div
-            className={`col-span-2 md:col-span-1 text-center ${isRTL ? "md:text-right" : "md:text-left"}`}
+            className={`col-span-2 text-center md:col-span-1 ${isRTL ? "md:text-right" : "md:text-left"}`}
           >
             <div
-              className={`flex items-center gap-2 mb-3 md:mb-4 justify-center ${isRTL ? "md:justify-end" : "md:justify-start"}`}
+              className={`mb-3 flex items-center justify-center gap-2 md:mb-4 ${isRTL ? "md:justify-end" : "md:justify-start"}`}
             >
               <Activity className="text-primary" size={28} />
-              <span className="font-bold text-lg md:text-xl">ClinicFlow</span>
+              <span className="text-lg font-bold md:text-xl">ClinicFlow</span>
             </div>
-            <p className="text-default-500 text-xs md:text-sm leading-relaxed">
+            <p className="text-default-500 text-xs leading-relaxed md:text-sm">
               {t("description")}
             </p>
           </div>
@@ -32,36 +31,17 @@ export const Footer = () => {
           <div
             className={`text-center ${isRTL ? "md:text-right" : "md:text-left"}`}
           >
-            <h4 className="font-semibold mb-3 md:mb-4 text-sm md:text-base">
+            <h4 className="mb-3 text-sm font-semibold md:mb-4 md:text-base">
               {t("product")}
             </h4>
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => {
-                    if (pathname === "/") {
-                      // If we're on home page, just scroll to pricing
-                      const pricingElement = document.getElementById("pricing");
-                      if (pricingElement) {
-                        pricingElement.scrollIntoView({ behavior: "smooth" });
-                      }
-                    } else {
-                      // If we're on another page, navigate to home first
-                      router.push("/");
-                      // Then scroll after navigation (with a small delay)
-                      setTimeout(() => {
-                        const pricingElement =
-                          document.getElementById("pricing");
-                        if (pricingElement) {
-                          pricingElement.scrollIntoView({ behavior: "smooth" });
-                        }
-                      }, 100);
-                    }
-                  }}
-                  className="text-default-500 hover:text-foreground text-xs md:text-sm transition-colors cursor-pointer bg-transparent border-none p-0"
+                <Link
+                  href="/#pricing"
+                  className="text-default-500 hover:text-foreground text-xs transition-colors md:text-sm"
                 >
                   {t("pricing")}
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -69,14 +49,14 @@ export const Footer = () => {
           <div
             className={`text-center ${isRTL ? "md:text-right" : "md:text-left"}`}
           >
-            <h4 className="font-semibold mb-3 md:mb-4 text-sm md:text-base">
+            <h4 className="mb-3 text-sm font-semibold md:mb-4 md:text-base">
               {t("company")}
             </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/about"
-                  className="text-default-500 hover:text-foreground text-xs md:text-sm transition-colors"
+                  className="text-default-500 hover:text-foreground text-xs transition-colors md:text-sm"
                 >
                   {t("about")}
                 </Link>
@@ -84,7 +64,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/contact"
-                  className="text-default-500 hover:text-foreground text-xs md:text-sm transition-colors"
+                  className="text-default-500 hover:text-foreground text-xs transition-colors md:text-sm"
                 >
                   {t("contact")}
                 </Link>
@@ -92,7 +72,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/help"
-                  className="text-default-500 hover:text-foreground text-xs md:text-sm transition-colors"
+                  className="text-default-500 hover:text-foreground text-xs transition-colors md:text-sm"
                 >
                   {t("helpCenter")}
                 </Link>
@@ -101,9 +81,9 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t mt-6 md:mt-8 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-3">
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t pt-6 md:mt-8 md:flex-row md:pt-8">
           <p
-            className={`text-default-500 text-xs md:text-sm text-center ${isRTL ? "md:text-right" : "md:text-left"}`}
+            className={`text-default-500 text-center text-xs md:text-sm ${isRTL ? "md:text-right" : "md:text-left"}`}
           >
             © 2024 ClinicFlow. {t("allRightsReserved")}
           </p>

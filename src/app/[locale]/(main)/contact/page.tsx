@@ -2,7 +2,7 @@ import { ContactForm } from "@/src/features/contact/ContactForm";
 import { routing } from "@/src/i18n/routing";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -14,6 +14,10 @@ export async function generateStaticParams() {
 
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
+
+  // Enable static rendering
+  setRequestLocale(locale);
+
   const t = await getTranslations({ locale, namespace: "contact" });
 
   const contactInfo = [
@@ -41,11 +45,11 @@ export default async function ContactPage({ params }: Props) {
     <div className="container mx-auto max-w-7xl py-24" data-locale={locale}>
       {/* Header Section */}
       <div className="mb-16">
-        <h1 className="text-3xl lg:text-4xl font-bold mb-4">{t("title")}</h1>
-        <p className="text-xl text-default-500 max-w-2xl">{t("subtitle")}</p>
+        <h1 className="mb-4 text-3xl font-bold lg:text-4xl">{t("title")}</h1>
+        <p className="text-default-500 max-w-2xl text-xl">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
+      <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-2">
         {/* Contact Form */}
         <div>
           <ContactForm />
@@ -54,14 +58,14 @@ export default async function ContactPage({ params }: Props) {
         {/* Contact Information */}
         <div className="space-y-8">
           <div>
-            <h2 className="text-2xl font-bold mb-6">{t("getInTouch")}</h2>
+            <h2 className="mb-6 text-2xl font-bold">{t("getInTouch")}</h2>
             <p className="text-default-500 mb-8">{t("description")}</p>
           </div>
 
           {contactInfo.map((info, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardBody className="p-8">
-                <h3 className="text-xl font-bold mb-3">{info.title}</h3>
+            <Card key={index} className="transition-shadow hover:shadow-md">
+              <CardBody className="p-8 text-start">
+                <h3 className="mb-3 text-xl font-bold">{info.title}</h3>
                 <p className="text-default-500 mb-6">{info.description}</p>
                 <div className="space-y-2">
                   <p className="font-medium">{info.contact}</p>
@@ -71,9 +75,9 @@ export default async function ContactPage({ params }: Props) {
             </Card>
           ))}
 
-          <Card className="bg-primary/5 hover:shadow-md transition-shadow">
-            <CardBody className="p-8">
-              <h3 className="text-xl font-bold mb-3">{t("demo.title")}</h3>
+          <Card className="bg-primary/5 transition-shadow hover:shadow-md">
+            <CardBody className="p-8 text-start">
+              <h3 className="mb-3 text-xl font-bold">{t("demo.title")}</h3>
               <p className="text-default-500 mb-6">{t("demo.description")}</p>
               <Button
                 color="primary"

@@ -3,16 +3,23 @@
 import { Button } from "@heroui/button";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
+import { spacing, textStyles } from "@/src/lib/styles";
+import { cn } from "@/src/lib/utils";
 
 export function CTASection() {
   const t = useTranslations("home");
 
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative">
-      <div className="container mx-auto max-w-4xl px-6 lg:px-8 text-center relative z-10">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-6">{t("ctaTitle")}</h2>
-        <p className="text-xl text-default-500 mb-12 max-w-2xl mx-auto">
+    <section
+      className={cn(
+        "from-muted/50 to-background bg-gradient-to-b",
+        spacing.section
+      )}
+    >
+      <div className="relative z-10 container mx-auto max-w-4xl px-6 text-center lg:px-8">
+        <h2 className={textStyles.sectionTitle}>{t("ctaTitle")}</h2>
+        <p className={cn(textStyles.sectionSubtitle, "text-default-500 mb-12")}>
           {t("ctaDescription")}
         </p>
         <Button
@@ -20,11 +27,11 @@ export function CTASection() {
           href="/signup"
           color="primary"
           size="lg"
-          className="font-semibold px-12 shadow-lg"
+          className="px-12 font-semibold shadow-lg"
         >
           {t("startFreeTrial")}
         </Button>
-        <p className="text-sm text-default-500 mt-8">{t("ctaFooter")}</p>
+        <p className="text-default-500 mt-8 text-sm">{t("ctaFooter")}</p>
       </div>
     </section>
   );

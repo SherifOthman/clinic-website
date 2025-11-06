@@ -1,20 +1,23 @@
 import { Card, CardBody } from "@heroui/card";
-import { ReactNode } from "react";
+import { LucideIcon } from "lucide-react";
+
+import { iconContainer, iconSizes, textStyles } from "@/src/lib/styles";
+import { cn } from "@/src/lib/utils";
 
 interface FeatureCardProps {
-  icon: ReactNode;
+  Icon: LucideIcon;
   title: string;
   description: string;
 }
 
-export const FeatureCard = ({ icon, title, description }: FeatureCardProps) => (
-  <Card className="hover:shadow-md transition-shadow">
+export const FeatureCard = ({ Icon, title, description }: FeatureCardProps) => (
+  <Card className="transition-shadow hover:shadow-md">
     <CardBody className="p-8 text-center">
-      <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-        <div className="text-primary">{icon}</div>
+      <div className={cn(iconContainer.primary, "mx-auto mb-6 h-16 w-16")}>
+        <Icon className={iconSizes.lg} />
       </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-default-500 leading-relaxed">{description}</p>
+      <h3 className={textStyles.cardTitle}>{title}</h3>
+      <p className={textStyles.cardDescription}>{description}</p>
     </CardBody>
   </Card>
 );

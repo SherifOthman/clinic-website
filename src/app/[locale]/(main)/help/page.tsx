@@ -46,13 +46,13 @@ export default function HelpPage() {
     <div className="container mx-auto max-w-7xl py-24">
       <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 mt-16">
+      <div className="mt-16 mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {helpSections.map((section, index) => (
-          <Card key={index} className="hover:shadow-md transition-shadow">
+          <Card key={index} className="transition-shadow hover:shadow-md">
             <CardHeader>
               <h3 className="text-xl font-bold">{section.title}</h3>
             </CardHeader>
-            <CardBody>
+            <CardBody className="text-start">
               <p className="text-default-500 mb-6">{section.description}</p>
               <ul className="space-y-3">
                 {section.items.map((item, itemIndex) => (
@@ -67,13 +67,15 @@ export default function HelpPage() {
       </div>
 
       <div className="text-center">
-        <Card className="bg-primary/5 max-w-2xl mx-auto hover:shadow-md transition-shadow">
-          <CardBody className="p-10">
-            <h3 className="text-3xl font-bold mb-4">{t("support.title")}</h3>
-            <p className="text-xl text-default-500 mb-8">
+        <Card className="bg-primary/5 mx-auto max-w-2xl transition-shadow hover:shadow-md">
+          <CardBody className="p-10 text-start">
+            <h3 className="mb-4 text-center text-3xl font-bold">
+              {t("support.title")}
+            </h3>
+            <p className="text-default-500 mb-8 text-xl">
               {t("support.description")}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Button
                 color="primary"
                 size="lg"

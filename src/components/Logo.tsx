@@ -1,7 +1,7 @@
 import { Activity } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 
 export const Logo = () => {
   const tCommon = useTranslations("common");
@@ -9,7 +9,7 @@ export const Logo = () => {
   return (
     <Link href="/" className="flex items-center gap-2">
       <Activity className="text-primary" size={32} />
-      <span className="font-bold text-xl text-foreground">
+      <span className="text-foreground text-xl font-bold">
         {tCommon("clinicFlow")}
       </span>
     </Link>

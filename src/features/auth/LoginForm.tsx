@@ -6,42 +6,26 @@ import { Divider } from "@heroui/divider";
 import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 
 export const LoginForm = () => {
   const t = useTranslations("auth.login");
 
   return (
     <Card className="shadow-2xl">
-      <CardHeader className="px-8 pt-8 pb-6" style={{ textAlign: "center" }}>
-        <div
-          className="space-y-4 flex flex-col items-center justify-center w-full"
-          style={{ textAlign: "center" }}
-        >
-          <h1
-            className="text-2xl font-bold w-full"
-            style={{ textAlign: "center" }}
-          >
-            {t("title")}
-          </h1>
-          <p
-            className="text-default-500 w-full"
-            style={{ textAlign: "center" }}
-          >
-            {t("subtitle")}
-          </p>
-        </div>
+      <CardHeader className="flex-col gap-4 px-8 pt-8 pb-6 text-center">
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
+        <p className="text-default-500">{t("subtitle")}</p>
       </CardHeader>
-      <CardBody className="px-8 pb-8 space-y-6">
+      <CardBody className="space-y-6 px-8 pb-8 text-start">
         <form className="space-y-4">
           <Input label={t("email")} type="email" />
-
           <Input label={t("password")} type="password" />
 
           <div className="flex justify-end">
-            <a href="#" className="text-sm text-primary hover:underline">
+            <Link href="#" className="text-primary text-sm hover:underline">
               {t("forgotPassword")}
-            </a>
+            </Link>
           </div>
 
           <Button
@@ -56,7 +40,7 @@ export const LoginForm = () => {
 
         <Divider />
 
-        <div className="text-center text-sm">
+        <p className="text-center text-sm">
           <span className="text-default-500">{t("noAccount")} </span>
           <Link
             href="/signup"
@@ -64,7 +48,7 @@ export const LoginForm = () => {
           >
             {t("signupLink")}
           </Link>
-        </div>
+        </p>
       </CardBody>
     </Card>
   );

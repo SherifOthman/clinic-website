@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/button";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 
 interface HeroButtonsProps {
   getStartedText: string;
@@ -25,13 +25,11 @@ export function HeroButtons({
         {getStartedText}
       </Button>
       <Button
+        as={Link}
+        href="/#pricing"
         variant="bordered"
         size="lg"
         className="px-10 font-semibold"
-        onPress={() => {
-          const pricingSection = document.getElementById("pricing");
-          pricingSection?.scrollIntoView({ behavior: "smooth" });
-        }}
       >
         {viewPricingText}
       </Button>

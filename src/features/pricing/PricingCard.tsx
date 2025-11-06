@@ -6,7 +6,7 @@ import { Chip } from "@heroui/chip";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 import { cn } from "@/src/lib/utils";
 import { PricingPlan } from "@/src/types";
 
@@ -31,7 +31,7 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
       className={cn(
         "relative overflow-hidden transition-all",
         plan.popular
-          ? "ring-2 ring-primary shadow-xl scale-105"
+          ? "ring-primary scale-105 shadow-xl ring-2"
           : "hover:shadow-md"
       )}
     >
@@ -45,8 +45,8 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
           </Chip>
         </div>
       )}
-      <CardBody className="p-8">
-        <h3 className="text-2xl font-bold mb-2">{planData?.name || plan.id}</h3>
+      <CardBody className="p-8 text-start">
+        <h3 className="mb-2 text-2xl font-bold">{planData?.name || plan.id}</h3>
         <p className="text-default-500 mb-4">
           {planData?.description || `Perfect for ${plan.id} practices`}
         </p>
@@ -55,17 +55,19 @@ export function PricingCard({ plan, isYearly = false }: PricingCardProps) {
           <span className="text-default-500">/{priceLabel}</span>
           {isYearly && (
             <div className="mt-2">
-              <span className="text-sm text-green-600 dark:text-green-400 font-medium">
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">
                 Save ${Math.round(plan.price * 12 * 0.2)}/year
               </span>
             </div>
           )}
         </div>
-        <ul className="space-y-3 mb-8">
+        <ul className="mb-8 space-y-3">
           {features.map((feature: string, index: number) => (
-            <li key={index} className="flex items-center gap-3">
-              <Check className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
-              <span className="text-default-500 text-sm">{feature}</span>
+            <li key={index} className="flex items-start gap-3">
+              <Check className="h-5 w-5 flex-shrink-0 text-green-600 ltr:mt-0.5 rtl:mt-0.5 dark:text-green-400" />
+              <span className="text-default-500 text-start text-sm">
+                {feature}
+              </span>
             </li>
           ))}
         </ul>

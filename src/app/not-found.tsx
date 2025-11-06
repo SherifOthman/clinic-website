@@ -1,78 +1,70 @@
-"use client";
-
 import { Button } from "@heroui/button";
 import { Home, Mail, Search } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-background to-muted/50">
-      <div className="max-w-2xl w-full text-center">
+    <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-b px-6">
+      <div className="w-full max-w-2xl text-center">
         <div className="relative mb-8">
-          <div className="text-[180px] sm:text-[220px] font-bold text-primary/10 leading-none select-none">
+          <div className="text-primary/10 text-[180px] leading-none font-bold select-none sm:text-[220px]">
             404
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
             <Search
-              className="w-20 h-20 sm:w-24 sm:h-24 text-primary/40"
+              className="text-primary/40 h-20 w-20 sm:h-24 sm:w-24"
               strokeWidth={1.5}
             />
           </div>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+        <h1 className="mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
           Page Not Found
         </h1>
-        <p className="text-lg sm:text-xl text-default-500 mb-10 max-w-lg mx-auto">
+        <p className="text-default-500 mx-auto mb-10 max-w-lg text-lg sm:text-xl">
           The page you're looking for doesn't exist or has been moved.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button
-            onClick={() => (window.location.href = "/en")}
-            color="primary"
-            size="lg"
-            className="min-w-[180px]"
-          >
-            <Home className="w-5 h-5 mr-2" />
-            Go Home
-          </Button>
-          <Button
-            onPress={() => (window.location.href = "en/contact")}
-            variant="bordered"
-            size="lg"
-            className="min-w-[180px]"
-          >
-            <Mail className="w-5 h-5 mr-2" />
-            Contact Support
-          </Button>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href="/en">
+            <Button color="primary" size="lg" className="min-w-[180px]">
+              <Home className="mr-2 h-5 w-5" />
+              Go Home
+            </Button>
+          </a>
+          <a href="/en/contact">
+            <Button variant="bordered" size="lg" className="min-w-[180px]">
+              <Mail className="mr-2 h-5 w-5" />
+              Contact Support
+            </Button>
+          </a>
         </div>
 
-        <div className="mt-12 pt-8 border-t">
-          <p className="text-sm text-default-500 mb-4">
+        <div className="mt-12 border-t pt-8">
+          <p className="text-default-500 mb-4 text-sm">
             You might be looking for:
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/en/" className="text-sm text-primary hover:underline">
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="/en/" className="text-primary text-sm hover:underline">
               Home
             </a>
             <span className="text-default-500">•</span>
             <a
               href="/en/about"
-              className="text-sm text-primary hover:underline"
+              className="text-primary text-sm hover:underline"
             >
               About
             </a>
             <span className="text-default-500">•</span>
             <a
               href="/en#pricing"
-              className="text-sm text-primary hover:underline"
+              className="text-primary text-sm hover:underline"
             >
               Pricing
             </a>
             <span className="text-default-500">•</span>
             <a
               href="/en/contact"
-              className="text-sm text-primary hover:underline"
+              className="text-primary text-sm hover:underline"
             >
               Contact
             </a>

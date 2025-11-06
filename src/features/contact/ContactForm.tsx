@@ -11,22 +11,16 @@ export const ContactForm = () => {
 
   return (
     <Card className="shadow-xl">
-      <CardHeader className="px-8 pt-8 pb-6">
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">{tContact("title")}</h2>
-          <p className="text-default-500">{tContact("subtitle")}</p>
-        </div>
+      <CardHeader className="flex-col items-start gap-4 px-8 pt-8 pb-6">
+        <h2 className="text-2xl font-bold">{tContact("title")}</h2>
+        <p className="text-default-500">{tContact("subtitle")}</p>
       </CardHeader>
-      <CardBody className="px-8 pb-8">
+      <CardBody className="px-8 pb-8 text-start">
         <form className="space-y-6">
           <Input label={t("name")} />
-
           <Input label={t("email")} type="email" />
-
           <Input label={t("company")} />
-
           <Textarea label={t("message")} rows={4} />
-
           <Button
             type="submit"
             color="primary"

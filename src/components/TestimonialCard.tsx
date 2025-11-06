@@ -4,89 +4,43 @@ import { Avatar } from "@heroui/avatar";
 import { Card, CardBody } from "@heroui/card";
 import { Star } from "lucide-react";
 
+import { iconSizes } from "@/src/lib/styles";
 import { Testimonial } from "@/src/types";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
-  locale?: string;
 }
 
-export const TestimonialCard = ({
-  testimonial,
-  locale = "en",
-}: TestimonialCardProps) => {
-  const isRTL = locale === "ar";
-
+export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   return (
-    <Card className="h-full hover:shadow-lg transition-shadow">
-      <CardBody className="p-5 md:p-8">
-        <div className="flex items-start justify-between gap-3 md:gap-4 mb-4 md:mb-6">
-          {isRTL ? (
-            <>
-              {/* Arabic RTL: Image on the far left */}
-              <Avatar
-                src={testimonial.avatar}
-                name={testimonial.name}
-                className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0"
-              />
-              {/* Info in the middle */}
-              <div className="text-right flex-grow">
-                <h4 className="font-semibold text-base md:text-lg">
-                  {testimonial.name}
-                </h4>
-                <p className="text-primary font-medium text-sm md:text-base">
-                  {testimonial.role}
-                </p>
-                <p className="text-xs md:text-sm text-default-500">
-                  {testimonial.clinic}
-                </p>
-              </div>
-              {/* Stars on the far right */}
-              <div className="flex text-yellow-400 flex-shrink-0">
-                {Array.from({ length: testimonial.rating }, (_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 md:w-5 md:h-5 fill-current"
-                  />
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              {/* English LTR: Image and Info together on the left */}
-              <div className="flex items-start gap-3 md:gap-4">
-                <Avatar
-                  src={testimonial.avatar}
-                  name={testimonial.name}
-                  className="h-12 w-12 md:h-14 md:w-14 flex-shrink-0"
-                />
-                <div className="text-left">
-                  <h4 className="font-semibold text-base md:text-lg">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-primary font-medium text-sm md:text-base">
-                    {testimonial.role}
-                  </p>
-                  <p className="text-xs md:text-sm text-default-500">
-                    {testimonial.clinic}
-                  </p>
-                </div>
-              </div>
-              {/* Stars on the right */}
-              <div className="flex text-yellow-400 flex-shrink-0">
-                {Array.from({ length: testimonial.rating }, (_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 md:w-5 md:h-5 fill-current"
-                  />
-                ))}
-              </div>
-            </>
-          )}
+    <Card className="h-full transition-shadow hover:shadow-lg">
+      <CardBody className="p-5 text-start md:p-8">
+        <div className="mb-4 flex items-start justify-between gap-3 md:mb-6 md:gap-4">
+          <div className="flex flex-1 items-start gap-3 md:gap-4">
+            <Avatar
+              src={testimonial.avatar}
+              name={testimonial.name}
+              className="h-12 w-12 flex-shrink-0 md:h-14 md:w-14"
+            />
+            <div className="text-start">
+              <h4 className="text-base font-semibold md:text-lg">
+                {testimonial.name}
+              </h4>
+              <p className="text-primary text-sm font-medium md:text-base">
+                {testimonial.role}
+              </p>
+              <p className="text-default-500 text-xs md:text-sm">
+                {testimonial.clinic}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-shrink-0 text-yellow-400">
+            {Array.from({ length: testimonial.rating }, (_, i) => (
+              <Star key={i} className={`${iconSizes.md} fill-current`} />
+            ))}
+          </div>
         </div>
-        <blockquote
-          className={`text-foreground/80 text-sm md:text-base leading-relaxed ${isRTL ? "text-right" : "text-left"}`}
-        >
+        <blockquote className="text-foreground/80 text-start text-sm leading-relaxed md:text-base">
           "{testimonial.quote}"
         </blockquote>
       </CardBody>

@@ -1,18 +1,12 @@
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 
-import { routing } from "./routing";
+import { DEFAULT_LOCALE, LOCALES } from "@/src/config/locales";
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  let locale = await requestLocale;
-
-  if (!locale || !routing.locales.includes(locale as any)) {
-    locale = routing.defaultLocale;
-  }
-
+  const requested = await requestLocale;
+  const locale = hasLocale(LOCALES, requested) ? requested : DEFAULT_LOCALE;
   const messages = (await import(`../messages/${locale}.json`)).default;
 
-  return {
-    locale,
-    messages,
-  };
+  return { locale, messages };
 });

@@ -5,33 +5,18 @@ import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Input } from "@heroui/input";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 
 export const SignupForm = () => {
   const t = useTranslations("auth.signup");
 
   return (
     <Card className="shadow-2xl">
-      <CardHeader className="px-8 pt-8 pb-6" style={{ textAlign: "center" }}>
-        <div
-          className="space-y-4 flex flex-col items-center justify-center w-full"
-          style={{ textAlign: "center" }}
-        >
-          <h1
-            className="text-2xl font-bold w-full"
-            style={{ textAlign: "center" }}
-          >
-            {t("title")}
-          </h1>
-          <p
-            className="text-default-500 w-full"
-            style={{ textAlign: "center" }}
-          >
-            {t("subtitle")}
-          </p>
-        </div>
+      <CardHeader className="flex-col gap-4 px-8 pt-8 pb-6 text-center">
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
+        <p className="text-default-500">{t("subtitle")}</p>
       </CardHeader>
-      <CardBody className="px-8 pb-8 space-y-6">
+      <CardBody className="space-y-6 px-8 pb-8 text-start">
         <form className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <Input label={t("firstName")} />
@@ -67,7 +52,7 @@ export const SignupForm = () => {
           </Link>
         </div>
 
-        <p className="text-xs text-default-500 text-center">{t("terms")}</p>
+        <p className="text-default-500 text-center text-xs">{t("terms")}</p>
       </CardBody>
     </Card>
   );
