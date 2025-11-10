@@ -15,15 +15,15 @@ export function HeroSection() {
           <div className="flex-1 text-start lg:max-w-[50%]">
             <Chip
               variant="flat"
-              className="bg-chip mt-8 mb-6 px-4 py-2 text-base"
+              className="bg-chip mt-8 mb-6 px-4 py-2 text-sm font-medium sm:text-base"
             >
-              Trusted by 1000+ Healthcare Practices
+              ✨ Trusted by 1000+ Healthcare Practices
             </Chip>
-            <h1 className="text-foreground mb-4 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl xl:text-5xl">
+            <h1 className="text-foreground mb-5 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl xl:text-6xl">
               Complete Clinic Management
               <span className="text-primary mt-2 block">Made Simple</span>
             </h1>
-            <p className="text-default-500 mb-8 text-base leading-relaxed sm:text-lg lg:text-xl">
+            <p className="text-default-600 mb-8 max-w-2xl text-base leading-relaxed sm:text-lg lg:text-xl">
               Streamline your healthcare practice with our comprehensive
               management platform. From patient records to appointment
               scheduling, everything you need in one place.
@@ -32,7 +32,9 @@ export function HeroSection() {
               getStartedText="Get Started Free"
               viewPricingText="View Pricing"
             />
-            <p className="text-default-500 text-sm">No credit card required</p>
+            <p className="text-default-500 mt-4 text-sm font-medium">
+              ✓ No credit card required • Free 14-day trial
+            </p>
           </div>
 
           {/* Image Section */}
