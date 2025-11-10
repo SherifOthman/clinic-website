@@ -1,15 +1,9 @@
-import { Cairo, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 export const fontSans = Roboto({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
+  display: "optional",
   weight: ["300", "400", "500", "700"],
-});
-
-export const fontArabic = Cairo({
-  subsets: ["arabic", "latin"],
-  variable: "--font-arabic",
-  display: "swap",
-  weight: ["300", "400", "500", "700"],
+  preload: true,
 });

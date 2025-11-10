@@ -1,15 +1,12 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
 
-import { Link } from "@/src/i18n/navigation";
 import { spacing, textStyles } from "@/src/lib/styles";
 import { cn } from "@/src/lib/utils";
 
 export function CTASection() {
-  const t = useTranslations("home");
-
   return (
     <section
       className={cn(
@@ -18,9 +15,11 @@ export function CTASection() {
       )}
     >
       <div className="relative z-10 container mx-auto max-w-4xl px-6 text-center lg:px-8">
-        <h2 className={textStyles.sectionTitle}>{t("ctaTitle")}</h2>
+        <h2 className={textStyles.sectionTitle}>
+          Ready to Transform Your Practice?
+        </h2>
         <p className={cn(textStyles.sectionSubtitle, "text-default-500 mb-12")}>
-          {t("ctaDescription")}
+          Join thousands of healthcare professionals who trust ClinicFlow
         </p>
         <Button
           as={Link}
@@ -29,9 +28,9 @@ export function CTASection() {
           size="lg"
           className="px-12 font-semibold shadow-lg"
         >
-          {t("startFreeTrial")}
+          Start Your Free Trial
         </Button>
-        <p className="text-default-500 mt-8 text-sm">{t("ctaFooter")}</p>
+        <p className="text-default-500 mt-8 text-sm">30-day free trial</p>
       </div>
     </section>
   );

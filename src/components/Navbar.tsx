@@ -10,22 +10,31 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useState } from "react";
 
-import { LanguageSwitcher } from "@/src/components/LanguageSwitcher";
-import { Logo } from "@/src/components/Logo";
-import { NavigationLinks } from "@/src/components/NavigationLinks";
-import { ThemeSwitch } from "@/src/components/ThemeSwitch";
-import { UserMenu } from "@/src/components/UserMenu";
 import { AUTH_LINKS, NAV_LINKS } from "@/src/config/navigation";
 import { useActiveLink } from "@/src/hooks/useActiveLink";
-import { Link } from "@/src/i18n/navigation";
+import { Logo } from "./Logo";
+import { NavigationLinks } from "./NavigationLinks";
+import { ThemeSwitch } from "./ThemeSwitch";
+import { UserMenu } from "./UserMenu";
+
+const navLabels: Record<string, string> = {
+  home: "Home",
+  pricing: "Pricing",
+  about: "About",
+  contact: "Contact",
+  login: "Login",
+  signup: "Get Started",
+};
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const t = useTranslations("navigation");
   const { isActive } = useActiveLink();
+
+  // TODO: Implement user state management
+  const user = null;
 
   return (
     <HeroUINavbar
@@ -38,7 +47,7 @@ export const Navbar = () => {
         <NavbarBrand className="max-w-fit gap-3">
           <Logo />
         </NavbarBrand>
-        <div className="hidden sm:flex ltr:ml-4 rtl:mr-4">
+        <div className="ml-4 hidden sm:flex">
           <NavigationLinks />
         </div>
       </NavbarContent>
@@ -48,17 +57,12 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="flex gap-2">
-          <LanguageSwitcher />
           <ThemeSwitch />
-          <UserMenu />
+          <UserMenu user={user} />
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent
-        className="basis-1 sm:hidden ltr:pl-4 rtl:pr-4"
-        justify="end"
-      >
-        <LanguageSwitcher />
+      <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
@@ -74,7 +78,7 @@ export const Navbar = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t(item.key)}
+                {navLabels[item.key]}
               </Link>
             </NavbarMenuItem>
           ))}
@@ -89,7 +93,7 @@ export const Navbar = () => {
                 color={item.key === "signup" ? "primary" : undefined}
                 className="w-full"
               >
-                {t(item.key)}
+                {navLabels[item.key]}
               </Button>
             ))}
           </div>

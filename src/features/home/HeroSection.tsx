@@ -1,12 +1,9 @@
 import { Chip } from "@heroui/chip";
-import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { HeroButtons } from "./HeroButtons";
 
-export async function HeroSection({ locale }: { locale: string }) {
-  const t = await getTranslations({ locale, namespace: "home" });
-
+export function HeroSection() {
   return (
     <section
       className="from-background to-default-50 relative flex items-center overflow-hidden bg-gradient-to-b pt-4 pb-12 lg:pt-6 lg:pb-16"
@@ -20,22 +17,22 @@ export async function HeroSection({ locale }: { locale: string }) {
               variant="flat"
               className="bg-chip mt-8 mb-6 px-4 py-2 text-base"
             >
-              {t("trustedBy")}
+              Trusted by 1000+ Healthcare Practices
             </Chip>
             <h1 className="text-foreground mb-4 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl xl:text-5xl">
-              {t("heroTitle")}
-              <span className="text-primary mt-2 block">
-                {t("heroSubtitle")}
-              </span>
+              Complete Clinic Management
+              <span className="text-primary mt-2 block">Made Simple</span>
             </h1>
             <p className="text-default-500 mb-8 text-base leading-relaxed sm:text-lg lg:text-xl">
-              {t("heroDescription")}
+              Streamline your healthcare practice with our comprehensive
+              management platform. From patient records to appointment
+              scheduling, everything you need in one place.
             </p>
             <HeroButtons
-              getStartedText={t("getStartedFree")}
-              viewPricingText={t("viewPricing")}
+              getStartedText="Get Started Free"
+              viewPricingText="View Pricing"
             />
-            <p className="text-default-500 text-sm">{t("noCardRequired")}</p>
+            <p className="text-default-500 text-sm">No credit card required</p>
           </div>
 
           {/* Image Section */}

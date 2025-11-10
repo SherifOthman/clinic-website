@@ -6,9 +6,18 @@ export interface User {
   lastName: string;
   email: string;
   clinicName: string;
-  role?: "admin" | "doctor" | "staff";
   plan: "starter" | "professional" | "enterprise";
-  isFirstLogin: boolean;
+  avatar?: string;
+  phone?: string;
+  address?: string;
+  description?: string;
+  createdAt: string;
+}
+
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: User;
 }
 
 export interface Testimonial {
@@ -19,10 +28,4 @@ export interface Testimonial {
   avatar: string;
   quote: string;
   rating: number;
-}
-
-export interface PricingPlan {
-  id: "starter" | "professional" | "enterprise";
-  price: number;
-  popular?: boolean;
 }

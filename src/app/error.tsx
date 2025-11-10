@@ -11,39 +11,39 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-background to-muted/50">
-      <div className="max-w-2xl w-full text-center">
+    <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-b px-6">
+      <div className="w-full max-w-2xl text-center">
         <div className="relative mb-8">
-          <div className="text-[180px] sm:text-[220px] font-bold text-destructive/10 leading-none select-none">
+          <div className="text-destructive/10 text-[180px] leading-none font-bold select-none sm:text-[220px]">
             ERROR
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-destructive/20 blur-3xl rounded-full" />
+              <div className="bg-destructive/20 absolute inset-0 rounded-full blur-3xl" />
               <AlertTriangle
-                className="w-20 h-20 sm:w-24 sm:h-24 text-destructive relative z-10"
+                className="text-destructive relative z-10 h-20 w-20 sm:h-24 sm:w-24"
                 strokeWidth={1.5}
               />
             </div>
           </div>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+        <h1 className="mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
           Something Went Wrong!
         </h1>
-        <p className="text-lg sm:text-xl text-default-500 mb-10 max-w-lg mx-auto">
+        <p className="text-default-500 mx-auto mb-10 max-w-lg text-lg sm:text-xl">
           We encountered an unexpected error. Please try again or contact
           support if the problem persists.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
             color="primary"
             size="lg"
             onPress={reset}
             className="min-w-[180px]"
           >
-            <RefreshCw className="w-5 h-5 mr-2" />
+            <RefreshCw className="mr-2 h-5 w-5" />
             Try Again
           </Button>
           <Button
@@ -52,13 +52,13 @@ export default function Error({
             onPress={() => (window.location.href = "/")}
             className="min-w-[180px]"
           >
-            <Home className="w-5 h-5 mr-2" />
+            <Home className="mr-2 h-5 w-5" />
             Go Home
           </Button>
         </div>
 
-        <div className="mt-12 pt-8 border-t">
-          <p className="text-sm text-default-500 mb-4">
+        <div className="mt-12 border-t pt-8">
+          <p className="text-default-500 mb-4 text-sm">
             Need help? We're here for you
           </p>
           <Button
@@ -67,17 +67,17 @@ export default function Error({
             onPress={() => (window.location.href = "/contact")}
             className="text-primary"
           >
-            <Mail className="w-4 h-4 mr-2" />
+            <Mail className="mr-2 h-4 w-4" />
             Contact Support
           </Button>
         </div>
 
         {process.env.NODE_ENV === "development" && (
-          <div className="mt-8 p-4 bg-destructive/5 border border-destructive/20 rounded-lg text-left">
-            <p className="text-xs font-mono text-destructive mb-2">
+          <div className="bg-destructive/5 border-destructive/20 mt-8 rounded-lg border p-4 text-left">
+            <p className="text-destructive mb-2 font-mono text-xs">
               Development Error Details:
             </p>
-            <p className="text-xs font-mono text-default-500 break-all">
+            <p className="text-default-500 font-mono text-xs break-all">
               {error.message}
             </p>
           </div>

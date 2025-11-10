@@ -1,13 +1,18 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 import { NAV_LINKS } from "@/src/config/navigation";
 import { useActiveLink } from "@/src/hooks/useActiveLink";
-import { Link } from "@/src/i18n/navigation";
+
+const navLabels: Record<string, string> = {
+  home: "Home",
+  pricing: "Pricing",
+  about: "About",
+  contact: "Contact",
+};
 
 export const NavigationLinks = () => {
-  const t = useTranslations("navigation");
   const { isActive } = useActiveLink();
 
   return (
@@ -20,7 +25,7 @@ export const NavigationLinks = () => {
             isActive(item.href) ? "text-primary" : "text-foreground"
           }`}
         >
-          {t(item.key)}
+          {navLabels[item.key]}
         </Link>
       ))}
     </div>

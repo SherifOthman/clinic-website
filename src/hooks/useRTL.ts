@@ -1,6 +1,4 @@
-import { useLocale } from "next-intl";
-
+// English-only app - RTL is always false
 export const useRTL = () => {
-  const locale = useLocale();
-  return locale === "ar";
+  return false;
 };

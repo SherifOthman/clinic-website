@@ -1,7 +1,19 @@
-import { redirect } from "next/navigation";
+import {
+  CTASection,
+  FeaturesSection,
+  HeroSection,
+  PricingPreviewSection,
+  TestimonialsSection,
+} from "@/src/features/home";
 
-// Root page - middleware should redirect to locale
-// This is a fallback in case middleware doesn't catch it
-export default function RootPage() {
-  redirect("/en");
+export default function HomePage() {
+  return (
+    <div className="min-h-screen">
+      <HeroSection />
+      <FeaturesSection />
+      <TestimonialsSection />
+      <PricingPreviewSection />
+      <CTASection />
+    </div>
+  );
 }

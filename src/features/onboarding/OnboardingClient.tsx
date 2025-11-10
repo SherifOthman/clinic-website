@@ -2,30 +2,56 @@
 
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardHeader } from "@heroui/card";
-import { useTranslations } from "next-intl";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { Stepper } from "@/src/components/Stepper";
-import { ClinicInfoForm } from "@/src/features/onboarding/ClinicInfoForm";
-import { ClinicNameForm } from "@/src/features/onboarding/ClinicNameForm";
-import { PlanSelector } from "@/src/features/onboarding/PlanSelector";
+import { Stepper } from "@/src/components";
+
+import { updateUserAction } from "./actions";
+
+import { ClinicInfoForm } from "./ClinicInfoForm";
+import { ClinicNameForm } from "./ClinicNameForm";
+import { PlanSelector } from "./PlanSelector";
+import { onboardingSchema, type OnboardingFormData } from "./schemas";
 
 export function OnboardingClient() {
-  const t = useTranslations();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState<
-    "starter" | "professional" | "enterprise"
-  >("professional");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const methods = useForm<OnboardingFormData>({
+    resolver: zodResolver(onboardingSchema),
+    defaultValues: {
+      plan: "professional",
+      clinicName: "",
+      phone: "",
+      address: "",
+      description: "",
+    },
+  });
+
+  const { watch, setValue, handleSubmit } = methods;
+  const selectedPlan = watch("clinicName");
 
   const steps = [
-    t("onboarding.step1.title"),
-    t("onboarding.step2.title"),
-    t("onboarding.step3.title"),
-    t("onboarding.step4.title"),
+    "Choose Your Plan",
+    "Clinic Name",
+    "Clinic Details",
+    "Setup Complete",
   ];
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
+  const handleNext = async () => {
+    let isValid = true;
+
+    if (currentStep === 1) {
+      isValid = await methods.trigger("clinicName");
+    } else if (currentStep === 2) {
+      isValid = await methods.trigger(["clinicName", "phone", "address"]);
+    }
+
+    if (isValid && currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -36,13 +62,39 @@ export function OnboardingClient() {
     }
   };
 
+  const onSubmit = async (data: OnboardingFormData) => {
+    setIsLoading(true);
+    try {
+      const updateData: any = {
+        plan: data.plan,
+        clinicName: data.clinicName,
+        phone: data.phone,
+        address: data.address,
+      };
+      if (data.description) {
+        updateData.description = data.description;
+      }
+
+      const result = await updateUserAction(updateData);
+
+      if (result.success) {
+        router.push("/dashboard");
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Onboarding error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
         return (
           <PlanSelector
-            selectedPlan={selectedPlan}
-            onPlanSelect={setSelectedPlan}
+            selectedPlan={watch("plan")}
+            onPlanSelect={(plan) => setValue("plan", plan)}
           />
         );
 
@@ -57,10 +109,10 @@ export function OnboardingClient() {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-4 text-4xl md:text-5xl">🎉</div>
             <h2 className="mb-2 text-2xl font-bold text-green-600 md:text-3xl">
-              {t("onboarding.step4.title")}
+              Setup Complete
             </h2>
             <p className="text-default-500 text-base md:text-lg">
-              {t("onboarding.step4.subtitle")}
+              You're all set! Welcome to ClinicFlow
             </p>
           </div>
         );
@@ -71,60 +123,68 @@ export function OnboardingClient() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6 md:py-6">
-      <Card className="overflow-hidden rounded-3xl shadow-2xl">
-        <CardHeader className="from-primary/8 via-primary/4 flex flex-col gap-6 bg-gradient-to-br to-transparent px-6 pt-6 pb-4 md:gap-8 md:px-10 md:pt-8 md:pb-6">
-          <div className="text-center">
-            <h1 className="mb-1 text-xl font-bold md:mb-2 md:text-2xl">
-              {t("onboarding.title")}
-            </h1>
-            <p className="text-default-500 text-sm md:text-base">
-              {t("onboarding.subtitle")}
-            </p>
-          </div>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6 md:py-6">
+          <Card className="overflow-hidden rounded-3xl shadow-2xl">
+            <CardHeader className="from-primary/8 via-primary/4 flex flex-col gap-6 bg-gradient-to-br to-transparent px-6 pt-6 pb-4 md:gap-8 md:px-10 md:pt-8 md:pb-6">
+              <div className="text-center">
+                <h1 className="mb-1 text-xl font-bold md:mb-2 md:text-2xl">
+                  Welcome to ClinicFlow
+                </h1>
+                <p className="text-default-500 text-sm md:text-base">
+                  Let's set up your clinic in just a few steps
+                </p>
+              </div>
 
-          <div className="mx-auto w-full max-w-2xl">
-            <Stepper steps={steps} currentStep={currentStep} />
-          </div>
-        </CardHeader>
+              <div className="mx-auto w-full max-w-2xl">
+                <Stepper steps={steps} currentStep={currentStep} />
+              </div>
+            </CardHeader>
 
-        <CardBody className="px-8 pb-6 md:px-16 md:pb-8">
-          <div className="flex min-h-[500px] flex-col md:min-h-[600px]">
-            <div className="flex-grow py-4 md:py-6">{renderStepContent()}</div>
+            <CardBody className="px-8 pb-6 md:px-16 md:pb-8">
+              <div className="flex min-h-[400px] flex-col md:min-h-[450px]">
+                <div className="flex-grow py-4 md:py-6">
+                  {renderStepContent()}
+                </div>
 
-            <div className="flex items-center justify-between border-t pt-6 md:pt-8">
-              <Button
-                variant="bordered"
-                size="lg"
-                onPress={handlePrevious}
-                isDisabled={currentStep === 0}
-                className="min-w-24 font-semibold md:min-w-32"
-              >
-                {t("common.previous")}
-              </Button>
+                <div className="flex items-center justify-between border-t pt-6 md:pt-8">
+                  <Button
+                    variant="bordered"
+                    size="lg"
+                    onPress={handlePrevious}
+                    isDisabled={currentStep === 0}
+                    className="min-w-24 font-semibold md:min-w-32"
+                  >
+                    Previous
+                  </Button>
 
-              {currentStep < steps.length - 1 ? (
-                <Button
-                  color="primary"
-                  size="lg"
-                  onPress={handleNext}
-                  className="min-w-24 font-semibold shadow-lg md:min-w-32"
-                >
-                  {t("common.next")}
-                </Button>
-              ) : (
-                <Button
-                  color="success"
-                  size="lg"
-                  className="min-w-32 font-semibold shadow-lg md:min-w-40"
-                >
-                  {t("onboarding.completeSetup")}
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardBody>
-      </Card>
-    </div>
+                  {currentStep < steps.length - 1 ? (
+                    <Button
+                      color="primary"
+                      size="lg"
+                      onPress={handleNext}
+                      className="min-w-24 font-semibold shadow-lg md:min-w-32"
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      color="success"
+                      size="lg"
+                      className="min-w-32 font-semibold shadow-lg md:min-w-40"
+                      isLoading={isLoading}
+                    >
+                      Complete Setup
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+      </form>
+    </FormProvider>
   );
 }

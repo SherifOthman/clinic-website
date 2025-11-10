@@ -1,30 +1,11 @@
 import { Metadata, Viewport } from "next";
-import "./globals.css";
 
-import { fontArabic, fontSans } from "@/src/config/fonts";
+import { Footer, Navbar } from "@/src/components";
+import { fontSans } from "@/src/config/fonts";
 import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
-
+import "./globals.css";
 import { Providers } from "./providers";
-
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  // metadataBase: new URL("https://localhost:3000"),
-  keywords: [
-    "clinic management",
-    "healthcare",
-    "patient management",
-    "medical software",
-    "HIPAA compliant",
-  ],
-  authors: [{ name: "ClinicFlow Team" }],
-  creator: "ClinicFlow",
-  publisher: "ClinicFlow",
-};
 
 export const viewport: Viewport = {
   themeColor: [
@@ -38,22 +19,39 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
-export default async function RootLayout({
+export const metadata: Metadata = {
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body
+        suppressHydrationWarning
         className={cn(
           "text-foreground bg-background min-h-screen font-sans antialiased",
-          fontSans.variable,
-          fontArabic.variable
+          fontSans.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="relative flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );

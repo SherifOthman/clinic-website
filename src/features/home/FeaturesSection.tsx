@@ -1,35 +1,34 @@
-"use client";
-
 import { BarChart3, Calendar, Shield, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
 
-import { FeatureCard } from "@/src/components/FeatureCard";
 import { spacing, textStyles } from "@/src/lib/styles";
 import { cn } from "@/src/lib/utils";
+import { FeatureCard } from "./FeatureCard";
 
 export function FeaturesSection() {
-  const t = useTranslations("home.features");
-
   const features = [
     {
       Icon: Users,
-      title: t("patientManagement.title"),
-      description: t("patientManagement.description"),
+      title: "Patient Management",
+      description:
+        "Complete patient records, medical history, and secure document storage with HIPAA compliance.",
     },
     {
       Icon: Calendar,
-      title: t("smartScheduling.title"),
-      description: t("smartScheduling.description"),
+      title: "Smart Scheduling",
+      description:
+        "Intelligent appointment booking with automated reminders and calendar synchronization.",
     },
     {
       Icon: Shield,
-      title: t("hipaaCompliance.title"),
-      description: t("hipaaCompliance.description"),
+      title: "HIPAA Compliance",
+      description:
+        "Built-in security features and compliance tools to protect patient data and meet regulations.",
     },
     {
       Icon: BarChart3,
-      title: t("analytics.title"),
-      description: t("analytics.description"),
+      title: "Analytics & Reports",
+      description:
+        "Comprehensive insights into your practice performance with customizable reports and dashboards.",
     },
   ];
 
@@ -38,9 +37,12 @@ export function FeaturesSection() {
       <div className={spacing.container}>
         <div className="mb-20 text-center">
           <h2 className={cn(textStyles.sectionTitle, "text-foreground")}>
-            {t("title")}
+            Everything You Need to Run Your Clinic
           </h2>
-          <p className={textStyles.sectionSubtitle}>{t("subtitle")}</p>
+          <p className={textStyles.sectionSubtitle}>
+            Comprehensive tools designed specifically for healthcare
+            professionals
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">

@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/button";
-
-import { Link } from "@/src/i18n/navigation";
+import Link from "next/link";
 
 interface HeroButtonsProps {
   getStartedText: string;
