@@ -1,0 +1,343 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "login": "Login"
+  },
+  "hero": {
+    "title": "Modern Clinic Management Platform",
+    "subtitle": "Comprehensive patient management system with multi-user access, location services, and secure data handling - built for healthcare professionals",
+    "cta": "Start Free Trial",
+    "secondary": "View Demo"
+  },
+  "features": {
+    "title": "Core Features",
+    "subtitle": "Essential tools for modern clinic management",
+    "patientManagement": {
+      "title": "Patient Records",
+      "description": "Complete patient database with personal info, medical history, chronic diseases, phone numbers, and location tracking with advanced search and filtering"
+    },
+    "userManagement": {
+      "title": "Multi-User System",
+      "description": "Role-based access for Admins, Clinic Owners, Doctors, and Receptionists with secure authentication, email verification, and profile management"
+    },
+    "locationServices": {
+      "title": "Location Integration",
+      "description": "Global address management with GeoNames API integration, phone number validation, and support for multiple clinic branches"
+    },
+    "onboarding": {
+      "title": "Easy Setup",
+      "description": "Guided onboarding process for clinic setup with subscription plan selection, staff invitation, and multi-step configuration wizard"
+    },
+    "fileManagement": {
+      "title": "File Storage",
+      "description": "Secure profile image uploads, document management system, and file organization with proper access controls"
+    },
+    "dataManagement": {
+      "title": "Data Security",
+      "description": "Multi-tenant architecture with secure data isolation, comprehensive audit trails, rate limiting, and HIPAA-compliant data handling"
+    }
+  },
+  "testimonials": {
+    "title": "What Healthcare Professionals Say",
+    "subtitle": "Trusted by clinics worldwide for reliable patient management",
+    "testimonial1": {
+      "text": "The patient management system is intuitive and comprehensive. Our staff can easily track patient records and chronic diseases.",
+      "author": "Dr. Sarah Johnson",
+      "position": "Clinic Administrator",
+      "clinic": "Johnson Family Health"
+    },
+    "testimonial2": {
+      "text": "Multi-user access with proper role management has streamlined our workflow. Each staff member has exactly the access they need.",
+      "author": "Dr. Michael Chen",
+      "position": "Medical Director",
+      "clinic": "Central Medical Clinic"
+    },
+    "testimonial3": {
+      "text": "The onboarding process was smooth and the location services work perfectly for our international patient base.",
+      "author": "Dr. Fatima Al-Rashid",
+      "position": "Clinic Owner",
+      "clinic": "Al-Rashid Medical Center"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive healthcare services for you and your family",
+    "general": {
+      "title": "General Medicine",
+      "description": "Complete primary healthcare services including consultations, check-ups, and preventive care"
+    },
+    "cardiology": {
+      "title": "Cardiology",
+      "description": "Specialized heart care with advanced diagnostic and treatment options"
+    },
+    "pediatrics": {
+      "title": "Pediatrics",
+      "description": "Dedicated healthcare services for children from infancy through adolescence"
+    },
+    "dermatology": {
+      "title": "Dermatology",
+      "description": "Comprehensive skin care and treatment for various dermatological conditions"
+    },
+    "orthopedics": {
+      "title": "Orthopedics",
+      "description": "Specialized care for bones, joints, and musculoskeletal system"
+    },
+    "gynecology": {
+      "title": "Gynecology",
+      "description": "Women's health services including routine care and specialized treatments"
+    }
+  },
+  "about": {
+    "title": "About Our Platform",
+    "subtitle": "Comprehensive clinic management solution designed for healthcare professionals",
+    "description": "Our platform streamlines clinic operations with patient management, staff coordination, and multi-location support. Built specifically for healthcare providers who need reliable, secure, and user-friendly management tools.",
+    "hero": {
+      "title": "Transforming Healthcare Management",
+      "subtitle": "We empower healthcare professionals with intuitive tools that simplify patient care, streamline operations, and enhance clinic efficiency."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "To provide healthcare professionals with powerful, easy-to-use clinic management tools that improve patient care quality, reduce administrative burden, and support practice growth.",
+      "commitment": "Committed to Healthcare Excellence",
+      "excellence": {
+        "title": "Patient-Centered Care",
+        "description": "Supporting healthcare providers in delivering exceptional patient care through organized records, efficient workflows, and comprehensive patient tracking."
+      },
+      "efficiency": {
+        "title": "Operational Excellence",
+        "description": "Streamlining clinic operations with automated processes, multi-user access, and integrated management tools that save time and reduce errors."
+      }
+    },
+    "values": {
+      "title": "Our Core Values",
+      "subtitle": "The principles that guide our healthcare management solutions",
+      "quality": {
+        "title": "Healthcare Quality",
+        "description": "We maintain the highest standards in patient data management and clinical workflow optimization."
+      },
+      "security": {
+        "title": "Data Security",
+        "description": "Patient privacy and HIPAA compliance are fundamental to our platform design and operations."
+      },
+      "collaboration": {
+        "title": "Team Collaboration",
+        "description": "We enable seamless collaboration between doctors, staff, and administrators for better patient outcomes."
+      },
+      "innovation": {
+        "title": "Continuous Innovation",
+        "description": "Constantly improving our platform with new features that address evolving healthcare management needs."
+      },
+      "care": {
+        "title": "Patient Care Excellence",
+        "description": "Dedicated to improving patient outcomes through efficient clinic management and comprehensive care coordination."
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Clinic?",
+      "subtitle": "Join thousands of healthcare professionals already using our platform to improve patient care and streamline operations."
+    },
+    "stats": {
+      "title": "Our Impact on Healthcare",
+      "clinics": "Active Clinics",
+      "users": "Healthcare Professionals",
+      "patients": "Patient Records Managed",
+      "uptime": "System Reliability",
+      "activeClinics": "Active Clinics",
+      "healthcareUsers": "Healthcare Users",
+      "passingTests": "Passing Tests",
+      "patientRecords": "Patient Records"
+    },
+    "technology": {
+      "title": "Built for Healthcare Professionals",
+      "subtitle": "Everything you need to run your clinic efficiently and serve your patients better",
+      "frontend": {
+        "title": "Easy to Use Dashboard",
+        "description": "Simple, clean interface that your staff can learn quickly. Works on computers, tablets, and phones. Available in both Arabic and English."
+      },
+      "backend": {
+        "title": "Reliable & Always Available",
+        "description": "Your clinic data is always safe and accessible. Handles busy clinics with hundreds of patients without slowing down."
+      },
+      "architecture": {
+        "title": "Secure for Each Clinic",
+        "description": "Your patient data stays private and separate from other clinics. Each clinic has its own secure space while sharing system resources efficiently."
+      },
+      "testing": {
+        "title": "Proven & Reliable",
+        "description": "Thoroughly tested system that healthcare professionals trust. Regular updates and improvements based on real clinic needs."
+      }
+    },
+    "features": {
+      "support247": "24/7 Support",
+      "qualityCare": "Quality Care",
+      "secureData": "Secure Data",
+      "teamWork": "Team Work",
+      "expertTeam": "Expert Team",
+      "patientFirst": "Patient First"
+    }
+  },
+  "pricing": {
+    "hero": {
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "Choose the perfect plan for your clinic. All plans include our core features with no hidden fees."
+    },
+    "plans": {
+      "title": "Choose Your Plan",
+      "subtitle": "Flexible pricing options designed to grow with your practice",
+      "soloPractice": {
+        "name": "Solo Practice",
+        "description": "Essential tools for individual practitioners and small clinics"
+      },
+      "growingClinic": {
+        "name": "Growing Clinic",
+        "description": "Advanced features for expanding healthcare practices"
+      },
+      "healthcareNetwork": {
+        "name": "Healthcare Network",
+        "description": "Enterprise solution for large healthcare organizations"
+      }
+    },
+    "popular": "Most Popular",
+    "perMonth": "month",
+    "billedMonthly": "Billed monthly",
+    "getStarted": "Get Started",
+    "features": {
+      "maxUsers": "Max Users",
+      "maxPatients": "Max Patients",
+      "maxClinics": "Max Clinics",
+      "maxBranches": "Max Branches",
+      "patientRecords": "Patient Records",
+      "appointmentScheduling": "Appointment Scheduling",
+      "inventoryManagement": "Inventory Management",
+      "staffManagement": "Staff Management",
+      "mobileApp": "Mobile App Access",
+      "dataBackup": "Automated Data Backup",
+      "customIntegrations": "Custom Integrations",
+      "whiteLabel": "White Label Solution",
+      "prioritySupport": "Priority Support",
+      "advancedReporting": "Advanced Reporting",
+      "apiAccess": "API Access",
+      "customBranding": "Custom Branding",
+      "basicReporting": "Basic Reporting",
+      "unlimited": "Unlimited",
+      "included": "Included",
+      "notIncluded": "Not Included",
+      "notAvailable": "Not Available"
+    },
+    "included": "✓ Included",
+    "notAvailable": "✗ Not Available",
+    "unlimited": "Unlimited",
+    "clinics": "clinics",
+    "branches": "branches",
+    "priority24h": "24/7 Priority",
+    "standardSupport": "Standard Support",
+    "comparison": {
+      "title": "Feature Comparison",
+      "subtitle": "Compare all features across our pricing plans",
+      "feature": "Feature"
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join thousands of healthcare professionals already using our platform",
+      "startTrial": "Start Free Trial",
+      "contactSales": "Contact Sales"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Common questions about our pricing plans",
+      "question1": "Can I change my plan anytime?",
+      "answer1": "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately and billing is prorated.",
+      "question2": "Is there a free trial?",
+      "answer2": "Yes, we offer a 14-day free trial for all plans. No credit card required to start.",
+      "question3": "What happens if I exceed my limits?",
+      "answer3": "We'll notify you when you're approaching your limits. You can upgrade your plan or we'll help you optimize your usage.",
+      "question4": "Do you offer discounts for annual billing?",
+      "answer4": "Yes, we offer 20% discount when you pay annually. Contact our sales team for more details."
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Get in Touch",
+      "subtitle": "Have questions about our platform? We're here to help you find the perfect solution for your clinic."
+    },
+    "form": {
+      "title": "Send us a Message",
+      "subtitle": "Fill out the form below and we'll get back to you within 24 hours.",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter your phone number",
+      "company": "Clinic/Organization",
+      "companyPlaceholder": "Enter your clinic or organization name",
+      "subject": "Subject",
+      "subjectPlaceholder": "What can we help you with?",
+      "message": "Message",
+      "messagePlaceholder": "Tell us more about your needs...",
+      "submit": "Send Message"
+    },
+    "info": {
+      "title": "Contact Information",
+      "subtitle": "Reach out to us through any of these channels",
+      "address": {
+        "title": "Office Address",
+        "value": "123 Healthcare Street, Medical District, City 12345"
+      },
+      "phone": {
+        "title": "Phone Numbers"
+      },
+      "email": {
+        "title": "Email Addresses"
+      },
+      "hours": {
+        "title": "Business Hours"
+      }
+    },
+    "quickActions": {
+      "title": "Ready to Start?",
+      "subtitle": "Skip the wait and get started with our platform today",
+      "startTrial": "Start Free Trial",
+      "login": "Login to Dashboard"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Common questions about our clinic management platform",
+      "question1": "How do I add patients to the system?",
+      "answer1": "Simply click 'Add Patient' and fill in their information. You can add chronic diseases, phone numbers, and location details. The system will automatically calculate their age and organize everything for easy access.",
+      "question2": "Can multiple staff members use the system?",
+      "answer2": "Yes! You can invite doctors, receptionists, and other staff. Each person gets access based on their role - doctors see patient records, receptionists handle appointments, and you control everything as the clinic owner.",
+      "question3": "What if I have multiple clinic locations?",
+      "answer3": "Perfect! Our system supports multiple clinic branches. You can manage all your locations from one dashboard while keeping each branch's data organized separately.",
+      "question4": "How do I search for specific patients?",
+      "answer4": "Use our search feature to find patients by name, phone number, or chronic diseases. You can also filter by age, gender, or location to quickly find who you're looking for."
+    }
+  },
+  "doctors": {
+    "title": "Our Medical Team",
+    "subtitle": "Meet our experienced and dedicated healthcare professionals"
+  },
+  "footer": {
+    "description": "Modern healthcare management with comprehensive medical services and experienced professionals.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "contact": "Contact Info",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved.",
+    "support": "Support",
+    "email": "Email Support",
+    "phone": "Phone Support",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "cta": {
+    "title": "Ready to Modernize Your Clinic Management?",
+    "subtitle": "Join healthcare professionals using our comprehensive patient management platform."
+  }
+}

@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@plugin '../hero.ts';
+
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "font", sans-serif;
+  --font-mono: "monospace", monospace;
+  --font-cairo: "Cairo", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .rtl\:text-right {
+  text-align: right;
+}
+
+[dir="rtl"] .rtl\:text-left {
+  text-align: left;
+}
+
+[dir="rtl"] .rtl\:mr-auto {
+  margin-right: auto;
+}
+
+[dir="rtl"] .rtl\:ml-auto {
+  margin-left: auto;
+}
+
+[dir="rtl"] .rtl\:flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .rtl\:space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* LTR Support */
+[dir="ltr"] .ltr\:text-left {
+  text-align: left;
+}
+
+[dir="ltr"] .ltr\:text-center {
+  text-align: center;
+}
+
+[dir="ltr"] .ltr\:text-right {
+  text-align: right;
+}
+
+[dir="ltr"] .ltr\:mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Arabic font styling */
+.font-cairo {
+  font-family: "Cairo", sans-serif;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Smooth transitions for theme and language switching */
+* {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Custom scrollbar for RTL */
+[dir="rtl"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
