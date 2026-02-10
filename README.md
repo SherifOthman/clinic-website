@@ -7,7 +7,8 @@
 📝 **This README was written with AI assistance**
 
 ## 🔗 **Live Demo**
-- **🌐 Website (English)**: https://clinic-website-lime.vercel.app/en
+
+- **🌐 Website**: https://clinic-website-lime.vercel.app
 
 ## 🎯 **What This Project Is**
 
