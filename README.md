@@ -9,8 +9,8 @@
 ## Live Deployments
 
 - **Marketing Website**: https://clinic-website-lime.vercel.app
-- **Admin Dashboard**: https://clinic-dashboard-two.vercel.app
-- **REST API**: https://clinic-api-production.up.railway.app
+- **Admin Dashboard**: https://clinic-dashboard-ecru.vercel.app
+- **REST API**: http://clinic-api.runasp.net/scalar/v1
 
 ## GitHub Repositories
 
