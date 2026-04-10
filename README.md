@@ -50,6 +50,19 @@ The `dir` attribute on the `<html>` element is set to `rtl` for Arabic. Tailwind
 
 ---
 
+## Feature Status
+
+| Page / Feature                | Status | Notes                             |
+| ----------------------------- | ------ | --------------------------------- |
+| Home page                     | ✅     | Hero, features, CTA               |
+| About page                    | ✅     |                                   |
+| Pricing page                  | ✅     | Pulls subscription plans from API |
+| Contact page                  | ✅     |                                   |
+| English + Arabic with RTL     | ✅     | next-intl, static pre-rendered    |
+| SEO (static HTML, Open Graph) | ✅     | Lighthouse 95+                    |
+
+---
+
 ## Getting Started
 
 ```bash
