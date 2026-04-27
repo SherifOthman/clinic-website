@@ -6,6 +6,78 @@
     "contact": "Contact",
     "login": "Login"
   },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Enter your credentials to continue",
+      "emailOrUsername": "Email or Username",
+      "password": "Password",
+      "signIn": "Sign In",
+      "signingIn": "Signing in...",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "accountLocked": "Account locked. Please try again later.",
+      "accountInactive": "Your account has been deactivated. Contact your clinic owner."
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Set up your clinic account",
+      "fullName": "Full Name",
+      "username": "Username",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "submit": "Create Account",
+      "submitting": "Creating...",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email and we'll send you a reset link",
+      "email": "Email",
+      "send": "Send Reset Link",
+      "sending": "Sending...",
+      "backToLogin": "Back to login",
+      "successTitle": "Email Sent!",
+      "successMessage": "Check your email for a password reset link."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "newPassword": "New Password",
+      "submit": "Reset Password",
+      "submitting": "Resetting...",
+      "invalidLink": "This link is invalid or has expired.",
+      "requestNew": "Request a new link"
+    },
+    "invitation": {
+      "title": "Accept Invitation",
+      "subtitle": "You've been invited to join",
+      "role": "Role",
+      "fullName": "Full Name",
+      "username": "Username",
+      "password": "Password",
+      "phone": "Phone Number",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "submit": "Accept Invitation",
+      "submitting": "Accepting...",
+      "expired": "This invitation has expired.",
+      "invalid": "Invalid invitation link."
+    },
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "passwordMin": "Password must be at least 8 characters",
+      "usernameMin": "Username must be at least 3 characters"
+    }
+  },
   "hero": {
     "title": "Modern Clinic Management Platform",
     "subtitle": "Comprehensive patient management system with multi-user access, location services, and secure data handling - built for healthcare professionals",
