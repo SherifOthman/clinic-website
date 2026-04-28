@@ -6,7 +6,7 @@ export const PricingFAQ = async () => {
   const t = await getTranslations();
 
   return (
-    <section className="py-20 bg-content1">
+    <section className="py-20 bg-surface">
       <div className="max-w-4xl mx-auto px-6">
         <SectionHeader
           title={t("pricing.faq.title")}
@@ -20,7 +20,7 @@ export const PricingFAQ = async () => {
                 <h3 className="font-semibold text-foreground mb-2">
                   {t(`pricing.faq.question${i}`)}
                 </h3>
-                <p className="text-default-600">
+                <p className="text-muted">
                   {t(`pricing.faq.answer${i}`)}
                 </p>
               </Card.Content>

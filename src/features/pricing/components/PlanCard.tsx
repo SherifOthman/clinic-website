@@ -50,7 +50,7 @@ export const PlanCard = async ({
   return (
     <Card
       className={`relative ${
-        isPopular ? "border-2 border-primary shadow-lg scale-105" : ""
+        isPopular ? "border-2 border-accent shadow-lg scale-105" : ""
       }`}
     >
       {isPopular && (
@@ -70,12 +70,12 @@ export const PlanCard = async ({
           <h3 className="text-2xl font-bold text-foreground text-start">
             {translatedPlan.name}
           </h3>
-          <p className="text-default-600 text-sm rtl:text-right ltr:text-left">
+          <p className="text-muted text-sm rtl:text-right ltr:text-left">
             {translatedPlan.description}
           </p>
           <div className="space-y-1 text-start">
-            <div className="text-4xl font-bold text-primary">${plan.price}</div>
-            <div className="text-sm text-default-500">
+            <div className="text-4xl font-bold text-accent">${plan.price}</div>
+            <div className="text-sm text-muted">
               {t("pricing.perMonth")}
             </div>
           </div>
@@ -98,7 +98,7 @@ export const PlanCard = async ({
                 <div className="flex-1 rtl:text-right ltr:text-left">
                   <span
                     className={
-                      feature.included ? "text-foreground" : "text-default-400"
+                      feature.included ? "text-foreground" : "text-muted/70"
                     }
                   >
                     {feature.name}: {feature.value}

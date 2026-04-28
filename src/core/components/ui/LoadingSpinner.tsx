@@ -19,9 +19,9 @@ export const LoadingSpinner = ({
     <div className={`flex items-center justify-center ${className}`}>
       <div className="text-center space-y-4">
         <div
-          className={`animate-spin rounded-full border-b-2 border-primary mx-auto ${sizeClasses[size]}`}
+          className={`animate-spin rounded-full border-b-2 border-accent mx-auto ${sizeClasses[size]}`}
         ></div>
-        {message && <p className="text-default-600">{message}</p>}
+        {message && <p className="text-muted">{message}</p>}
       </div>
     </div>
   );

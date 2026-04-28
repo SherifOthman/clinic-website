@@ -11,7 +11,7 @@ export const PricingCTA = async () => {
         <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
           {t("pricing.cta.title")}
         </h2>
-        <p className="text-xl text-default-600">{t("pricing.cta.subtitle")}</p>
+        <p className="text-xl text-muted">{t("pricing.cta.subtitle")}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="http://localhost:3000/register" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover">
             {t("hero.cta")}

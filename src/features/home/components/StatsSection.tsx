@@ -16,21 +16,19 @@ export const StatsSection = async () => {
   ];
 
   return (
-    <section className="py-16 bg-content1">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="bg-surface py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center space-y-4">
+            <div key={index} className="space-y-4 text-center">
               <div className="flex justify-center">
-                <div className="p-4 bg-primary-100 rounded-full">
-                  <stat.icon className="h-8 w-8 text-primary" />
+                <div className="rounded-full bg-accent/10 p-4">
+                  <stat.icon className="h-8 w-8 text-accent" />
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-foreground">
-                  {stat.value}
-                </div>
-                <div className="text-default-600">{stat.label}</div>
+                <div className="text-3xl font-bold text-foreground">{stat.value}</div>
+                <div className="text-muted">{stat.label}</div>
               </div>
             </div>
           ))}

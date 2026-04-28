@@ -7,7 +7,7 @@ export const CTASection = async () => {
   const locale = await getLocale();
 
   return (
-    <section className="py-20 bg-primary text-primary-foreground">
+    <section className="py-20 bg-accent text-accent-foreground">
       <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
         <div className="space-y-4">
           <h2 className="text-3xl lg:text-4xl font-bold">{t("cta.title")}</h2>

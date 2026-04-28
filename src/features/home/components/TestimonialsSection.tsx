@@ -35,7 +35,7 @@ export const TestimonialsSection = async () => {
   ];
 
   return (
-    <section className="py-20 bg-content1">
+    <section className="py-20 bg-surface">
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
           title={t("testimonials.title")}

@@ -32,8 +32,8 @@ export const TestimonialCard = ({
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-primary-100 flex items-center justify-center">
-                  <span className="text-primary font-semibold text-sm">
+                <div className="w-full h-full bg-accent/10 flex items-center justify-center">
+                  <span className="text-accent font-semibold text-sm">
                     {author
                       .split(" ")
                       .map((n) => n[0])
@@ -46,10 +46,10 @@ export const TestimonialCard = ({
               <div className="font-semibold text-foreground rtl:text-right ltr:text-left">
                 {author}
               </div>
-              <div className="text-sm text-default-500 rtl:text-right ltr:text-left">
+              <div className="text-sm text-muted rtl:text-right ltr:text-left">
                 {position}
               </div>
-              <div className="text-sm text-primary font-medium rtl:text-right ltr:text-left">
+              <div className="text-sm text-accent font-medium rtl:text-right ltr:text-left">
                 {clinic}
               </div>
             </div>
@@ -69,7 +69,7 @@ export const TestimonialCard = ({
         </div>
 
         {/* Testimonial Text */}
-        <div className="text-default-600 leading-relaxed italic rtl:text-right ltr:text-left">
+        <div className="text-muted leading-relaxed italic rtl:text-right ltr:text-left">
           "{text}"
         </div>
       </Card.Content>

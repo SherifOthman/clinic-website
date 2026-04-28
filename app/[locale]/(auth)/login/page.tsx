@@ -3,14 +3,13 @@
 import { authApi } from "@/src/features/auth/api";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
   const t = useTranslations("auth.login");
   const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
-  const router = useRouter();
 
   const [form, setForm] = useState({ emailOrUsername: "", password: "" });
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +30,6 @@ export default function LoginPage() {
     try {
       const result = await authApi.login(form);
       if (result.ok) {
-        // Cookies are set by the backend — redirect to dashboard
         window.location.href = dashboardUrl;
       } else {
         setError(result.error);
@@ -41,11 +39,13 @@ export default function LoginPage() {
     }
   }
 
+  const inputCls = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent";
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="text-default-500 mt-1 text-sm">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -62,7 +62,7 @@ export default function LoginPage() {
             autoComplete="username"
             value={form.emailOrUsername}
             onChange={(e) => setForm((f) => ({ ...f, emailOrUsername: e.target.value }))}
-            className="rounded-lg border border-divider bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+            className={inputCls}
             required
           />
         </div>
@@ -70,7 +70,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">{t("password")}</label>
-            <Link href={`/${locale}/forgot-password`} className="text-xs text-primary hover:underline">
+            <Link href={`/${locale}/forgot-password`} className="text-xs text-accent hover:underline">
               {t("forgotPassword")}
             </Link>
           </div>
@@ -79,7 +79,7 @@ export default function LoginPage() {
             autoComplete="current-password"
             value={form.password}
             onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-            className="rounded-lg border border-divider bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+            className={inputCls}
             required
           />
         </div>
@@ -87,30 +87,28 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-60"
+          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover disabled:opacity-60"
         >
           {loading ? t("signingIn") : t("signIn")}
         </button>
       </form>
 
-      <p className="text-center text-sm text-default-500">
+      <p className="text-center text-sm text-muted">
         {t("noAccount")}{" "}
-        <Link href={`/${locale}/register`} className="text-primary hover:underline">
+        <Link href={`/${locale}/register`} className="text-accent hover:underline">
           {t("signUp")}
         </Link>
       </p>
 
-      {/* Divider */}
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-divider" />
-        <span className="text-xs text-default-400">OR</span>
-        <div className="h-px flex-1 bg-divider" />
+        <div className="h-px flex-1 bg-border" />
+        <span className="text-xs text-muted">OR</span>
+        <div className="h-px flex-1 bg-border" />
       </div>
 
-      {/* Google OAuth */}
       <a
         href={googleOAuthUrl}
-        className="flex items-center justify-center gap-3 rounded-lg border border-divider bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-default-50"
+        className="flex items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-surface"
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
