@@ -21,15 +21,8 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-
-  // Validate that the incoming `locale` parameter is valid
   if (!routing.locales.includes(locale as any)) notFound();
-
-  // Enable static rendering
   setRequestLocale(locale);
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
@@ -46,13 +39,13 @@ export default async function LocaleLayout({
       </head>
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable,
+          "min-h-screen bg-background text-foreground antialiased",
           locale === "ar" ? "font-cairo" : "font-roboto",
+          fontSans.variable,
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <Providers>
             <div className="relative flex flex-col min-h-screen">
               <Navbar />
               <main className="flex-grow">{children}</main>

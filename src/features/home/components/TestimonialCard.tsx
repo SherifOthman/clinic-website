@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@heroui/card";
+import { Card } from "@heroui/react";
 import { Star } from "lucide-react";
 
 interface TestimonialCardProps {
@@ -20,7 +20,7 @@ export const TestimonialCard = ({
 }: TestimonialCardProps) => {
   return (
     <Card className="hover:shadow-lg transition-shadow">
-      <CardBody className="p-6 space-y-6">
+      <Card.Content className="p-6 space-y-6">
         {/* User Info and Rating */}
         <div className="flex items-start gap-4">
           <div className="flex items-center gap-3 flex-1">
@@ -72,7 +72,7 @@ export const TestimonialCard = ({
         <div className="text-default-600 leading-relaxed italic rtl:text-right ltr:text-left">
           "{text}"
         </div>
-      </CardBody>
+      </Card.Content>
     </Card>
   );
 };

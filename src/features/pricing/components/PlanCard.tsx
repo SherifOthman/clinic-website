@@ -1,8 +1,8 @@
 import type { PlanFeature, SubscriptionPlan } from "@/src/core/types";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Link } from "@heroui/link";
+import { Button } from "@heroui/react";
+import { Card } from "@heroui/react";
+import { Chip } from "@heroui/react";
+import { Link } from "@heroui/react";
 import { Check } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -56,8 +56,8 @@ export const PlanCard = async ({
       {isPopular && (
         <div className="absolute rtl:top-5 ltr:top-7 rtl:-left-10 ltr:-right-10 rtl:-rotate-45 ltr:rotate-45 z-10">
           <Chip
-            color="primary"
-            variant="solid"
+            color="accent"
+            variant="primary"
             className="font-semibold px-8 py-1"
           >
             {t("pricing.popular")}
@@ -65,7 +65,7 @@ export const PlanCard = async ({
         </div>
       )}
 
-      <CardHeader className="pb-2 p-8">
+      <Card.Header className="pb-2 p-8">
         <div className="space-y-2">
           <h3 className="text-2xl font-bold text-foreground text-start">
             {translatedPlan.name}
@@ -80,9 +80,9 @@ export const PlanCard = async ({
             </div>
           </div>
         </div>
-      </CardHeader>
+      </Card.Header>
 
-      <CardBody className="pt-4 p-8">
+      <Card.Content className="pt-4 p-8">
         <div className="space-y-4">
           <ul className="space-y-3">
             {features.map((feature, featureIndex) => (
@@ -108,19 +108,11 @@ export const PlanCard = async ({
             ))}
           </ul>
 
-          <Button
-            as={Link}
-            href="http://localhost:3000/register"
-            target="_blank"
-            color={isPopular ? "primary" : "default"}
-            variant={isPopular ? "solid" : "bordered"}
-            size="lg"
-            className="w-full font-semibold"
-          >
+          <a href="http://localhost:3000/register" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
             {t("pricing.getStarted")}
-          </Button>
+          </a>
         </div>
-      </CardBody>
+      </Card.Content>
     </Card>
   );
 };

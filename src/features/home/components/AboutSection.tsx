@@ -1,5 +1,5 @@
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Button } from "@heroui/react";
+import { Link } from "@heroui/react";
 import { Award, Clock, HeartHandshake, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -22,16 +22,9 @@ export const AboutSection = async () => {
                 {t("about.description")}
               </p>
             </div>
-            <Button
-              as={Link}
-              href="http://localhost:3000/login"
-              target="_blank"
-              color="primary"
-              variant="bordered"
-              size="lg"
-            >
+            <a href="http://localhost:3000/login" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
               {t("navigation.login")}
-            </Button>
+            </a>
           </div>
           <div className="relative">
             <div className="aspect-[4/3] bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 rounded-2xl overflow-hidden">

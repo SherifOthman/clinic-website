@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
-import { Card, CardBody } from "@heroui/card";
+import { Card } from "@heroui/react";
 import { getTranslations } from "next-intl/server";
 
 export const PricingFAQ = async () => {
@@ -16,14 +16,14 @@ export const PricingFAQ = async () => {
         <div className="space-y-6">
           {[1, 2, 3, 4].map((i) => (
             <Card key={i}>
-              <CardBody className="p-6">
+              <Card.Content className="p-6">
                 <h3 className="font-semibold text-foreground mb-2">
                   {t(`pricing.faq.question${i}`)}
                 </h3>
                 <p className="text-default-600">
                   {t(`pricing.faq.answer${i}`)}
                 </p>
-              </CardBody>
+              </Card.Content>
             </Card>
           ))}
         </div>

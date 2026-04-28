@@ -1,5 +1,5 @@
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Button } from "@heroui/react";
+import { Link } from "@heroui/react";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export const CTASection = async () => {
@@ -14,24 +14,12 @@ export const CTASection = async () => {
           <p className="text-xl opacity-90">{t("cta.subtitle")}</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            as={Link}
-            href="http://localhost:3000/register"
-            target="_blank"
-            size="lg"
-            className="bg-white text-primary hover:bg-gray-100 font-semibold"
-          >
+          <a href="http://localhost:3000/register" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover">
             {t("hero.cta")}
-          </Button>
-          <Button
-            as={Link}
-            href={`/${locale}/contact`}
-            variant="bordered"
-            size="lg"
-            className="font-semibold border-white text-white hover:bg-white hover:text-primary"
-          >
+          </a>
+          <a href="#" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
             {t("navigation.contact")}
-          </Button>
+          </a>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Button } from "@heroui/react";
+import { Link } from "@heroui/react";
 import { getTranslations } from "next-intl/server";
 
 export const HeroContent = async () => {
@@ -22,26 +22,12 @@ export const HeroContent = async () => {
         </p>
       </div>
       <div className="flex flex-col sm:flex-row gap-4">
-        <Button
-          as={Link}
-          href="http://localhost:3000/register"
-          target="_blank"
-          color="primary"
-          size="lg"
-          className="font-semibold"
-        >
+        <a href="http://localhost:3000/register" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover">
           {t("hero.cta")}
-        </Button>
-        <Button
-          as={Link}
-          href="http://localhost:3000/login"
-          target="_blank"
-          variant="bordered"
-          size="lg"
-          className="font-semibold"
-        >
+        </a>
+        <a href="http://localhost:3000/login" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
           {t("navigation.login")}
-        </Button>
+        </a>
       </div>
     </div>
   );

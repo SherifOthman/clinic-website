@@ -1,27 +1,24 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
-import {
-  Navbar as HeroNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarMenuToggle,
-} from "@heroui/navbar";
-import { Globe, HeartHandshake } from "lucide-react";
+import { Button, Link } from "@heroui/react";
+import { Globe, HeartHandshake, Menu, Moon, Sun, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
 
 export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const t = useTranslations("navigation");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => setMounted(true), []);
 
   const menuItems = [
     { key: "home", href: "/" },
@@ -30,124 +27,114 @@ export const Navbar = () => {
     { key: "contact", href: "/contact" },
   ];
 
-  const switchLocale = (newLocale: string) => {
+  const loginUrl = `${AUTH_URL}/${locale}/login`;
+
+  const switchLocale = () => {
     const path = pathname.split("/").slice(2).join("/");
-    router.push(`/${newLocale}/${path}`);
+    router.push(`/${locale === "en" ? "ar" : "en"}/${path}`);
   };
 
+  const isActive = (href: string) =>
+    pathname === `/${locale}${href}` || (href === "/" && pathname === `/${locale}`);
+
   return (
-    <HeroNavbar
-      onMenuOpenChange={setIsMenuOpen}
-      className="border-b border-divider"
-      maxWidth="xl"
-    >
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-        <NavbarBrand className="flex items-center gap-6">
-          <Link href={`/${locale}`} className="flex items-center gap-2">
-            <HeartHandshake className="h-8 w-8 text-primary" />
-            <p className="font-bold text-xl text-inherit">ClinicCare</p>
+    <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href={`/${locale}`} className="flex items-center gap-2 no-underline">
+            <HeartHandshake className="h-7 w-7 text-accent" />
+            <span className="text-lg font-bold text-foreground">ClinicCare</span>
           </Link>
 
-          {/* Navigation items directly next to logo */}
-          <div className="hidden sm:flex gap-4">
-            {menuItems.map((item) => {
-              const isActive =
-                pathname === `/${locale}${item.href}` ||
-                (item.href === "/" && pathname === `/${locale}`);
-
-              return (
-                <Link
-                  key={item.key}
-                  href={`/${locale}${item.href}`}
-                  className={`transition-colors ${
-                    isActive
-                      ? "text-primary font-semibold"
-                      : "text-foreground hover:text-primary"
-                  }`}
-                >
-                  {t(item.key)}
-                </Link>
-              );
-            })}
-          </div>
-        </NavbarBrand>
-
-        {/* Remove the separate navigation div */}
-      </NavbarContent>
-
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden sm:flex">
-          <Button
-            variant="light"
-            size="sm"
-            startContent={<Globe className="h-4 w-4" />}
-            onClick={() => switchLocale(locale === "en" ? "ar" : "en")}
-          >
-            {locale === "en" ? "العربية" : "English"}
-          </Button>
-        </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
-          <Button
-            as={Link}
-            color="primary"
-            href="http://localhost:3001/login"
-            target="_blank"
-          >
-            {t("login")}
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarMenu>
-        {menuItems.map((item) => {
-          const isActive =
-            pathname === `/${locale}${item.href}` ||
-            (item.href === "/" && pathname === `/${locale}`);
-
-          return (
-            <NavbarMenuItem key={item.key}>
+          {/* Desktop nav links */}
+          <div className="hidden items-center gap-6 sm:flex">
+            {menuItems.map((item) => (
               <Link
+                key={item.key}
                 href={`/${locale}${item.href}`}
-                className={`w-full transition-colors ${
-                  isActive
-                    ? "text-primary font-semibold"
-                    : "text-foreground hover:text-primary"
+                className={`text-sm transition-colors no-underline ${
+                  isActive(item.href)
+                    ? "font-semibold text-accent"
+                    : "text-foreground hover:text-accent"
                 }`}
-                size="lg"
               >
                 {t(item.key)}
               </Link>
-            </NavbarMenuItem>
-          );
-        })}
-        <NavbarMenuItem>
-          <Button
-            as={Link}
-            href="http://localhost:3001/login"
-            target="_blank"
-            color="primary"
-            className="w-full font-semibold"
-            size="lg"
+            ))}
+          </div>
+
+          {/* Desktop actions */}
+          <div className="hidden items-center gap-2 sm:flex">
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onPress={switchLocale}>
+              <Globe className="me-1 h-4 w-4" />
+              {locale === "en" ? "العربية" : "English"}
+            </Button>
+            <Button variant="primary" size="sm" onPress={() => { window.location.href = loginUrl; }}>
+              {t("login")}
+            </Button>
+          </div>
+
+          {/* Mobile menu toggle */}
+          <button
+            className="rounded-lg p-2 text-foreground hover:bg-default sm:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
           >
-            {t("login")}
-          </Button>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Button
-            size="sm"
-            variant="light"
-            startContent={<Globe className="h-4 w-4" />}
-            onClick={() => switchLocale(locale === "en" ? "ar" : "en")}
-            className="w-full justify-start"
-          >
-            {locale === "en" ? "العربية" : "English"}
-          </Button>
-        </NavbarMenuItem>
-      </NavbarMenu>
-    </HeroNavbar>
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="border-t border-border bg-background px-6 py-4 sm:hidden">
+          <div className="flex flex-col gap-3">
+            {menuItems.map((item) => (
+              <Link
+                key={item.key}
+                href={`/${locale}${item.href}`}
+                className={`text-sm no-underline ${
+                  isActive(item.href) ? "font-semibold text-accent" : "text-foreground"
+                }`}
+                onPress={() => setIsOpen(false)}
+              >
+                {t(item.key)}
+              </Link>
+            ))}
+            <Button variant="primary" className="mt-2 w-full" onPress={() => { setIsOpen(false); window.location.href = loginUrl; }}>
+              {t("login")}
+            </Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onPress={switchLocale} className="flex-1">
+                <Globe className="me-1 h-4 w-4" />
+                {locale === "en" ? "العربية" : "English"}
+              </Button>
+              {mounted && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="flex-1"
+                >
+                  {theme === "dark" ? <Sun className="me-1 h-4 w-4" /> : <Moon className="me-1 h-4 w-4" />}
+                  {theme === "dark" ? "Light" : "Dark"}
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
