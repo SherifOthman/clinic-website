@@ -16,8 +16,9 @@ export function Providers({
 
   return (
     <RouterProvider navigate={router.push}>
+      {/* HeroUI v3 needs both class AND data-theme attributes for theming */}
       <ThemeProvider
-        attribute="class"
+        attribute={["class", "data-theme"]}
         defaultTheme="light"
         enableSystem
         {...themeProps}

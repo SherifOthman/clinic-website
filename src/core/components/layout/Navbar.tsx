@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Link } from "@heroui/react";
+import { Button, Link, Switch } from "@heroui/react";
 import { Globe, HeartHandshake, Menu, Moon, Sun, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
@@ -66,15 +66,24 @@ export const Navbar = () => {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-2 sm:flex">
+            {/* Dark mode toggle using HeroUI v3 Switch */}
             {mounted && (
-              <Button
-                variant="ghost"
+              <Switch
                 size="sm"
-                onPress={() => setTheme(theme === "dark" ? "light" : "dark")}
-                aria-label="Toggle theme"
+                isSelected={theme === "dark"}
+                onChange={(checked) => setTheme(checked ? "dark" : "light")}
+                aria-label="Toggle dark mode"
               >
-                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </Button>
+                {({ isSelected }: { isSelected: boolean }) => (
+                  <Switch.Control>
+                    <Switch.Thumb>
+                      <Switch.Icon>
+                        {isSelected ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+                      </Switch.Icon>
+                    </Switch.Thumb>
+                  </Switch.Control>
+                )}
+              </Switch>
             )}
             <Button variant="ghost" size="sm" onPress={switchLocale}>
               <Globe className="me-1 h-4 w-4" />
@@ -121,15 +130,18 @@ export const Navbar = () => {
                 {locale === "en" ? "العربية" : "English"}
               </Button>
               {mounted && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onPress={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="flex-1"
-                >
-                  {theme === "dark" ? <Sun className="me-1 h-4 w-4" /> : <Moon className="me-1 h-4 w-4" />}
-                  {theme === "dark" ? "Light" : "Dark"}
-                </Button>
+                <div className="flex flex-1 items-center justify-center gap-2">
+                  <Moon className="h-3.5 w-3.5 text-muted" />
+                  <Switch
+                    size="sm"
+                    isSelected={theme === "dark"}
+                    onChange={(checked) => setTheme(checked ? "dark" : "light")}
+                    aria-label="Toggle dark mode"
+                  >
+                    <Switch.Control><Switch.Thumb /></Switch.Control>
+                  </Switch>
+                  <Sun className="h-3.5 w-3.5 text-muted" />
+                </div>
               )}
             </div>
           </div>
