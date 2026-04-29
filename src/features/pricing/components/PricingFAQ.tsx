@@ -1,12 +1,12 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
-import { Card, CardBody } from "@heroui/card";
+import { Card } from "@heroui/react";
 import { getTranslations } from "next-intl/server";
 
 export const PricingFAQ = async () => {
   const t = await getTranslations();
 
   return (
-    <section className="py-20 bg-content1">
+    <section className="py-20 bg-surface">
       <div className="max-w-4xl mx-auto px-6">
         <SectionHeader
           title={t("pricing.faq.title")}
@@ -16,14 +16,14 @@ export const PricingFAQ = async () => {
         <div className="space-y-6">
           {[1, 2, 3, 4].map((i) => (
             <Card key={i}>
-              <CardBody className="p-6">
+              <Card.Content className="p-6">
                 <h3 className="font-semibold text-foreground mb-2">
                   {t(`pricing.faq.question${i}`)}
                 </h3>
-                <p className="text-default-600">
+                <p className="text-muted">
                   {t(`pricing.faq.answer${i}`)}
                 </p>
-              </CardBody>
+              </Card.Content>
             </Card>
           ))}
         </div>

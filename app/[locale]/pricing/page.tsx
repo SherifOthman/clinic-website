@@ -2,7 +2,8 @@ import { routing } from "@/i18n/routing";
 import { PricingPage } from "@/src/features/pricing";
 import { setRequestLocale } from "next-intl/server";
 
-export const dynamic = "force-static";
+// Revalidate every hour — plans don't change often
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

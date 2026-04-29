@@ -9,7 +9,7 @@ export const PricingHero = async () => {
         <h1 className="text-4xl lg:text-6xl font-bold text-foreground">
           Affordable Plans for Every Practice
         </h1>
-        <p className="text-xl text-default-600 leading-relaxed max-w-3xl mx-auto">
+        <p className="text-xl text-muted leading-relaxed max-w-3xl mx-auto">
           Start managing your clinic more efficiently today. From solo
           practitioners to large healthcare networks, we have the perfect
           solution to streamline your operations and grow your practice.

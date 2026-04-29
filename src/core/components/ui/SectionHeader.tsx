@@ -14,7 +14,7 @@ export const SectionHeader = ({
       <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
         {title}
       </h2>
-      <p className="text-xl text-default-600 max-w-2xl mx-auto">{subtitle}</p>
+      <p className="text-xl text-muted max-w-2xl mx-auto">{subtitle}</p>
     </div>
   );
 };
