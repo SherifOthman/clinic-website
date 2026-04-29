@@ -4,7 +4,13 @@
     "about": "About",
     "pricing": "Pricing",
     "contact": "Contact",
-    "login": "Login"
+    "login": "Login",
+    "dashboard": "Go to Dashboard"
+  },
+  "common": {
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "saving": "Saving...",
+    "loading": "Loading..."
   },
   "auth": {
     "login": {
@@ -110,6 +116,18 @@
     "dataManagement": {
       "title": "Data Security",
       "description": "Multi-tenant architecture with secure data isolation, comprehensive audit trails, rate limiting, and HIPAA-compliant data handling"
+    },
+    "appointments": {
+      "title": "Appointment Scheduling",
+      "description": "Smart scheduling system with doctor availability, working hours, visit types, and patient booking management"
+    },
+    "reporting": {
+      "title": "Analytics & Reporting",
+      "description": "Clinic performance dashboards, patient statistics, revenue reports, and exportable data insights"
+    },
+    "inventory": {
+      "title": "Inventory Management",
+      "description": "Track medical supplies, medications, and equipment with automated reorder alerts and usage reports"
     }
   },
   "testimonials": {

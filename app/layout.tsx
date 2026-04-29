@@ -3,14 +3,11 @@ import { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "Clinic Management",
-    template: `%s - Clinic Management`,
+    default: "ClinicCare — Clinic Management Platform",
+    template: `%s | ClinicCare`,
   },
   description:
     "Modern healthcare management with comprehensive medical services",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export const viewport: Viewport = {

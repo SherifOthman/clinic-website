@@ -1,10 +1,11 @@
 "use client";
 
 import { Button, Link, Switch } from "@heroui/react";
-import { Globe, HeartHandshake, Menu, Moon, Sun, X } from "lucide-react";
+import { Globe, Menu, Moon, Sun, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
@@ -12,13 +13,21 @@ const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const t = useTranslations("navigation");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    // Check if user is already authenticated
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+    fetch(`${apiUrl}/auth/me`, { credentials: "include" })
+      .then((res) => { if (res.ok) setIsLoggedIn(true); })
+      .catch(() => {});
+  }, []);
 
   const menuItems = [
     { key: "home", href: "/" },
@@ -43,7 +52,7 @@ export const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center gap-2 no-underline">
-            <HeartHandshake className="h-7 w-7 text-accent" />
+            <Image src="/logo.svg" alt="ClinicCare" width={28} height={28} priority />
             <span className="text-lg font-bold text-foreground">ClinicCare</span>
           </Link>
 
@@ -89,8 +98,8 @@ export const Navbar = () => {
               <Globe className="me-1 h-4 w-4" />
               {locale === "en" ? "العربية" : "English"}
             </Button>
-            <Button variant="primary" size="sm" onPress={() => { window.location.href = loginUrl; }}>
-              {t("login")}
+            <Button variant="primary" size="sm" onPress={() => { window.location.href = isLoggedIn ? (process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000") : loginUrl; }}>
+              {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
           </div>
 
@@ -121,8 +130,8 @@ export const Navbar = () => {
                 {t(item.key)}
               </Link>
             ))}
-            <Button variant="primary" className="mt-2 w-full" onPress={() => { setIsOpen(false); window.location.href = loginUrl; }}>
-              {t("login")}
+            <Button variant="primary" className="mt-2 w-full" onPress={() => { setIsOpen(false); window.location.href = isLoggedIn ? (process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000") : loginUrl; }}>
+              {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
             <div className="flex gap-2">
               <Button variant="ghost" size="sm" onPress={switchLocale} className="flex-1">

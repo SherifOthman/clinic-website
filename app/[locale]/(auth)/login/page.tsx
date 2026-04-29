@@ -4,7 +4,7 @@ import { authApi } from "@/src/features/auth/api";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const t = useTranslations("auth.login");
@@ -14,10 +14,21 @@ export default function LoginPage() {
   const [form, setForm] = useState({ emailOrUsername: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
 
   const dashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000";
   const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
   const googleOAuthUrl = `${apiUrl}/auth/oauth/google?returnUrl=${encodeURIComponent(dashboardUrl)}`;
+
+  // If already logged in, redirect straight to dashboard
+  useEffect(() => {
+    fetch(`${apiUrl}/auth/me`, { credentials: "include" })
+      .then((res) => {
+        if (res.ok) window.location.replace(dashboardUrl);
+        else setChecking(false);
+      })
+      .catch(() => setChecking(false));
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,7 +41,7 @@ export default function LoginPage() {
     try {
       const result = await authApi.login(form);
       if (result.ok) {
-        window.location.href = dashboardUrl;
+        window.location.replace(dashboardUrl);
       } else {
         setError(result.error);
       }
@@ -41,11 +52,38 @@ export default function LoginPage() {
 
   const inputCls = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent";
 
+  const demoUsers = [
+    { label: "Super Admin",   email: "superadmin@clinic.com",   password: "SuperAdmin123!" },
+    { label: "Clinic Owner",  email: "owner@clinic.com",        password: "ClinicOwner123!" },
+    { label: "Doctor",        email: "doctor@clinic.com",       password: "Doctor123!" },
+    { label: "Receptionist",  email: "receptionist@clinic.com", password: "Receptionist123!" },
+  ];
+
+  // Show nothing while checking auth — avoids flash of login form
+  if (checking) return null;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
         <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
+      </div>
+
+      {/* Demo credentials */}
+      <div className="rounded-lg border border-border bg-surface p-3">
+        <p className="mb-2 text-xs font-medium text-muted">Test accounts</p>
+        <div className="flex flex-wrap gap-2">
+          {demoUsers.map((u) => (
+            <button
+              key={u.email}
+              type="button"
+              onClick={() => setForm({ emailOrUsername: u.email, password: u.password })}
+              className="rounded-md border border-border px-2.5 py-1 text-xs transition hover:border-accent hover:text-accent"
+            >
+              {u.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

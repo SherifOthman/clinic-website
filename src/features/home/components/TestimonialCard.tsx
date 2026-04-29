@@ -19,7 +19,7 @@ export const TestimonialCard = ({
   avatar,
 }: TestimonialCardProps) => {
   return (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="bg-surface-secondary hover:shadow-lg transition-shadow border border-border/60">
       <Card.Content className="p-6 space-y-6">
         {/* User Info and Rating */}
         <div className="flex items-start gap-4">

@@ -1,17 +1,56 @@
-import { Award, HeartHandshake, UserCheck, Users } from "lucide-react";
+import { Award, HeartPulse, UserCheck, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+
+interface PublicStats {
+  totalClinics: number;
+  totalPatients: number;
+  totalStaff: number;
+}
+
+async function getPublicStats(): Promise<PublicStats | null> {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+    const res = await fetch(
+      `${apiUrl}/dashboard/stats/public`,
+      { next: { revalidate: 300 } },
+    );
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+function fmt(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k+`;
+  if (n > 0) return `${n}+`;
+  return "—";
+}
 
 export const StatsSection = async () => {
   const t = await getTranslations();
+  const data = await getPublicStats();
 
   const stats = [
-    { icon: Users, value: "50+", label: t("about.stats.activeClinics") },
-    { icon: UserCheck, value: "200+", label: t("about.stats.healthcareUsers") },
-    { icon: Award, value: "297", label: t("about.stats.passingTests") },
     {
-      icon: HeartHandshake,
-      value: "1,000+",
+      icon: Users,
+      value: data ? fmt(data.totalClinics) : "—",
+      label: t("about.stats.activeClinics"),
+    },
+    {
+      icon: UserCheck,
+      value: data ? fmt(data.totalStaff) : "—",
+      label: t("about.stats.healthcareUsers"),
+    },
+    {
+      icon: HeartPulse,
+      value: data ? fmt(data.totalPatients) : "—",
       label: t("about.stats.patientRecords"),
+    },
+    {
+      icon: Award,
+      value: "297",
+      label: t("about.stats.passingTests"),
     },
   ];
 

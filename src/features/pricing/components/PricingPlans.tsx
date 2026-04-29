@@ -1,5 +1,5 @@
 import type { PlanFeature, SubscriptionPlan } from "@/src/core/types";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { PlanCard } from "./PlanCard";
 
 interface PricingPlansProps {
@@ -8,116 +8,93 @@ interface PricingPlansProps {
 
 export const PricingPlans = async ({ plans }: PricingPlansProps) => {
   const t = await getTranslations();
+  const locale = await getLocale();
+  const isAr = locale === "ar";
+
+  if (!plans.length) {
+    return (
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-6 text-center text-muted">
+          {t("pricing.plans.title")}
+        </div>
+      </section>
+    );
+  }
+
+  const unlimited = (n: number) => (n === -1 ? t("pricing.unlimited") : String(n));
 
   const getFeatures = (plan: SubscriptionPlan): PlanFeature[] => [
     {
-      name: t("pricing.features.maxClinics"),
-      value:
-        plan.maxClinics === -1
-          ? t("pricing.unlimited")
-          : `${plan.maxClinics} ${t("pricing.clinics")}`,
+      name: t("pricing.features.maxBranches"),
+      value: unlimited(plan.maxBranches),
       included: true,
     },
     {
-      name: t("pricing.features.maxBranches"),
-      value:
-        plan.maxBranches === -1
-          ? t("pricing.unlimited")
-          : `${plan.maxBranches} ${t("pricing.branches")}`,
+      name: t("pricing.features.maxUsers"),
+      value: unlimited(plan.maxStaff),
+      included: true,
+    },
+    {
+      name: t("pricing.features.maxPatients"),
+      value: unlimited(plan.maxPatientsPerMonth),
       included: true,
     },
     {
       name: t("pricing.features.patientRecords"),
-      value: t("pricing.unlimited"),
-      included: true,
-    },
-    {
-      name: t("pricing.features.appointmentScheduling"),
-      value: t("pricing.included"),
-      included: true,
-    },
-    {
-      name: t("pricing.features.basicReporting"),
       value: t("pricing.included"),
       included: true,
     },
     {
       name: t("pricing.features.dataBackup"),
-      value: t("pricing.included"),
-      included: true,
+      value: plan.hasBackupAndRestore ? t("pricing.included") : t("pricing.notAvailable"),
+      included: plan.hasBackupAndRestore,
     },
     {
-      name: t("pricing.features.mobileApp"),
-      value: t("pricing.included"),
-      included: true,
+      name: t("pricing.features.basicReporting"),
+      value: plan.hasReporting ? t("pricing.included") : t("pricing.notAvailable"),
+      included: plan.hasReporting,
     },
     {
       name: t("pricing.features.advancedReporting"),
-      value: plan.hasAdvancedReporting
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
+      value: plan.hasAdvancedReporting ? t("pricing.included") : t("pricing.notAvailable"),
       included: plan.hasAdvancedReporting,
     },
     {
       name: t("pricing.features.inventoryManagement"),
-      value: plan.hasAdvancedReporting
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
-      included: plan.hasAdvancedReporting,
-    },
-    {
-      name: t("pricing.features.staffManagement"),
-      value: plan.hasAdvancedReporting
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
-      included: plan.hasAdvancedReporting,
+      value: plan.hasInventoryManagement ? t("pricing.included") : t("pricing.notAvailable"),
+      included: plan.hasInventoryManagement,
     },
     {
       name: t("pricing.features.apiAccess"),
-      value: plan.hasApiAccess
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
+      value: plan.hasApiAccess ? t("pricing.included") : t("pricing.notAvailable"),
       included: plan.hasApiAccess,
     },
     {
       name: t("pricing.features.customIntegrations"),
-      value: plan.hasApiAccess
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
-      included: plan.hasApiAccess,
+      value: plan.hasIntegrations ? t("pricing.included") : t("pricing.notAvailable"),
+      included: plan.hasIntegrations,
     },
     {
       name: t("pricing.features.prioritySupport"),
-      value: plan.hasPrioritySupport
-        ? t("pricing.priority24h")
-        : t("pricing.standardSupport"),
+      value: plan.hasPrioritySupport ? t("pricing.priority24h") : t("pricing.standardSupport"),
       included: plan.hasPrioritySupport,
     },
     {
       name: t("pricing.features.customBranding"),
-      value: plan.hasCustomBranding
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
-      included: plan.hasCustomBranding,
-    },
-    {
-      name: t("pricing.features.whiteLabel"),
-      value: plan.hasCustomBranding
-        ? t("pricing.included")
-        : t("pricing.notAvailable"),
+      value: plan.hasCustomBranding ? t("pricing.included") : t("pricing.notAvailable"),
       included: plan.hasCustomBranding,
     },
   ];
 
   return (
     <section className="py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {plans.map((plan) => (
             <PlanCard
               key={plan.id}
               plan={plan}
-              isPopular={index === 1}
+              isAr={isAr}
               features={getFeatures(plan)}
             />
           ))}
