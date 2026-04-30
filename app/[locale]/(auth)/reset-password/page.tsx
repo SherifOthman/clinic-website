@@ -1,10 +1,10 @@
 "use client";
 
-import { authApi } from "@/src/features/auth/api";
+import { useResetPasswordForm } from "@/src/features/auth/hooks/useResetPasswordForm";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 
 function ResetPasswordForm() {
   const t = useTranslations("auth.resetPassword");
@@ -15,9 +15,11 @@ function ResetPasswordForm() {
   const email = searchParams.get("email");
   const token = searchParams.get("token");
 
-  const [newPassword, setNewPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { newPassword, setNewPassword, error, loading, submit } = useResetPasswordForm(
+    token,
+    email,
+    () => router.push(`/${locale}/login?reset=1`),
+  );
 
   if (!email || !token) {
     return (
@@ -30,30 +32,14 @@ function ResetPasswordForm() {
     );
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      const result = await authApi.resetPassword({ token: token!, email: email!, newPassword });
-      if (result.ok) {
-        router.push(`/${locale}/login?reset=1`);
-      } else {
-        setError(result.error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="text-default-500 mt-1 text-sm">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-default-500">{t("subtitle")}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={submit} className="flex flex-col gap-4">
         {error && (
           <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
             {error}

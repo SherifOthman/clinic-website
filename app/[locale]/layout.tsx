@@ -1,5 +1,6 @@
 import { routing } from "@/i18n/routing";
 import { fontSans } from "@/src/core/config/fonts";
+import { NavbarWrapper } from "@/src/core/components/layout/NavbarWrapper";
 import { Footer, Navbar } from "@/src/features/navigation";
 import clsx from "clsx";
 import { NextIntlClientProvider } from "next-intl";
@@ -39,6 +40,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body
+        suppressHydrationWarning
         className={clsx(
           "min-h-screen bg-background text-foreground antialiased",
           locale === "ar" ? "font-cairo" : "font-roboto",
@@ -47,11 +49,9 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <div className="relative flex flex-col min-h-screen">
-              <Navbar />
-              <main className="flex-grow">{children}</main>
-              <Footer />
-            </div>
+            <NavbarWrapper locale={locale} navbar={<Navbar />} footer={<Footer />}>
+              {children}
+            </NavbarWrapper>
           </Providers>
         </NextIntlClientProvider>
       </body>

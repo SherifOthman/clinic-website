@@ -1,21 +1,49 @@
 import type { SubscriptionPlan } from "@/src/core/types";
+import type { TestimonialDto } from "@/src/features/home/types";
+import { serverFetch } from "./api";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+// ── Subscription plans ────────────────────────────────────────────────────────
 
 export async function getSubscriptionPlans(): Promise<SubscriptionPlan[]> {
   try {
-    const res = await fetch(`${API_BASE_URL}/subscription-plans`, {
-      next: { revalidate: 3600 }, // cache 1 hour, revalidate in background
+    const data = await serverFetch<SubscriptionPlan[]>("/subscription-plans", {
+      next: { revalidate: 3600 },
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data: SubscriptionPlan[] = await res.json();
-    // Only show active plans, sorted by displayOrder
     return data
       .filter((p) => p.isActive)
       .sort((a, b) => a.displayOrder - b.displayOrder);
   } catch (err) {
     console.error("Failed to fetch subscription plans:", err);
+    return [];
+  }
+}
+
+// ── Public stats ──────────────────────────────────────────────────────────────
+
+export interface PublicStats {
+  totalClinics: number;
+  totalPatients: number;
+  totalStaff: number;
+}
+
+export async function getPublicStats(): Promise<PublicStats | null> {
+  try {
+    return await serverFetch<PublicStats>("/dashboard/stats/public", {
+      next: { revalidate: 300 },
+    });
+  } catch {
+    return null;
+  }
+}
+
+// ── Testimonials ──────────────────────────────────────────────────────────────
+
+export async function getTestimonials(): Promise<TestimonialDto[]> {
+  try {
+    return await serverFetch<TestimonialDto[]>("/testimonials", {
+      next: { revalidate: 60 },
+    });
+  } catch {
     return [];
   }
 }

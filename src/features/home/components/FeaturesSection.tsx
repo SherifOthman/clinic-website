@@ -53,7 +53,7 @@ export const FeaturesSection = async () => {
       icon: CalendarClock,
       title: t("features.appointments.title"),
       description: t("features.appointments.description"),
-      soon: true,
+      soon: false,
     },
     {
       icon: FileText,

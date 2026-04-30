@@ -1,63 +1,61 @@
-import { Button } from "@heroui/react";
-import { Link } from "@heroui/react";
+import { AboutFeatureBox } from "@/src/core/components/ui/AboutFeatureBox";
+import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { Award, Clock, HeartHandshake, Users } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
+
+/**
+ * About section: two-column layout with text on the left
+ * and a 2×2 feature box grid on the right.
+ */
 export const AboutSection = async () => {
   const t = await getTranslations();
+  const locale = await getLocale();
+
+  const features = [
+    { icon: Clock,         label: t("about.features.support247") },
+    { icon: Award,         label: t("about.features.expertTeam") },
+    { icon: HeartHandshake, label: t("about.features.qualityCare") },
+    { icon: Users,         label: t("about.features.patientFirst") },
+  ];
 
   return (
-    <section className="py-20 bg-surface">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="bg-surface py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+
+          {/* Text column */}
           <div className="space-y-6">
             <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground rtl:text-right ltr:text-left">
+              <h2 className="text-3xl font-bold text-foreground ltr:text-left rtl:text-right lg:text-4xl">
                 {t("about.title")}
               </h2>
-              <p className="text-xl text-accent font-semibold rtl:text-right ltr:text-left">
+              <p className="text-xl font-semibold text-accent ltr:text-left rtl:text-right">
                 {t("about.subtitle")}
               </p>
-              <p className="text-muted leading-relaxed rtl:text-right ltr:text-left">
+              <p className="leading-relaxed text-muted ltr:text-left rtl:text-right">
                 {t("about.description")}
               </p>
             </div>
-            <a href="http://localhost:3000/login" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
+            <CtaButton href={`${AUTH_URL}/${locale}/login`} variant="outline">
               {t("navigation.login")}
-            </a>
+            </CtaButton>
           </div>
+
+          {/* Feature boxes grid */}
           <div className="relative">
-            <div className="aspect-[4/3] bg-gradient-to-br from-accent/10 to-accent/20 dark:from-primary-900/30 dark:to-primary-800/30 rounded-2xl overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="grid grid-cols-2 gap-4 p-8">
-                  <div className="bg-white dark:bg-surface p-4 rounded-lg shadow-sm transform hover:scale-105 transition-transform flex flex-col items-center">
-                    <Clock className="h-8 w-8 text-accent mb-2" />
-                    <div className="text-sm font-semibold text-center">
-                      {t("about.features.support247")}
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-surface p-4 rounded-lg shadow-sm transform hover:scale-105 transition-transform flex flex-col items-center">
-                    <Award className="h-8 w-8 text-accent mb-2" />
-                    <div className="text-sm font-semibold text-center">
-                      {t("about.features.expertTeam")}
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-surface p-4 rounded-lg shadow-sm transform hover:scale-105 transition-transform flex flex-col items-center">
-                    <HeartHandshake className="h-8 w-8 text-accent mb-2" />
-                    <div className="text-sm font-semibold text-center">
-                      {t("about.features.qualityCare")}
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-surface p-4 rounded-lg shadow-sm transform hover:scale-105 transition-transform flex flex-col items-center">
-                    <Users className="h-8 w-8 text-accent mb-2" />
-                    <div className="text-sm font-semibold text-center">
-                      {t("about.features.patientFirst")}
-                    </div>
-                  </div>
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-accent/10 to-accent/20 dark:from-primary-900/30 dark:to-primary-800/30">
+              <div className="flex h-full w-full items-center justify-center p-8">
+                <div className="grid grid-cols-2 gap-4">
+                  {features.map(({ icon, label }) => (
+                    <AboutFeatureBox key={label} icon={icon} label={label} />
+                  ))}
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

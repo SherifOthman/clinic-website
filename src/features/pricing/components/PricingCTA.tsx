@@ -1,24 +1,26 @@
-import { Button } from "@heroui/react";
-import { Link } from "@heroui/react";
-import { getTranslations } from "next-intl/server";
+import { CtaButton } from "@/src/core/components/ui/CtaButton";
+import { getLocale, getTranslations } from "next-intl/server";
+
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
 
 export const PricingCTA = async () => {
   const t = await getTranslations();
+  const locale = await getLocale();
 
   return (
     <section className="py-20">
-      <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
-        <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+      <div className="mx-auto max-w-4xl space-y-8 px-6 text-center">
+        <h2 className="text-3xl font-bold text-foreground lg:text-4xl">
           {t("pricing.cta.title")}
         </h2>
         <p className="text-xl text-muted">{t("pricing.cta.subtitle")}</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="http://localhost:3000/register" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover">
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <CtaButton href={`${AUTH_URL}/${locale}/register`} variant="primary">
             {t("hero.cta")}
-          </a>
-          <a href="/contact" className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10">
+          </CtaButton>
+          <CtaButton href={`/${locale}/contact`} variant="outline">
             {t("navigation.contact")}
-          </a>
+          </CtaButton>
         </div>
       </div>
     </section>

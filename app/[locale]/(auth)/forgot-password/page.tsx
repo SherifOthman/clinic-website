@@ -1,44 +1,22 @@
 "use client";
 
-import { authApi } from "@/src/features/auth/api";
+import { useForgotPasswordForm } from "@/src/features/auth/hooks/useForgotPasswordForm";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("auth.forgotPassword");
   const { locale } = useParams<{ locale: string }>();
 
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      const result = await authApi.forgotPassword({ email });
-      if (result.ok) {
-        setSent(true);
-      } else {
-        setError(result.error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { email, setEmail, sent, error, loading, submit } = useForgotPasswordForm();
 
   if (sent) {
     return (
       <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10 text-3xl">
-          ✓
-        </div>
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10 text-3xl">✓</div>
         <h1 className="text-xl font-bold text-success">{t("successTitle")}</h1>
-        <p className="text-default-500 text-sm">{t("successMessage")}</p>
+        <p className="text-sm text-default-500">{t("successMessage")}</p>
         <Link href={`/${locale}/login`} className="text-sm text-primary hover:underline">
           {t("backToLogin")}
         </Link>
@@ -50,10 +28,10 @@ export default function ForgotPasswordPage() {
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="text-default-500 mt-1 text-sm">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-default-500">{t("subtitle")}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={submit} className="flex flex-col gap-4">
         {error && (
           <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
             {error}

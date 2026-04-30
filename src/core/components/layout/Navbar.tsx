@@ -22,11 +22,11 @@ export const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
-    // Check if user is already authenticated
+    // Check if user is already authenticated — suppress 401 errors (expected when not logged in)
     const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
     fetch(`${apiUrl}/auth/me`, { credentials: "include" })
       .then((res) => { if (res.ok) setIsLoggedIn(true); })
-      .catch(() => {});
+      .catch(() => {}); // Suppress network errors — not logged in is expected
   }, []);
 
   const menuItems = [
