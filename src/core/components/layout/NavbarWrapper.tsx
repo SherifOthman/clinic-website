@@ -2,8 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { AuthNavbar } from "./AuthNavbar";
 
-// Segments that belong to auth pages — no Navbar/Footer on these
+// Segments that belong to auth pages
 const AUTH_SEGMENTS = [
   "login", "register", "forgot-password", "reset-password",
   "accept-invitation", "resend-email-verification", "confirm-email",
@@ -19,14 +20,18 @@ interface NavbarWrapperProps {
 export function NavbarWrapper({ locale, navbar, footer, children }: NavbarWrapperProps) {
   const pathname = usePathname();
 
-  // Check if current path is an auth page
   const isAuthPage = AUTH_SEGMENTS.some((seg) =>
     pathname === `/${locale}/${seg}` || pathname.startsWith(`/${locale}/${seg}/`)
   );
 
   if (isAuthPage) {
-    // Auth pages: full-screen, no Navbar/Footer — just render children
-    return <>{children}</>;
+    // Auth pages: minimal navbar (logo + dark mode + language), no footer
+    return (
+      <div className="flex min-h-screen flex-col">
+        <AuthNavbar />
+        <main className="flex-grow">{children}</main>
+      </div>
+    );
   }
 
   return (
