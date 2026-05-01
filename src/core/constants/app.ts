@@ -5,7 +5,7 @@ export const APP_CONFIG = {
   version: "1.0.0",
   author: "ClinicCare Team",
   url: "https://cliniccare.com",
-  dashboardUrl: "http://localhost:3000",
+  dashboardUrl: process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000",
 } as const;
 
 export const API_CONFIG = {
@@ -24,9 +24,9 @@ export const ROUTES = {
 } as const;
 
 export const EXTERNAL_LINKS = {
-  dashboard: "http://localhost:3000",
-  login: "http://localhost:3000/login",
-  register: "http://localhost:3000/register",
+  dashboard: process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000",
+  login: `${process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001"}/en/login`,
+  register: `${process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001"}/en/register`,
 } as const;
 
 export const SOCIAL_LINKS = {
