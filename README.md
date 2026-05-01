@@ -32,7 +32,7 @@ Translations are resolved server-side and embedded in the HTML at build time, so
 
 ### RTL Support
 
-The `dir` attribute on the `<html>` element is set to `rtl` for Arabic. Tailwind CSS automatically flips all directional utilities (`ml-`, `mr-`, `pl-`, `pr-`, etc.) so no separate RTL stylesheet is needed. The font switches between Roboto (English) and Cairo (Arabic) using `next/font/google`, self-hosted and optimized at build time.
+The `dir` attribute on the `<html>` element is set to `rtl` for Arabic. Tailwind CSS automatically flips all directional utilities (`ml-`, `mr-`, `pl-`, `pr-`, etc.) so no separate RTL stylesheet is needed. The font switches between Inter (English) and Cairo (Arabic) using `next/font/google`, self-hosted and optimized at build time.
 
 ### Pricing Page
 
@@ -40,7 +40,7 @@ The pricing page fetches subscription plans from the live API at build time usin
 
 ### Contact Form
 
-The contact page includes a form that submits to the API. It uses React Hook Form with Zod validation and Axios for the POST request. This is the only interactive section that requires client-side JavaScript.
+The contact page includes a form that submits to the API. It uses React Hook Form with Zod validation and native fetch for the POST request. This is the only interactive section that requires client-side JavaScript.
 
 ### Auth Pages
 
@@ -57,10 +57,9 @@ Login and registration pages are included for deep-linking from the dashboard (e
 | Styling       | Tailwind CSS 4                              |
 | UI components | HeroUI v3                                   |
 | i18n          | next-intl                                   |
-| Animations    | Framer Motion                               |
 | Forms         | React Hook Form + Zod                       |
-| HTTP client   | Axios                                       |
-| Fonts         | Google Fonts (Roboto + Cairo) via next/font |
+| HTTP client   | Native fetch                                |
+| Fonts         | Google Fonts (Inter + Cairo) via next/font  |
 
 ---
 
