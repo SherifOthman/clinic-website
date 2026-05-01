@@ -18,5 +18,5 @@ export default async function AboutPageRoute({
   // Enable static rendering
   setRequestLocale(locale);
 
-  return <AboutPage />;
+  return <AboutPage locale={locale} />;
 }

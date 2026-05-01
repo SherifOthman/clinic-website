@@ -2,7 +2,7 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useRegisterForm } from "@/src/features/auth/hooks/useRegisterForm";
-import { Input, Label, TextField } from "@heroui/react";
+import { Alert, Button, Input, Label, Separator, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -26,9 +26,12 @@ export default function RegisterPage() {
 
       <form onSubmit={submit} className="flex flex-col gap-4">
         {error && (
-          <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-            {error}
-          </div>
+          <Alert status="danger">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Description>{error}</Alert.Description>
+            </Alert.Content>
+          </Alert>
         )}
 
         <TextField isRequired className="flex flex-col gap-1">
@@ -71,13 +74,9 @@ export default function RegisterPage() {
           </select>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
-        >
-          {loading ? t("submitting") : t("submit")}
-        </button>
+        <Button type="submit" variant="primary" fullWidth isPending={loading}>
+          {({ isPending }) => isPending ? t("submitting") : t("submit")}
+        </Button>
       </form>
 
       <p className="text-center text-sm text-muted">
@@ -86,9 +85,9 @@ export default function RegisterPage() {
       </p>
 
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-border" />
+        <Separator className="flex-1" />
         <span className="text-xs text-muted">OR</span>
-        <div className="h-px flex-1 bg-border" />
+        <Separator className="flex-1" />
       </div>
 
       <a

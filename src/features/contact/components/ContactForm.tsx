@@ -1,11 +1,9 @@
 "use client";
 
 import { useContactForm } from "@/src/features/contact/hooks/useContactForm";
-import { Card } from "@heroui/react";
+import { Alert, Button, Card, Input, Label, TextArea, TextField } from "@heroui/react";
 import { CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-const inputCls = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent";
 
 /**
  * Contact form card — handles its own state via useContactForm.
@@ -25,38 +23,67 @@ export function ContactForm() {
         ) : (
           <form onSubmit={submit} className="space-y-5">
             {error && (
-              <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-                {error}
-              </div>
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>{error}</Alert.Description>
+                </Alert.Content>
+              </Alert>
             )}
 
             <div className="grid gap-4 md:grid-cols-2">
-              <FormField label={t("contact.form.firstName")} value={form.firstName} onChange={setField("firstName")} placeholder={t("contact.form.firstNamePlaceholder")} required />
-              <FormField label={t("contact.form.lastName")}  value={form.lastName}  onChange={setField("lastName")}  placeholder={t("contact.form.lastNamePlaceholder")}  required />
-            </div>
-
-            <FormField label={t("contact.form.email")}   type="email" value={form.email}   onChange={setField("email")}   placeholder={t("contact.form.emailPlaceholder")}   required />
-            <FormField label={t("contact.form.subject")}             value={form.subject} onChange={setField("subject")} placeholder={t("contact.form.subjectPlaceholder")} required />
-
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">{t("contact.form.message")}</label>
-              <textarea
-                value={form.message}
-                onChange={setField("message")}
-                placeholder={t("contact.form.messagePlaceholder")}
+              <FormField
+                label={t("contact.form.firstName")}
+                value={form.firstName}
+                onChange={setField("firstName")}
+                placeholder={t("contact.form.firstNamePlaceholder")}
                 required
-                rows={4}
-                className={`${inputCls} resize-none`}
+              />
+              <FormField
+                label={t("contact.form.lastName")}
+                value={form.lastName}
+                onChange={setField("lastName")}
+                placeholder={t("contact.form.lastNamePlaceholder")}
+                required
               />
             </div>
 
-            <button
+            <FormField
+              label={t("contact.form.email")}
+              type="email"
+              value={form.email}
+              onChange={setField("email")}
+              placeholder={t("contact.form.emailPlaceholder")}
+              required
+            />
+            <FormField
+              label={t("contact.form.subject")}
+              value={form.subject}
+              onChange={setField("subject")}
+              placeholder={t("contact.form.subjectPlaceholder")}
+              required
+            />
+
+            <TextField isRequired className="flex flex-col gap-1">
+              <Label>{t("contact.form.message")}</Label>
+              <TextArea
+                value={form.message}
+                onChange={setField("message") as React.ChangeEventHandler<HTMLTextAreaElement>}
+                placeholder={t("contact.form.messagePlaceholder")}
+                required
+                rows={4}
+                className="w-full resize-none"
+              />
+            </TextField>
+
+            <Button
               type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
+              variant="primary"
+              fullWidth
+              isPending={loading}
             >
-              {loading ? "Sending..." : t("contact.form.submit")}
-            </button>
+              {({ isPending }) => isPending ? "Sending..." : t("contact.form.submit")}
+            </Button>
           </form>
         )}
       </Card.Content>
@@ -77,10 +104,16 @@ interface FormFieldProps {
 
 function FormField({ label, value, onChange, placeholder, type = "text", required }: FormFieldProps) {
   return (
-    <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">{label}</label>
-      <input type={type} value={value} onChange={onChange} placeholder={placeholder} required={required} className={inputCls} />
-    </div>
+    <TextField isRequired={required} className="flex flex-col gap-1">
+      <Label>{label}</Label>
+      <Input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full"
+      />
+    </TextField>
   );
 }
 
@@ -90,9 +123,9 @@ function ContactSuccess({ onReset }: { onReset: () => void }) {
       <CheckCircle className="h-16 w-16 text-success" />
       <h3 className="text-xl font-semibold">Message Sent!</h3>
       <p className="text-muted">We'll get back to you within 24 hours.</p>
-      <button onClick={onReset} className="text-sm text-accent hover:underline">
+      <Button variant="ghost" size="sm" onPress={onReset}>
         Send another message
-      </button>
+      </Button>
     </div>
   );
 }

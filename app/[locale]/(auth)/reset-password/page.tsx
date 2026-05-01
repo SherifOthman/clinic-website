@@ -2,7 +2,7 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useResetPasswordForm } from "@/src/features/auth/hooks/useResetPasswordForm";
-import { Input, Label, TextField } from "@heroui/react";
+import { Alert, Button, Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -43,9 +43,12 @@ function ResetPasswordForm() {
 
       <form onSubmit={submit} className="flex flex-col gap-4">
         {error && (
-          <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-            {error}
-          </div>
+          <Alert status="danger">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Description>{error}</Alert.Description>
+            </Alert.Content>
+          </Alert>
         )}
 
         <TextField isReadOnly className="flex flex-col gap-1">
@@ -62,13 +65,9 @@ function ResetPasswordForm() {
           minLength={8}
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
-        >
-          {loading ? t("submitting") : t("submit")}
-        </button>
+        <Button type="submit" variant="primary" fullWidth isPending={loading}>
+          {({ isPending }) => isPending ? t("submitting") : t("submit")}
+        </Button>
       </form>
     </div>
   );

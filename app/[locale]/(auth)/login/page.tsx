@@ -2,7 +2,7 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useLoginForm } from "@/src/features/auth/hooks/useLoginForm";
-import { Input, Label, TextField } from "@heroui/react";
+import { Alert, Button, Input, Label, Separator, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,23 +38,26 @@ export default function LoginPage() {
           <p className="mb-2 text-xs font-medium text-muted">Test accounts</p>
           <div className="flex flex-wrap gap-1.5">
             {DEMO_USERS.map((u) => (
-              <button
+              <Button
                 key={u.email}
-                type="button"
-                onClick={() => fillDemo(u.email, u.password)}
-                className="rounded-md border border-border px-2 py-1 text-xs transition hover:border-accent hover:text-accent"
+                variant="outline"
+                size="sm"
+                onPress={() => fillDemo(u.email, u.password)}
               >
                 {u.label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
 
         <form onSubmit={submit} className="flex flex-col gap-4">
           {error && (
-            <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-              {error}
-            </div>
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Description>{error}</Alert.Description>
+              </Alert.Content>
+            </Alert>
           )}
 
           {/* Email / username */}
@@ -86,13 +89,9 @@ export default function LoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
-          >
-            {loading ? t("signingIn") : t("signIn")}
-          </button>
+          <Button type="submit" variant="primary" fullWidth isPending={loading}>
+            {({ isPending }) => isPending ? t("signingIn") : t("signIn")}
+          </Button>
         </form>
 
         <p className="text-center text-sm text-muted">
@@ -102,19 +101,19 @@ export default function LoginPage() {
           </Link>
         </p>
 
-        <OAuthDivider />
+        <OAuthSeparator />
         <GoogleButton href={googleOAuthUrl} />
       </div>
     </div>
   );
 }
 
-function OAuthDivider() {
+function OAuthSeparator() {
   return (
     <div className="flex items-center gap-3">
-      <div className="h-px flex-1 bg-border" />
+      <Separator className="flex-1" />
       <span className="text-xs text-muted">OR</span>
-      <div className="h-px flex-1 bg-border" />
+      <Separator className="flex-1" />
     </div>
   );
 }

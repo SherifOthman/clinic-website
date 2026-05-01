@@ -2,7 +2,7 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
-import { Input, Label, TextField } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -42,16 +42,21 @@ function AcceptInvitationForm() {
         <p className="mt-1 text-sm text-muted">
           {t("subtitle")} <span className="font-semibold text-foreground">{invitation.clinicName}</span>
         </p>
-        <span className="mt-2 inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
-          {invitation.role}
+        <span className="mt-2 inline-block">
+          <Chip color="accent" variant="soft" size="sm">
+            {invitation.role}
+          </Chip>
         </span>
       </div>
 
       <form onSubmit={submit} className="flex flex-col gap-4">
         {error && (
-          <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-            {error}
-          </div>
+          <Alert status="danger">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Description>{error}</Alert.Description>
+            </Alert.Content>
+          </Alert>
         )}
 
         <TextField isRequired className="flex flex-col gap-1">
@@ -89,13 +94,9 @@ function AcceptInvitationForm() {
           </select>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
-        >
-          {loading ? t("submitting") : t("submit")}
-        </button>
+        <Button type="submit" variant="primary" fullWidth isPending={loading}>
+          {({ isPending }) => isPending ? t("submitting") : t("submit")}
+        </Button>
       </form>
     </div>
   );
