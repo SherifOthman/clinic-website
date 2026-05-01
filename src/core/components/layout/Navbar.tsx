@@ -8,7 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
+const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "https://clinic-dashboard-ecru.vercel.app";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ export const Navbar = () => {
   useEffect(() => {
     setMounted(true);
     // Check if user is already authenticated — suppress 401 errors (expected when not logged in)
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://clinic-api.runasp.net/api";
     fetch(`${apiUrl}/auth/me`, { credentials: "include" })
       .then((res) => { if (res.ok) setIsLoggedIn(true); })
       .catch(() => {}); // Suppress network errors — not logged in is expected
@@ -36,7 +36,14 @@ export const Navbar = () => {
     { key: "contact", href: "/contact" },
   ];
 
-  const loginUrl = `${AUTH_URL}/${locale}/login`;
+  // Login is a page on this same website — use internal navigation, no external URL needed
+  const handleLoginOrDashboard = () => {
+    if (isLoggedIn) {
+      window.location.href = DASHBOARD_URL;
+    } else {
+      router.push(`/${locale}/login`);
+    }
+  };
 
   const switchLocale = () => {
     const path = pathname.split("/").slice(2).join("/");
@@ -75,7 +82,6 @@ export const Navbar = () => {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-2 sm:flex">
-            {/* Dark mode toggle using HeroUI v3 Switch */}
             {mounted && (
               <Switch
                 size="sm"
@@ -98,7 +104,7 @@ export const Navbar = () => {
               <Globe className="me-1 h-4 w-4" />
               {locale === "en" ? "العربية" : "English"}
             </Button>
-            <Button variant="primary" size="sm" onPress={() => { window.location.href = isLoggedIn ? (process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000") : loginUrl; }}>
+            <Button variant="primary" size="sm" onPress={handleLoginOrDashboard}>
               {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
           </div>
@@ -130,7 +136,11 @@ export const Navbar = () => {
                 {t(item.key)}
               </Link>
             ))}
-            <Button variant="primary" className="mt-2 w-full" onPress={() => { setIsOpen(false); window.location.href = isLoggedIn ? (process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000") : loginUrl; }}>
+            <Button
+              variant="primary"
+              className="mt-2 w-full"
+              onPress={() => { setIsOpen(false); handleLoginOrDashboard(); }}
+            >
               {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
             <div className="flex gap-2">

@@ -1,8 +1,6 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { getLocale, getTranslations } from "next-intl/server";
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
-
 export const PricingCTA = async () => {
   const t = await getTranslations();
   const locale = await getLocale();
@@ -15,7 +13,7 @@ export const PricingCTA = async () => {
         </h2>
         <p className="text-xl text-muted">{t("pricing.cta.subtitle")}</p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <CtaButton href={`${AUTH_URL}/${locale}/register`} variant="primary">
+          <CtaButton href={`/${locale}/register`} variant="primary">
             {t("hero.cta")}
           </CtaButton>
           <CtaButton href={`/${locale}/contact`} variant="outline">

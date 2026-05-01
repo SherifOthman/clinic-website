@@ -1,11 +1,6 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { getLocale, getTranslations } from "next-intl/server";
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
-
-/**
- * Full-width accent-background call-to-action section at the bottom of the home page.
- */
 export const CTASection = async () => {
   const t = await getTranslations();
   const locale = await getLocale();
@@ -20,7 +15,7 @@ export const CTASection = async () => {
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <CtaButton
-            href={`${AUTH_URL}/${locale}/register`}
+            href={`/${locale}/register`}
             className="bg-white text-accent hover:bg-white/90"
           >
             {t("hero.cta")}

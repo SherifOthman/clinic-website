@@ -1,13 +1,9 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
-
-/**
- * Left column of the hero section: headline, subtitle, and CTA buttons.
- */
 export const HeroContent = async () => {
   const t = await getTranslations();
+  const locale = await getLocale();
 
   return (
     <div className="space-y-8">
@@ -19,10 +15,10 @@ export const HeroContent = async () => {
       </div>
 
       <div className="flex flex-col gap-4 sm:flex-row">
-        <CtaButton href={`${AUTH_URL}/en/register`} variant="primary">
+        <CtaButton href={`/${locale}/register`} variant="primary">
           {t("hero.cta")}
         </CtaButton>
-        <CtaButton href={`${AUTH_URL}/en/login`} variant="outline">
+        <CtaButton href={`/${locale}/login`} variant="outline">
           {t("navigation.login")}
         </CtaButton>
       </div>

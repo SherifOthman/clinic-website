@@ -14,9 +14,7 @@ export const PlanCard = async ({ plan, isAr, features }: PlanCardProps) => {
 
   const name = isAr ? plan.nameAr : plan.name;
   const description = isAr ? plan.descriptionAr : plan.description;
-  const registerUrl = process.env.NEXT_PUBLIC_AUTH_URL
-    ? `${process.env.NEXT_PUBLIC_AUTH_URL}/${isAr ? "ar" : "en"}/register`
-    : `http://localhost:3001/${isAr ? "ar" : "en"}/register`;
+  const registerUrl = `/${isAr ? "ar" : "en"}/register`;
 
   return (
     <Card

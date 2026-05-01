@@ -11,18 +11,12 @@ interface ContactInfoItem {
   href: string;
 }
 
-/**
- * Right column of the contact page — info cards + quick-action CTA.
- * Pure display component, no state.
- */
 export function ContactInfoSidebar() {
   const t = useTranslations();
 
-  const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
-
   const items: ContactInfoItem[] = [
-    { icon: Mail,   title: t("contact.info.email.title"),   value: "support@cliniccare.com", href: "mailto:support@cliniccare.com" },
-    { icon: Phone,  title: t("contact.info.phone.title"),   value: "+1 (555) 123-4567",      href: "tel:+15551234567" },
+    { icon: Mail,   title: t("contact.info.email.title"),   value: "support@cliniccare.com",        href: "mailto:support@cliniccare.com" },
+    { icon: Phone,  title: t("contact.info.phone.title"),   value: "+1 (555) 123-4567",             href: "tel:+15551234567" },
     { icon: MapPin, title: t("contact.info.address.title"), value: t("contact.info.address.value"), href: "#" },
   ];
 
@@ -41,7 +35,7 @@ export function ContactInfoSidebar() {
         <Card.Content className="space-y-4 p-6 text-center">
           <h3 className="text-xl font-semibold">{t("contact.quickActions.title")}</h3>
           <p className="opacity-90">{t("contact.quickActions.subtitle")}</p>
-          <CtaButton href={`${AUTH_URL}/en/register`} className="bg-white text-accent hover:bg-white/90">
+          <CtaButton href="/en/register" className="bg-white text-accent hover:bg-white/90">
             {t("hero.cta")}
           </CtaButton>
         </Card.Content>

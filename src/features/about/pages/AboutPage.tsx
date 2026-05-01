@@ -1,6 +1,4 @@
-import { Button } from "@heroui/react";
 import { Card } from "@heroui/react";
-import { Link } from "@heroui/react";
 import { Award, Clock, HeartHandshake, Shield, Users, Zap } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -147,7 +145,7 @@ export const AboutPage = async () => {
           <p className="text-xl text-muted">{t("about.cta.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href={`${process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001"}/en/register`}
+              href={`/en/register`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent-hover"

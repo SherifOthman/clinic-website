@@ -3,8 +3,6 @@ import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { Award, Clock, HeartHandshake, Users } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
-const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3001";
-
 /**
  * About section: two-column layout with text on the left
  * and a 2×2 feature box grid on the right.
@@ -38,7 +36,7 @@ export const AboutSection = async () => {
                 {t("about.description")}
               </p>
             </div>
-            <CtaButton href={`${AUTH_URL}/${locale}/login`} variant="outline">
+            <CtaButton href={`/${locale}/login`} variant="outline">
               {t("navigation.login")}
             </CtaButton>
           </div>
