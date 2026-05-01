@@ -1,11 +1,11 @@
 "use client";
 
+import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
+import { Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-
-const inputCls = "rounded-lg border border-divider bg-background px-3 py-2 text-sm outline-none focus:border-primary";
 
 function AcceptInvitationForm() {
   const t = useTranslations("auth.invitation");
@@ -23,7 +23,7 @@ function AcceptInvitationForm() {
   }
 
   if (!invitation) {
-    return <div className="text-center text-default-500">Loading...</div>;
+    return <div className="text-center text-muted">Loading...</div>;
   }
 
   if (done) {
@@ -35,21 +35,14 @@ function AcceptInvitationForm() {
     );
   }
 
-  const fields = [
-    { key: "fullName"    as const, label: t("fullName"), type: "text",     auto: "name" },
-    { key: "userName"    as const, label: t("username"), type: "text",     auto: "username" },
-    { key: "phoneNumber" as const, label: t("phone"),    type: "tel",      auto: "tel" },
-    { key: "password"    as const, label: t("password"), type: "password", auto: "new-password" },
-  ];
-
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-default-500">
+        <p className="mt-1 text-sm text-muted">
           {t("subtitle")} <span className="font-semibold text-foreground">{invitation.clinicName}</span>
         </p>
-        <span className="mt-2 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+        <span className="mt-2 inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
           {invitation.role}
         </span>
       </div>
@@ -61,23 +54,36 @@ function AcceptInvitationForm() {
           </div>
         )}
 
-        {fields.map(({ key, label, type, auto }) => (
-          <div key={key} className="flex flex-col gap-1">
-            <label className="text-sm font-medium">{label}</label>
-            <input
-              type={type}
-              autoComplete={auto}
-              value={form[key]}
-              onChange={setField(key)}
-              className={inputCls}
-              required
-            />
-          </div>
-        ))}
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("fullName")}</Label>
+          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} className="w-full" />
+        </TextField>
+
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("username")}</Label>
+          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} className="w-full" />
+        </TextField>
+
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("phone")}</Label>
+          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} className="w-full" />
+        </TextField>
+
+        <PasswordInput
+          label={t("password")}
+          value={form.password}
+          onChange={setField("password")}
+          autoComplete="new-password"
+          required
+        />
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">{t("gender")}</label>
-          <select value={form.gender} onChange={setField("gender")} className={inputCls}>
+          <Label>{t("gender")}</Label>
+          <select
+            value={form.gender}
+            onChange={setField("gender")}
+            className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent"
+          >
             <option value="Male">{t("male")}</option>
             <option value="Female">{t("female")}</option>
           </select>
@@ -86,7 +92,7 @@ function AcceptInvitationForm() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-60"
+          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
         >
           {loading ? t("submitting") : t("submit")}
         </button>

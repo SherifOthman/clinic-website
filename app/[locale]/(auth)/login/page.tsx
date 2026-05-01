@@ -1,6 +1,8 @@
 "use client";
 
+import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useLoginForm } from "@/src/features/auth/hooks/useLoginForm";
+import { Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,20 +15,15 @@ const DEMO_USERS = [
   { label: "Receptionist", email: "receptionist@clinic.com", password: "Receptionist123!" },
 ];
 
-const inputCls =
-  "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent transition-colors";
-
 export default function LoginPage() {
-  const t    = useTranslations("auth.login");
+  const t = useTranslations("auth.login");
   const { locale } = useParams<{ locale: string }>();
-
   const { form, error, loading, checking, googleOAuthUrl, setField, fillDemo, submit } = useLoginForm();
 
   if (checking) return null;
 
   return (
     <div className="w-full max-w-[22rem]">
-      {/* White card */}
       <div className="rounded-2xl border border-border bg-background shadow-lg px-8 py-8 flex flex-col gap-5">
 
         {/* Logo + brand */}
@@ -54,36 +51,37 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={submit} className="flex flex-col gap-4">
-          {error && <ErrorAlert message={error} />}
+          {error && (
+            <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
+              {error}
+            </div>
+          )}
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">{t("emailOrUsername")}</label>
-            <input
+          {/* Email / username */}
+          <TextField isRequired className="flex flex-col gap-1">
+            <Label>{t("emailOrUsername")}</Label>
+            <Input
               type="text"
               autoComplete="username"
               value={form.emailOrUsername}
               onChange={setField("emailOrUsername")}
-              className={inputCls}
-              required
+              className="w-full"
             />
-          </div>
+          </TextField>
 
+          {/* Password */}
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">{t("password")}</label>
-              <Link
-                href={`/${locale}/forgot-password`}
-                className="text-xs text-accent hover:underline"
-              >
+              <span className="text-sm font-medium">{t("password")}</span>
+              <Link href={`/${locale}/forgot-password`} className="text-xs text-accent hover:underline">
                 {t("forgotPassword")}
               </Link>
             </div>
-            <input
-              type="password"
-              autoComplete="current-password"
+            <PasswordInput
+              label=""
               value={form.password}
               onChange={setField("password")}
-              className={inputCls}
+              autoComplete="current-password"
               required
             />
           </div>
@@ -107,16 +105,6 @@ export default function LoginPage() {
         <OAuthDivider />
         <GoogleButton href={googleOAuthUrl} />
       </div>
-    </div>
-  );
-}
-
-// ── Small local components ────────────────────────────────────────────────────
-
-function ErrorAlert({ message }: { message: string }) {
-  return (
-    <div className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
-      {message}
     </div>
   );
 }

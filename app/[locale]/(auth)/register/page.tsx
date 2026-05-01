@@ -1,11 +1,11 @@
 "use client";
 
+import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useRegisterForm } from "@/src/features/auth/hooks/useRegisterForm";
+import { Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-
-const inputCls = "rounded-lg border border-divider bg-background px-3 py-2 text-sm outline-none focus:border-primary";
 
 export default function RegisterPage() {
   const t = useTranslations("auth.register");
@@ -17,19 +17,11 @@ export default function RegisterPage() {
     locale,
   );
 
-  const fields = [
-    { key: "fullName"    as const, label: t("fullName"), type: "text",     auto: "name" },
-    { key: "userName"    as const, label: t("username"), type: "text",     auto: "username" },
-    { key: "email"       as const, label: t("email"),    type: "email",    auto: "email" },
-    { key: "phoneNumber" as const, label: t("phone"),    type: "tel",      auto: "tel" },
-    { key: "password"    as const, label: t("password"), type: "password", auto: "new-password" },
-  ];
-
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-default-500">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
 
       <form onSubmit={submit} className="flex flex-col gap-4">
@@ -39,23 +31,41 @@ export default function RegisterPage() {
           </div>
         )}
 
-        {fields.map(({ key, label, type, auto }) => (
-          <div key={key} className="flex flex-col gap-1">
-            <label className="text-sm font-medium">{label}</label>
-            <input
-              type={type}
-              autoComplete={auto}
-              value={form[key]}
-              onChange={setField(key)}
-              className={inputCls}
-              required
-            />
-          </div>
-        ))}
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("fullName")}</Label>
+          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} className="w-full" />
+        </TextField>
+
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("username")}</Label>
+          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} className="w-full" />
+        </TextField>
+
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("email")}</Label>
+          <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} className="w-full" />
+        </TextField>
+
+        <TextField isRequired className="flex flex-col gap-1">
+          <Label>{t("phone")}</Label>
+          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} className="w-full" />
+        </TextField>
+
+        <PasswordInput
+          label={t("password")}
+          value={form.password}
+          onChange={setField("password")}
+          autoComplete="new-password"
+          required
+        />
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">{t("gender")}</label>
-          <select value={form.gender} onChange={setField("gender")} className={inputCls}>
+          <Label>{t("gender")}</Label>
+          <select
+            value={form.gender}
+            onChange={setField("gender")}
+            className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent"
+          >
             <option value="Male">{t("male")}</option>
             <option value="Female">{t("female")}</option>
           </select>
@@ -64,26 +74,26 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-60"
+          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
         >
           {loading ? t("submitting") : t("submit")}
         </button>
       </form>
 
-      <p className="text-center text-sm text-default-500">
+      <p className="text-center text-sm text-muted">
         {t("haveAccount")}{" "}
-        <Link href={`/${locale}/login`} className="text-primary hover:underline">{t("signIn")}</Link>
+        <Link href={`/${locale}/login`} className="text-accent hover:underline">{t("signIn")}</Link>
       </p>
 
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-divider" />
-        <span className="text-xs text-default-400">OR</span>
-        <div className="h-px flex-1 bg-divider" />
+        <div className="h-px flex-1 bg-border" />
+        <span className="text-xs text-muted">OR</span>
+        <div className="h-px flex-1 bg-border" />
       </div>
 
       <a
         href={googleOAuthUrl}
-        className="flex items-center justify-center gap-3 rounded-lg border border-divider bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-default-50"
+        className="flex items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-surface"
       >
         <GoogleIcon />
         Sign up with Google

@@ -1,6 +1,8 @@
 "use client";
 
+import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useResetPasswordForm } from "@/src/features/auth/hooks/useResetPasswordForm";
+import { Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -25,7 +27,7 @@ function ResetPasswordForm() {
     return (
       <div className="flex flex-col items-center gap-4 text-center">
         <p className="text-danger">{t("invalidLink")}</p>
-        <Link href={`/${locale}/forgot-password`} className="text-sm text-primary hover:underline">
+        <Link href={`/${locale}/forgot-password`} className="text-sm text-accent hover:underline">
           {t("requestNew")}
         </Link>
       </div>
@@ -36,7 +38,7 @@ function ResetPasswordForm() {
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-default-500">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
 
       <form onSubmit={submit} className="flex flex-col gap-4">
@@ -46,33 +48,24 @@ function ResetPasswordForm() {
           </div>
         )}
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-default-500">Email</label>
-          <input
-            type="email"
-            value={email}
-            readOnly
-            className="rounded-lg border border-divider bg-default-50 px-3 py-2 text-sm text-default-500"
-          />
-        </div>
+        <TextField isReadOnly className="flex flex-col gap-1">
+          <Label className="text-muted">Email</Label>
+          <Input type="email" value={email} readOnly className="w-full opacity-60" />
+        </TextField>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">{t("newPassword")}</label>
-          <input
-            type="password"
-            autoComplete="new-password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="rounded-lg border border-divider bg-background px-3 py-2 text-sm outline-none focus:border-primary"
-            required
-            minLength={8}
-          />
-        </div>
+        <PasswordInput
+          label={t("newPassword")}
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          autoComplete="new-password"
+          required
+          minLength={8}
+        />
 
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-60"
+          className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
         >
           {loading ? t("submitting") : t("submit")}
         </button>
