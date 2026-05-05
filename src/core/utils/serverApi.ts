@@ -40,8 +40,9 @@ export async function getPublicStats(): Promise<PublicStats | null> {
 
 export async function getTestimonials(): Promise<TestimonialDto[]> {
   try {
-    return await serverFetch<TestimonialDto[]>("/testimonials", {
-      next: { revalidate: 60 },
+    // count=4 — show 4 random approved testimonials, rotated daily by the API
+    return await serverFetch<TestimonialDto[]>("/testimonials?count=4", {
+      next: { revalidate: 86400 }, // revalidate once per day — matches the daily rotation
     });
   } catch {
     return [];
