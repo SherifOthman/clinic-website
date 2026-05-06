@@ -2,10 +2,8 @@
 
 import { apiClient } from "@/src/core/utils/api";
 import { authApi } from "@/src/features/auth/api";
+import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
 import { useEffect, useState } from "react";
-
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000";
-const API_URL       = process.env.NEXT_PUBLIC_API_URL       ?? "http://localhost:5000/api";
 
 export interface LoginForm {
   emailOrUsername: string;

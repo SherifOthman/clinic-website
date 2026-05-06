@@ -1,9 +1,8 @@
 "use client";
 
 import { invitationApi } from "@/src/features/auth/api";
+import { DASHBOARD_URL } from "@/src/core/constants/env";
 import { useEffect, useState } from "react";
-
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000";
 
 export interface InvitationDetail {
   email: string;

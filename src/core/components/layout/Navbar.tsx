@@ -4,11 +4,11 @@ import { Button, Link, Switch } from "@heroui/react";
 import { Globe, Menu, Moon, Sun, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "https://clinic-dashboard-ecru.vercel.app";
+import { apiClient } from "@/src/core/utils/api";
+import { DASHBOARD_URL } from "@/src/core/constants/env";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,11 +22,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
-    // Check if user is already authenticated — suppress 401 errors (expected when not logged in)
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://clinic-api.runasp.net/api";
-    fetch(`${apiUrl}/auth/me`, { credentials: "include" })
-      .then((res) => { if (res.ok) setIsLoggedIn(true); })
-      .catch(() => {}); // Suppress network errors — not logged in is expected
+    // Check if user is already authenticated — suppress errors (expected when not logged in)
+    apiClient.get("/auth/me").then((result) => {
+      if (result.ok) setIsLoggedIn(true);
+    });
   }, []);
 
   const menuItems = [
@@ -51,16 +50,28 @@ export const Navbar = () => {
   };
 
   const isActive = (href: string) =>
-    pathname === `/${locale}${href}` || (href === "/" && pathname === `/${locale}`);
+    pathname === `/${locale}${href}` ||
+    (href === "/" && pathname === `/${locale}`);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-2 no-underline">
-            <Image src="/logo.svg" alt="ClinicCare" width={28} height={28} priority />
-            <span className="text-lg font-bold text-foreground">ClinicCare</span>
+          <Link
+            href={`/${locale}`}
+            className="flex items-center gap-2 no-underline"
+          >
+            <Image
+              src="/logo.svg"
+              alt="ClinicCare"
+              width={28}
+              height={28}
+              priority
+            />
+            <span className="text-lg font-bold text-foreground">
+              ClinicCare
+            </span>
           </Link>
 
           {/* Desktop nav links */}
@@ -93,7 +104,11 @@ export const Navbar = () => {
                   <Switch.Control>
                     <Switch.Thumb>
                       <Switch.Icon>
-                        {isSelected ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+                        {isSelected ? (
+                          <Sun className="h-3 w-3" />
+                        ) : (
+                          <Moon className="h-3 w-3" />
+                        )}
                       </Switch.Icon>
                     </Switch.Thumb>
                   </Switch.Control>
@@ -104,7 +119,11 @@ export const Navbar = () => {
               <Globe className="me-1 h-4 w-4" />
               {locale === "en" ? "العربية" : "English"}
             </Button>
-            <Button variant="primary" size="sm" onPress={handleLoginOrDashboard}>
+            <Button
+              variant="primary"
+              size="sm"
+              onPress={handleLoginOrDashboard}
+            >
               {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
           </div>
@@ -129,7 +148,9 @@ export const Navbar = () => {
                 key={item.key}
                 href={`/${locale}${item.href}`}
                 className={`text-sm no-underline ${
-                  isActive(item.href) ? "font-semibold text-accent" : "text-foreground"
+                  isActive(item.href)
+                    ? "font-semibold text-accent"
+                    : "text-foreground"
                 }`}
                 onPress={() => setIsOpen(false)}
               >
@@ -139,12 +160,20 @@ export const Navbar = () => {
             <Button
               variant="primary"
               className="mt-2 w-full"
-              onPress={() => { setIsOpen(false); handleLoginOrDashboard(); }}
+              onPress={() => {
+                setIsOpen(false);
+                handleLoginOrDashboard();
+              }}
             >
               {isLoggedIn ? t("dashboard") : t("login")}
             </Button>
             <div className="flex gap-2">
-              <Button variant="ghost" size="sm" onPress={switchLocale} className="flex-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={switchLocale}
+                className="flex-1"
+              >
                 <Globe className="me-1 h-4 w-4" />
                 {locale === "en" ? "العربية" : "English"}
               </Button>
@@ -157,7 +186,9 @@ export const Navbar = () => {
                     onChange={(checked) => setTheme(checked ? "dark" : "light")}
                     aria-label="Toggle dark mode"
                   >
-                    <Switch.Control><Switch.Thumb /></Switch.Control>
+                    <Switch.Control>
+                      <Switch.Thumb />
+                    </Switch.Control>
                   </Switch>
                   <Sun className="h-3.5 w-3.5 text-muted" />
                 </div>

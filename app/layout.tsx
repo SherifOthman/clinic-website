@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
@@ -8,13 +8,6 @@ export const metadata: Metadata = {
   },
   description:
     "Modern healthcare management with comprehensive medical services",
-};
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
 };
 
 export default function RootLayout({

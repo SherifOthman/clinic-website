@@ -1,6 +1,6 @@
 import { routing } from "@/i18n/routing";
-import { fontSans } from "@/src/core/config/fonts";
 import { NavbarWrapper } from "@/src/core/components/layout/NavbarWrapper";
+import { fontSans } from "@/src/core/config/fonts";
 import { Footer, Navbar } from "@/src/features/navigation";
 import clsx from "clsx";
 import { NextIntlClientProvider } from "next-intl";
@@ -49,7 +49,11 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <NavbarWrapper locale={locale} navbar={<Navbar />} footer={<Footer />}>
+            <NavbarWrapper
+              locale={locale}
+              navbar={<Navbar />}
+              footer={<Footer />}
+            >
               {children}
             </NavbarWrapper>
           </Providers>

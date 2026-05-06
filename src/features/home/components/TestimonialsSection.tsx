@@ -17,15 +17,15 @@ export const TestimonialsSection = async () => {
           subtitle={t("testimonials.subtitle")}
         />
         <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
-          {testimonials.map((t, i) => (
+          {testimonials.map((testimonial, i) => (
             <TestimonialCard
               key={i}
-              text={t.text}
-              author={t.authorName}
-              position={t.position}
-              clinic={t.clinicName}
-              rating={t.rating}
-              avatar={t.avatarUrl}
+              text={testimonial.text}
+              author={testimonial.authorName}
+              position={testimonial.position}
+              clinic={testimonial.clinicName}
+              rating={testimonial.rating}
+              avatar={testimonial.avatarUrl}
             />
           ))}
         </div>
