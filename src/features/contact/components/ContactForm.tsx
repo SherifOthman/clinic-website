@@ -118,13 +118,14 @@ function FormField({ label, value, onChange, placeholder, type = "text", require
 }
 
 function ContactSuccess({ onReset }: { onReset: () => void }) {
+  const t = useTranslations();
   return (
     <div className="flex flex-col items-center gap-4 py-8 text-center">
       <CheckCircle className="h-16 w-16 text-success" />
-      <h3 className="text-xl font-semibold">Message Sent!</h3>
-      <p className="text-muted">We'll get back to you within 24 hours.</p>
+      <h3 className="text-xl font-semibold">{t("contact.form.successTitle")}</h3>
+      <p className="text-muted">{t("contact.form.successMessage")}</p>
       <Button variant="ghost" size="sm" onPress={onReset}>
-        Send another message
+        {t("contact.form.sendAnother")}
       </Button>
     </div>
   );

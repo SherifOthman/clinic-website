@@ -370,7 +370,10 @@
       "subjectPlaceholder": "كيف يمكننا مساعدتك؟",
       "message": "الرسالة",
       "messagePlaceholder": "أخبرنا المزيد عن احتياجاتك...",
-      "submit": "إرسال الرسالة"
+      "submit": "إرسال الرسالة",
+      "successTitle": "تم الإرسال!",
+      "successMessage": "سنعود إليك خلال 24 ساعة.",
+      "sendAnother": "إرسال رسالة أخرى"
     },
     "info": {
       "title": "معلومات الاتصال",

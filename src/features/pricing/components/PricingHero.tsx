@@ -4,15 +4,13 @@ export const PricingHero = async () => {
   const t = await getTranslations();
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40">
+    <section className="py-20 bg-gradient-to-br from-accent/10 to-accent/5">
       <div className="max-w-4xl mx-auto px-6 space-y-8 text-center">
         <h1 className="text-4xl lg:text-6xl font-bold text-foreground">
-          Affordable Plans for Every Practice
+          {t("pricing.hero.title")}
         </h1>
         <p className="text-xl text-muted leading-relaxed max-w-3xl mx-auto">
-          Start managing your clinic more efficiently today. From solo
-          practitioners to large healthcare networks, we have the perfect
-          solution to streamline your operations and grow your practice.
+          {t("pricing.hero.subtitle")}
         </p>
       </div>
     </section>

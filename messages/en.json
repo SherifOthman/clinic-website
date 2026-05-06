@@ -370,7 +370,10 @@
       "subjectPlaceholder": "What can we help you with?",
       "message": "Message",
       "messagePlaceholder": "Tell us more about your needs...",
-      "submit": "Send Message"
+      "submit": "Send Message",
+      "successTitle": "Message Sent!",
+      "successMessage": "We'll get back to you within 24 hours.",
+      "sendAnother": "Send another message"
     },
     "info": {
       "title": "Contact Information",
