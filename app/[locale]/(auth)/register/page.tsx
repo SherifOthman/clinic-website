@@ -9,9 +9,6 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-
-type Method = null | "email" | "google";
 
 export default function RegisterPage() {
   const t = useTranslations("auth.register");
@@ -19,7 +16,6 @@ export default function RegisterPage() {
   const currentLocale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const [method, setMethod] = useState<Method>(null);
 
   const { form, error, loading, googleOAuthUrl, setField, submit } = useRegisterForm(
     (loc) => router.push(`/${loc}/login?registered=1`),
@@ -96,100 +92,74 @@ export default function RegisterPage() {
             <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
 
-          {/* ── Step 1: choose method ── */}
-          {method === null && (
-            <div className="space-y-3">
-              {/* Google */}
-              <a
-                href={googleOAuthUrl}
-                className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-medium transition hover:bg-surface-secondary"
-              >
-                <GoogleIcon />
-                {t("signUpWithGoogle")}
-              </a>
+          <form onSubmit={submit} className="space-y-4">
+            {error && (
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+              </Alert>
+            )}
 
-              <div className="flex items-center gap-3">
-                <Separator className="flex-1" />
-                <span className="text-xs text-muted">{t("or")}</span>
-                <Separator className="flex-1" />
-              </div>
-
-              {/* Email/password */}
-              <Button variant="outline" fullWidth onPress={() => setMethod("email")}>
-                {t("signUpWithEmail")}
-              </Button>
-
-              <p className="text-center text-sm text-muted">
-                {t("haveAccount")}{" "}
-                <Link href={`/${locale}/login`} className="font-medium text-accent hover:underline">
-                  {t("signIn")}
-                </Link>
-              </p>
+            <div className="grid grid-cols-2 gap-3">
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("fullName")}</Label>
+                <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
+              </TextField>
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("username")}</Label>
+                <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
+              </TextField>
             </div>
-          )}
 
-          {/* ── Step 2: email/password form ── */}
-          {method === "email" && (
-            <div className="space-y-4">
-              <form onSubmit={submit} className="space-y-4">
-                {error && (
-                  <Alert status="danger">
-                    <Alert.Indicator />
-                    <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
-                  </Alert>
-                )}
+            <TextField isRequired className="flex flex-col gap-1.5">
+              <Label>{t("email")}</Label>
+              <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} variant="secondary" className="w-full" />
+            </TextField>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <TextField isRequired className="flex flex-col gap-1.5">
-                    <Label>{t("fullName")}</Label>
-                    <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
-                  </TextField>
-                  <TextField isRequired className="flex flex-col gap-1.5">
-                    <Label>{t("username")}</Label>
-                    <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
-                  </TextField>
-                </div>
-
-                <TextField isRequired className="flex flex-col gap-1.5">
-                  <Label>{t("email")}</Label>
-                  <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} variant="secondary" className="w-full" />
-                </TextField>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <TextField isRequired className="flex flex-col gap-1.5">
-                    <Label>{t("phone")}</Label>
-                    <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
-                  </TextField>
-                  <Select isRequired variant="secondary" defaultValue="Male" value={form.gender}
-                    onChange={handleGenderChange} placeholder={t("selectGender")} className="flex flex-col gap-1.5">
-                    <Label>{t("gender")}</Label>
-                    <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
-                        <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
-                      </ListBox>
-                    </Select.Popover>
-                  </Select>
-                </div>
-
-                <PasswordInput label={t("password")} value={form.password}
-                  onChange={setField("password")} autoComplete="new-password" required />
-
-                <Button type="submit" variant="primary" fullWidth isPending={loading}>
-                  {({ isPending }) => isPending ? t("submitting") : t("submit")}
-                </Button>
-              </form>
-
-              <button
-                type="button"
-                onClick={() => setMethod(null)}
-                className="w-full text-center text-sm text-muted hover:text-foreground transition-colors"
-              >
-                ← {t("backToOptions")}
-              </button>
+            <div className="grid grid-cols-2 gap-3">
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("phone")}</Label>
+                <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
+              </TextField>
+              <Select isRequired variant="secondary" defaultValue="Male" value={form.gender}
+                onChange={handleGenderChange} placeholder={t("selectGender")} className="flex flex-col gap-1.5">
+                <Label>{t("gender")}</Label>
+                <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
+                <Select.Popover>
+                  <ListBox>
+                    <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
+                    <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
+                  </ListBox>
+                </Select.Popover>
+              </Select>
             </div>
-          )}
+
+            <PasswordInput label={t("password")} value={form.password}
+              onChange={setField("password")} autoComplete="new-password" required />
+
+            <Button type="submit" variant="primary" fullWidth isPending={loading}>
+              {({ isPending }) => isPending ? t("submitting") : t("submit")}
+            </Button>
+          </form>
+
+          <p className="text-center text-sm text-muted">
+            {t("haveAccount")}{" "}
+            <Link href={`/${locale}/login`} className="font-medium text-accent hover:underline">
+              {t("signIn")}
+            </Link>
+          </p>
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted">{t("or")}</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <a href={googleOAuthUrl}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-surface-secondary">
+            <GoogleIcon />
+            {t("signUpWithGoogle")}
+          </a>
         </div>
       </div>
     </div>
