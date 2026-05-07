@@ -1,6 +1,7 @@
 "use client";
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
+import { PhoneInput } from "@/src/core/components/ui/PhoneInput";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
 import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
@@ -21,7 +22,7 @@ export default function AcceptInvitationPage() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { invitation, loadError, form, error, loading, done, setField, submit } =
+  const { invitation, loadError, form, error, loading, done, setField, setPhone, submit } =
     useAcceptInvitation(token ?? null, t("invalid"), t("expired"), t("alreadyAccepted"));
 
   const handleGenderChange = (value: React.Key | null) => {
@@ -196,12 +197,14 @@ export default function AcceptInvitationPage() {
               </TextField>
             </div>
 
-            {/* Phone */}
-            <TextField isRequired className="flex flex-col gap-1.5">
-              <Label>{t("phone")}</Label>
-              <Input type="tel" autoComplete="tel" value={form.phoneNumber}
-                onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
-            </TextField>
+            {/* Phone with country selector */}
+            <PhoneInput
+              label={t("phone")}
+              value={form.phoneNumber}
+              onChange={setPhone}
+              required
+              searchPlaceholder={t("searchCountry")}
+            />
 
             {/* Password */}
             <PasswordInput

@@ -30,6 +30,10 @@ export function useRegisterForm(onSuccess: (locale: string) => void, locale: str
       setForm((f) => ({ ...f, [field]: e.target.value }));
   }
 
+  function setPhone(value: string) {
+    setForm((f) => ({ ...f, phoneNumber: value }));
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -47,5 +51,5 @@ export function useRegisterForm(onSuccess: (locale: string) => void, locale: str
     }
   }
 
-  return { form, error, loading, googleOAuthUrl, setField, submit };
+  return { form, error, loading, googleOAuthUrl, setField, setPhone, submit };
 }

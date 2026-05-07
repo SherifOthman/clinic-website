@@ -1,6 +1,7 @@
 "use client";
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
+import { PhoneInput } from "@/src/core/components/ui/PhoneInput";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useRegisterForm } from "@/src/features/auth/hooks/useRegisterForm";
 import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
@@ -17,7 +18,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { form, error, loading, googleOAuthUrl, setField, submit } = useRegisterForm(
+  const { form, error, loading, googleOAuthUrl, setField, setPhone, submit } = useRegisterForm(
     (loc) => router.push(`/${loc}/login?registered=1`),
     locale,
   );
@@ -100,40 +101,50 @@ export default function RegisterPage() {
               </Alert>
             )}
 
+            {/* Full name + username */}
             <div className="grid grid-cols-2 gap-3">
               <TextField isRequired className="flex flex-col gap-1.5">
                 <Label>{t("fullName")}</Label>
-                <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
+                <Input type="text" autoComplete="name" value={form.fullName}
+                  onChange={setField("fullName")} variant="secondary" className="w-full" />
               </TextField>
               <TextField isRequired className="flex flex-col gap-1.5">
                 <Label>{t("username")}</Label>
-                <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
+                <Input type="text" autoComplete="username" value={form.userName}
+                  onChange={setField("userName")} variant="secondary" className="w-full" />
               </TextField>
             </div>
 
+            {/* Email */}
             <TextField isRequired className="flex flex-col gap-1.5">
               <Label>{t("email")}</Label>
-              <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} variant="secondary" className="w-full" />
+              <Input type="email" autoComplete="email" value={form.email}
+                onChange={setField("email")} variant="secondary" className="w-full" />
             </TextField>
 
-            <div className="grid grid-cols-2 gap-3">
-              <TextField isRequired className="flex flex-col gap-1.5">
-                <Label>{t("phone")}</Label>
-                <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
-              </TextField>
-              <Select isRequired variant="secondary" defaultValue="Male" value={form.gender}
-                onChange={handleGenderChange} placeholder={t("selectGender")} className="flex flex-col gap-1.5">
-                <Label>{t("gender")}</Label>
-                <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
-                    <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
+            {/* Phone with country selector */}
+            <PhoneInput
+              label={t("phone")}
+              value={form.phoneNumber}
+              onChange={setPhone}
+              required
+              searchPlaceholder={t("searchCountry")}
+            />
 
+            {/* Gender */}
+            <Select isRequired variant="secondary" defaultValue="Male" value={form.gender}
+              onChange={handleGenderChange} placeholder={t("selectGender")} className="flex flex-col gap-1.5">
+              <Label>{t("gender")}</Label>
+              <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
+                  <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
+                </ListBox>
+              </Select.Popover>
+            </Select>
+
+            {/* Password */}
             <PasswordInput label={t("password")} value={form.password}
               onChange={setField("password")} autoComplete="new-password" required />
 

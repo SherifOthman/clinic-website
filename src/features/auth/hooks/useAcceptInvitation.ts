@@ -53,6 +53,10 @@ export function useAcceptInvitation(token: string | null, invalidLabel: string, 
       setForm((f) => ({ ...f, [field]: e.target.value }));
   }
 
+  function setPhone(value: string) {
+    setForm((f) => ({ ...f, phoneNumber: value }));
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!token) return;
@@ -72,5 +76,5 @@ export function useAcceptInvitation(token: string | null, invalidLabel: string, 
     }
   }
 
-  return { invitation, loadError, form, error, loading, done, setField, submit };
+  return { invitation, loadError, form, error, loading, done, setField, setPhone, submit };
 }
