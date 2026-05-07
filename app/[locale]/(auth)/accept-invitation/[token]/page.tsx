@@ -3,7 +3,7 @@
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
-import { Alert, Button, Chip, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
+import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
 import { Building2, CheckCircle, Globe, Stethoscope, UserCog, XCircle } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -172,24 +172,6 @@ export default function AcceptInvitationPage() {
           <div>
             <h2 className="text-2xl font-bold text-foreground">{t("formTitle")}</h2>
             <p className="mt-1 text-sm text-muted">{t("formSubtitle")}</p>
-          </div>
-
-          {/* Invitation summary — visible on both mobile and desktop */}
-          <div className="rounded-xl border border-border bg-surface p-4 space-y-2.5">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted">{t("clinic")}</span>
-              <span className="font-semibold text-foreground">{invitation.clinicName}</span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted">{t("role")}</span>
-              <Chip color="accent" variant="soft" size="sm">{invitation.role}</Chip>
-            </div>
-            {invitation.specializationName && (
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted">{t("specialization")}</span>
-                <span className="font-semibold text-foreground">{invitation.specializationName}</span>
-              </div>
-            )}
           </div>
 
           <form onSubmit={submit} className="space-y-4">

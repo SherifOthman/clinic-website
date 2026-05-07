@@ -51,6 +51,8 @@
       "haveAccount": "لديك حساب بالفعل؟",
       "signIn": "تسجيل الدخول",
       "signUpWithGoogle": "التسجيل بحساب Google",
+      "signUpWithEmail": "التسجيل بالبريد الإلكتروني",
+      "backToOptions": "العودة للخيارات",
       "or": "أو",
       "panelHeading": "ابدأ إدارة عيادتك اليوم",
       "panelSubtitle": "انضم إلى مئات العيادات التي تستخدم ClinicCare بالفعل لتبسيط عملياتها.",

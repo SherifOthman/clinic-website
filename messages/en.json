@@ -51,6 +51,8 @@
       "haveAccount": "Already have an account?",
       "signIn": "Sign in",
       "signUpWithGoogle": "Sign up with Google",
+      "signUpWithEmail": "Sign up with email",
+      "backToOptions": "Back to options",
       "or": "OR",
       "panelHeading": "Start managing your clinic today",
       "panelSubtitle": "Join hundreds of clinics already using ClinicCare to streamline their operations.",
