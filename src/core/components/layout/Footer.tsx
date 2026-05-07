@@ -127,7 +127,7 @@ export const Footer = async () => {
 
         <div className="border-t border-divider mt-8 pt-8 text-center">
           <p className="text-muted text-sm">
-            © 2024 ClinicCare. {t("rights")}
+            © {new Date().getFullYear()} ClinicCare. {t("rights")}
           </p>
         </div>
       </div>

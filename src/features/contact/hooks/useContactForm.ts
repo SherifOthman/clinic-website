@@ -7,15 +7,13 @@ export interface ContactForm {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  company: string;
   subject: string;
   message: string;
 }
 
 const EMPTY_FORM: ContactForm = {
   firstName: "", lastName: "", email: "",
-  phone: "", company: "", subject: "", message: "",
+  subject: "", message: "",
 };
 
 /**

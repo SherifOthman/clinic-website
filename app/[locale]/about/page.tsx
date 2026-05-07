@@ -24,7 +24,7 @@ export default async function AboutPage({
       <AboutHero />
       <AboutMission />
       <AboutValues />
-      <AboutCta locale={locale} />
+      <AboutCta />
     </>
   );
 }

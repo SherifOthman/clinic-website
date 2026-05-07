@@ -1,9 +1,3 @@
-import { SVGProps } from "react";
-
-export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number;
-};
-
 // Matches backend SubscriptionPlanDto exactly
 export interface SubscriptionPlan {
   id: string;

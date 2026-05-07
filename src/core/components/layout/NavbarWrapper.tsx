@@ -2,12 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { AuthNavbar } from "./AuthNavbar";
 
-// Segments that belong to auth pages
+// Segments that belong to auth pages (full-screen split panels with their own top bar)
 const AUTH_SEGMENTS = [
-  "login", "register", "forgot-password", "reset-password",
-  "accept-invitation", "resend-email-verification", "confirm-email",
+  "login", "register", "forgot-password", "reset-password", "accept-invitation",
 ];
 
 interface NavbarWrapperProps {
@@ -25,7 +23,7 @@ export function NavbarWrapper({ locale, navbar, footer, children }: NavbarWrappe
   );
 
   if (isAuthPage) {
-    // Auth pages are full-screen split panels with their own logo — no wrapper needed
+    // Auth pages are full-screen split panels with their own logo and controls
     return <>{children}</>;
   }
 

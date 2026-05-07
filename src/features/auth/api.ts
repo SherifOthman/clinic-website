@@ -22,15 +22,7 @@ export const authApi = {
     apiRequest("POST", "/auth/reset-password", data),
 
   logout: () => apiRequest("POST", "/auth/logout"),
-
-  checkEmail: (email: string) =>
-    apiRequest<{ isAvailable: boolean }>("GET", `/auth/check-email?email=${encodeURIComponent(email)}`),
-
-  checkUsername: (username: string) =>
-    apiRequest<{ isAvailable: boolean }>("GET", `/auth/check-username?username=${encodeURIComponent(username)}`),
 };
-
-// ── Invitation endpoints ──────────────────────────────────────────────────────
 
 export const invitationApi = {
   getDetail: (token: string) =>
