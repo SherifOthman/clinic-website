@@ -33,9 +33,9 @@ export const Footer = async () => {
   return (
     <footer className="bg-surface border-t border-divider">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Brand — full width on mobile */}
+          <div className="col-span-2 space-y-4 lg:col-span-1">
             <div className="flex items-center gap-2">
               <HeartHandshake className="h-8 w-8 text-accent" />
               <span className="font-bold text-xl">ClinicCare</span>
@@ -93,10 +93,10 @@ export const Footer = async () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="space-y-4">
+          {/* Contact Info — 2-column grid for the 4 items */}
+          <div className="col-span-2 space-y-4 lg:col-span-1">
             <h3 className="font-semibold text-foreground">{t("contact")}</h3>
-            <div className="space-y-3 text-sm text-muted">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm text-muted">
               <div>
                 <p className="font-medium">📍 Address</p>
                 <p>
@@ -106,12 +106,12 @@ export const Footer = async () => {
                 </p>
               </div>
               <div>
-                <p className="font-medium">📞 Phone</p>
-                <p>+20 01098021259</p>
-              </div>
-              <div>
                 <p className="font-medium">✉️ Email</p>
                 <p>sheriff.a.othman@gmail.com</p>
+              </div>
+              <div>
+                <p className="font-medium">📞 Phone</p>
+                <p>+20 01098021259</p>
               </div>
               <div>
                 <p className="font-medium">🕒 Hours</p>

@@ -17,7 +17,7 @@ const VARIANT_CLASSES: Record<Variant, string> = {
 
 /**
  * Anchor-based CTA button used across hero, CTA, and about sections.
- * Keeps button styling consistent without duplicating Tailwind classes.
+ * Renders as a native <a> tag styled to match HeroUI Button appearance.
  */
 export const CtaButton = ({ variant = "primary", className = "", children, ...props }: CtaButtonProps) => (
   <a

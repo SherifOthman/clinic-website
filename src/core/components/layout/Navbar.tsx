@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Drawer, Link, Separator } from "@heroui/react";
-import { Globe, Menu } from "lucide-react";
+import { Globe, Home, Info, LayoutDashboard, LogIn, DollarSign, Mail, Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,10 +25,10 @@ export const Navbar = () => {
   }, []);
 
   const menuItems = [
-    { key: "home", href: "/" },
-    { key: "about", href: "/about" },
-    { key: "pricing", href: "/pricing" },
-    { key: "contact", href: "/contact" },
+    { key: "home",    href: "/",        icon: Home },
+    { key: "about",   href: "/about",   icon: Info },
+    { key: "pricing", href: "/pricing", icon: DollarSign },
+    { key: "contact", href: "/contact", icon: Mail },
   ];
 
   const handleLoginOrDashboard = () => {
@@ -107,49 +107,58 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Drawer — controlled, slides in from the side like the dashboard */}
-      <Drawer.Backdrop
-        isOpen={mobileMenuOpen}
-        onOpenChange={setMobileMenuOpen}
-      >
+      {/* Mobile Drawer */}
+      <Drawer.Backdrop isOpen={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <Drawer.Content placement={isRTL ? "right" : "left"}>
           <Drawer.Dialog aria-label="Navigation menu">
             <Drawer.CloseTrigger />
             <Drawer.Body className="p-0">
               <div className="flex h-full flex-col">
-                {/* Brand */}
-                <div className="flex h-16 shrink-0 items-center gap-2 px-4">
-                  <Image src="/logo.svg" alt="ClinicCare" width={28} height={28} />
-                  <span className="text-lg font-bold">ClinicCare</span>
+
+                {/* Brand header */}
+                <div className="flex h-16 shrink-0 items-center gap-3 px-5">
+                  <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
+                  <span className="text-xl font-bold text-foreground">ClinicCare</span>
                 </div>
 
                 <Separator />
 
                 {/* Nav links */}
-                <nav className="flex-1 overflow-auto px-3 py-3">
+                <nav className="flex-1 overflow-auto py-4">
                   <ul className="flex flex-col gap-1">
-                    {menuItems.map((item) => (
-                      <li key={item.key}>
-                        <Link
-                          href={`/${locale}${item.href}`}
-                          onPress={() => setMobileMenuOpen(false)}
-                          className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium no-underline transition-colors ${
-                            isActive(item.href)
-                              ? "bg-surface-tertiary text-foreground font-semibold"
-                              : "text-muted hover:bg-surface-secondary hover:text-foreground"
-                          }`}
-                        >
-                          {t(item.key)}
-                        </Link>
-                      </li>
-                    ))}
+                    {menuItems.map((item) => {
+                      const Icon = item.icon;
+                      const active = isActive(item.href);
+                      return (
+                        <li key={item.key}>
+                          <Link
+                            href={`/${locale}${item.href}`}
+                            onPress={() => setMobileMenuOpen(false)}
+                            className={`group flex w-full items-center gap-3 px-5 py-3 no-underline transition-all ${
+                              active
+                                ? "bg-accent text-accent-foreground"
+                                : "text-foreground hover:bg-surface-secondary"
+                            }`}
+                          >
+                            <Icon className={`h-5 w-5 shrink-0 ${active ? "text-accent-foreground" : "text-muted group-hover:text-foreground"}`} />
+                            <span className={`text-sm font-medium ${active ? "text-accent-foreground" : ""}`}>
+                              {t(item.key)}
+                            </span>
+                            {active && (
+                              <span className="ms-auto h-1.5 w-1.5 rounded-full bg-accent-foreground" />
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
 
                 <Separator />
 
                 {/* Bottom actions */}
-                <div className="flex shrink-0 flex-col gap-2 p-4">
+                <div className="shrink-0 space-y-3 p-4">
+                  {/* Login / Dashboard button */}
                   <Button
                     variant="primary"
                     fullWidth
@@ -158,21 +167,25 @@ export const Navbar = () => {
                       handleLoginOrDashboard();
                     }}
                   >
-                    {isLoggedIn ? t("dashboard") : t("login")}
+                    {isLoggedIn
+                      ? <><LayoutDashboard className="h-4 w-4" />{t("dashboard")}</>
+                      : <><LogIn className="h-4 w-4" />{t("login")}</>
+                    }
                   </Button>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onPress={switchLocale}
-                      className="flex-1"
+
+                  {/* Language + Theme row */}
+                  <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2">
+                    <Globe className="h-4 w-4 shrink-0 text-muted" />
+                    <button
+                      onClick={switchLocale}
+                      className="flex-1 text-start text-sm font-medium text-foreground"
                     >
-                      <Globe className="me-1 h-4 w-4" />
                       {locale === "en" ? "العربية" : "English"}
-                    </Button>
+                    </button>
                     <ThemeSwitch />
                   </div>
                 </div>
+
               </div>
             </Drawer.Body>
           </Drawer.Dialog>

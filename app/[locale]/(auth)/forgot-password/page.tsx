@@ -51,6 +51,7 @@ export default function ForgotPasswordPage() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            variant="secondary"
             className="w-full"
           />
         </TextField>

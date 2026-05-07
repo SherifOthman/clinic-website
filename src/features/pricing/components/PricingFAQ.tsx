@@ -1,9 +1,16 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
-import { Card } from "@heroui/react";
+import { Accordion } from "@heroui/react";
+import { ChevronDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 export const PricingFAQ = async () => {
   const t = await getTranslations();
+
+  const faqs = [1, 2, 3, 4].map((i) => ({
+    id: String(i),
+    question: t(`pricing.faq.question${i}`),
+    answer: t(`pricing.faq.answer${i}`),
+  }));
 
   return (
     <section className="py-20 bg-surface">
@@ -12,21 +19,25 @@ export const PricingFAQ = async () => {
           title={t("pricing.faq.title")}
           subtitle={t("pricing.faq.subtitle")}
         />
-
-        <div className="space-y-6">
-          {[1, 2, 3, 4].map((i) => (
-            <Card key={i}>
-              <Card.Content className="p-6">
-                <h3 className="font-semibold text-foreground mb-2">
-                  {t(`pricing.faq.question${i}`)}
-                </h3>
-                <p className="text-muted">
-                  {t(`pricing.faq.answer${i}`)}
-                </p>
-              </Card.Content>
-            </Card>
+        <Accordion variant="surface" className="w-full">
+          {faqs.map((faq) => (
+            <Accordion.Item key={faq.id} id={faq.id}>
+              <Accordion.Heading>
+                <Accordion.Trigger>
+                  {faq.question}
+                  <Accordion.Indicator>
+                    <ChevronDown className="h-4 w-4" />
+                  </Accordion.Indicator>
+                </Accordion.Trigger>
+              </Accordion.Heading>
+              <Accordion.Panel>
+                <Accordion.Body className="text-muted">
+                  {faq.answer}
+                </Accordion.Body>
+              </Accordion.Panel>
+            </Accordion.Item>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );

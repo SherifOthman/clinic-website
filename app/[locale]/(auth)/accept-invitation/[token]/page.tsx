@@ -2,17 +2,23 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
-import { Alert, Button, Chip, Input, Label, TextField } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, ListBox, Select, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useParams } from "next/navigation";
 
-function AcceptInvitationForm() {
+export default function AcceptInvitationPage() {
   const t = useTranslations("auth.invitation");
-  const token = useSearchParams().get("token");
+  const { token } = useParams<{ token: string }>();
 
   const { invitation, loadError, form, error, loading, done, setField, submit } =
-    useAcceptInvitation(token, t("invalid"), t("expired"));
+    useAcceptInvitation(token ?? null, t("invalid"), t("expired"));
+
+  const handleGenderChange = (value: React.Key | null) => {
+    if (value) {
+      const syntheticEvent = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
+      setField("gender")(syntheticEvent);
+    }
+  };
 
   if (loadError) {
     return (
@@ -30,7 +36,7 @@ function AcceptInvitationForm() {
     return (
       <div className="flex flex-col items-center gap-4 text-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10 text-3xl">✓</div>
-        <p className="font-semibold text-success">Invitation accepted! Redirecting...</p>
+        <p className="font-semibold text-success">{t("accepted")}</p>
       </div>
     );
   }
@@ -61,17 +67,17 @@ function AcceptInvitationForm() {
 
         <TextField isRequired className="flex flex-col gap-1">
           <Label>{t("fullName")}</Label>
-          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} className="w-full" />
+          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
         </TextField>
 
         <TextField isRequired className="flex flex-col gap-1">
           <Label>{t("username")}</Label>
-          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} className="w-full" />
+          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
         </TextField>
 
         <TextField isRequired className="flex flex-col gap-1">
           <Label>{t("phone")}</Label>
-          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} className="w-full" />
+          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
         </TextField>
 
         <PasswordInput
@@ -82,30 +88,38 @@ function AcceptInvitationForm() {
           required
         />
 
-        <div className="flex flex-col gap-1">
+        <Select
+          isRequired
+          variant="secondary"
+          defaultValue="Male"
+          value={form.gender}
+          onChange={handleGenderChange}
+          placeholder={t("gender")}
+          className="flex flex-col gap-1"
+        >
           <Label>{t("gender")}</Label>
-          <select
-            value={form.gender}
-            onChange={setField("gender")}
-            className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent"
-          >
-            <option value="Male">{t("male")}</option>
-            <option value="Female">{t("female")}</option>
-          </select>
-        </div>
+          <Select.Trigger>
+            <Select.Value />
+            <Select.Indicator />
+          </Select.Trigger>
+          <Select.Popover>
+            <ListBox>
+              <ListBox.Item id="Male" textValue={t("male")}>
+                {t("male")}
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+              <ListBox.Item id="Female" textValue={t("female")}>
+                {t("female")}
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+            </ListBox>
+          </Select.Popover>
+        </Select>
 
         <Button type="submit" variant="primary" fullWidth isPending={loading}>
           {({ isPending }) => isPending ? t("submitting") : t("submit")}
         </Button>
       </form>
     </div>
-  );
-}
-
-export default function AcceptInvitationPage() {
-  return (
-    <Suspense>
-      <AcceptInvitationForm />
-    </Suspense>
   );
 }

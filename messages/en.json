@@ -91,6 +91,7 @@
       "female": "Female",
       "submit": "Accept Invitation",
       "submitting": "Accepting...",
+      "accepted": "Invitation accepted! Redirecting to login...",
       "expired": "This invitation has expired.",
       "invalid": "Invalid invitation link."
     },

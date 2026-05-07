@@ -1,5 +1,5 @@
+import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 
 interface AboutCtaProps {
   locale: string;
@@ -16,18 +16,12 @@ export async function AboutCta({ locale }: AboutCtaProps) {
         </h2>
         <p className="text-xl text-muted">{t("about.cta.subtitle")}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href={`/${locale}/register`}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/90"
-          >
+          <CtaButton href={`/${locale}/register`} variant="primary">
             {t("hero.cta")}
-          </Link>
-          <Link
-            href={`/${locale}/contact`}
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent/10"
-          >
+          </CtaButton>
+          <CtaButton href={`/${locale}/contact`} variant="outline">
             {t("navigation.contact")}
-          </Link>
+          </CtaButton>
         </div>
       </div>
     </section>

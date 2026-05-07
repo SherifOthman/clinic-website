@@ -53,7 +53,7 @@ function ResetPasswordForm() {
 
         <TextField isReadOnly className="flex flex-col gap-1">
           <Label className="text-muted">Email</Label>
-          <Input type="email" value={email} readOnly className="w-full opacity-60" />
+          <Input type="email" value={email} readOnly variant="secondary" className="w-full opacity-60" />
         </TextField>
 
         <PasswordInput

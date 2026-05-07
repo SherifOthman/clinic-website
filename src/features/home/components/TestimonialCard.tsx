@@ -1,4 +1,4 @@
-import { Card } from "@heroui/react";
+import { Avatar, Card } from "@heroui/react";
 import { Star } from "lucide-react";
 
 interface TestimonialCardProps {
@@ -23,48 +23,27 @@ export const TestimonialCard = ({
       <Card.Content className="p-6 space-y-6">
         {/* User Info and Rating */}
         <div className="flex items-start gap-4">
-          <div className="flex items-center gap-3 flex-1">
-            <div className="w-12 h-12 rounded-full overflow-hidden bg-default-200 flex-shrink-0">
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt={author}
-                  className="w-full h-full object-cover"
+          <Avatar className="h-12 w-12 shrink-0">
+            {avatar ? <Avatar.Image src={avatar} alt={author} /> : null}
+            <Avatar.Fallback>
+              {author.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+            </Avatar.Fallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-foreground">{author}</div>
+            <div className="text-sm text-muted">{position}</div>
+            <div className="text-sm text-accent font-medium">{clinic}</div>
+            {/* Stars below name — no overflow */}
+            <div className="mt-1.5 flex gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-3.5 w-3.5 ${
+                    i < rating ? "text-yellow-400 fill-current" : "text-muted/30"
+                  }`}
                 />
-              ) : (
-                <div className="w-full h-full bg-accent/10 flex items-center justify-center">
-                  <span className="text-accent font-semibold text-sm">
-                    {author
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </span>
-                </div>
-              )}
+              ))}
             </div>
-            <div className="flex-shrink-0">
-              <div className="font-semibold text-foreground rtl:text-right ltr:text-left">
-                {author}
-              </div>
-              <div className="text-sm text-muted rtl:text-right ltr:text-left">
-                {position}
-              </div>
-              <div className="text-sm text-accent font-medium rtl:text-right ltr:text-left">
-                {clinic}
-              </div>
-            </div>
-          </div>
-          <div className="flex gap-1 flex-shrink-0">
-            {[...Array(5)].map((_, starIndex) => (
-              <Star
-                key={starIndex}
-                className={`h-4 w-4 ${
-                  starIndex < rating
-                    ? "text-yellow-400 fill-current"
-                    : "text-default-300"
-                }`}
-              />
-            ))}
           </div>
         </div>
 
