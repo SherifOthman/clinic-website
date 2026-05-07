@@ -34,7 +34,7 @@ export const authApi = {
 
 export const invitationApi = {
   getDetail: (token: string) =>
-    apiRequest<{ email: string; role: string; clinicName: string; isExpired: boolean }>(
+    apiRequest<{ email: string; role: string; clinicName: string; specializationName?: string | null; isExpired: boolean; isAccepted: boolean }>(
       "GET", `/staff/invitations/${token}/detail`
     ),
 
