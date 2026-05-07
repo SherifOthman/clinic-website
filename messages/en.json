@@ -102,6 +102,12 @@
       "usernameMin": "Username must be at least 3 characters"
     }
   },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    "goHome": "Go to Home",
+    "goBack": "Go Back"
+  },
   "hero": {
     "title": "Modern Clinic Management Platform",
     "subtitle": "Comprehensive patient management system with multi-user access, location services, and secure data handling - built for healthcare professionals",

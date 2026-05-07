@@ -6,6 +6,9 @@ import { Alert, Button, Chip, Input, Label, ListBox, Select, TextField } from "@
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
+// Token is dynamic — can't be pre-rendered at build time
+export const dynamic = "force-dynamic";
+
 export default function AcceptInvitationPage() {
   const t = useTranslations("auth.invitation");
   const { token } = useParams<{ token: string }>();
