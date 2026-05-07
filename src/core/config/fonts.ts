@@ -1,7 +1,23 @@
-import { Inter as FontSans } from "next/font/google";
+import { Cairo, Roboto } from "next/font/google";
 
-// Only fontSans is used — applied as a CSS variable in layout.tsx
-export const fontSans = FontSans({
+/**
+ * Cairo — used for Arabic (RTL) locale.
+ * Self-hosted by Next.js, no external request, no layout shift.
+ */
+export const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-cairo",
+  display: "swap",
+});
+
+/**
+ * Roboto — used for English (LTR) locale.
+ * Self-hosted by Next.js, no external request, no layout shift.
+ */
+export const roboto = Roboto({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+  display: "swap",
 });

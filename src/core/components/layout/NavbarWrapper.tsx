@@ -25,13 +25,8 @@ export function NavbarWrapper({ locale, navbar, footer, children }: NavbarWrappe
   );
 
   if (isAuthPage) {
-    // Auth pages: minimal navbar (logo + dark mode + language), no footer
-    return (
-      <div className="flex min-h-screen flex-col">
-        <AuthNavbar />
-        <main className="flex-grow">{children}</main>
-      </div>
-    );
+    // Auth pages are full-screen split panels with their own logo — no wrapper needed
+    return <>{children}</>;
   }
 
   return (

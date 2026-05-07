@@ -2,11 +2,9 @@
 @import "@heroui/styles";
 
 @theme {
-  --font-cairo: "Cairo", sans-serif;
-  --font-roboto: "Roboto", sans-serif;
+  /* These CSS variables are injected by next/font — no hardcoded strings needed */
+  --font-cairo: var(--font-cairo);
+  --font-roboto: var(--font-roboto);
 }
-
-.font-cairo  { font-family: "Cairo", sans-serif; }
-.font-roboto { font-family: "Roboto", sans-serif; }
 
 [dir="rtl"] { direction: rtl; }

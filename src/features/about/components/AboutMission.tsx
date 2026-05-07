@@ -45,9 +45,9 @@ export async function AboutMission() {
 
 function FeatureTile({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
-      <Icon className="h-8 w-8 text-accent mb-2" />
-      <div className="text-sm font-semibold">{label}</div>
+    <div className="flex flex-col items-center justify-center gap-2 rounded-xl bg-surface p-4 shadow-sm text-center">
+      <Icon className="h-8 w-8 text-accent" />
+      <div className="text-sm font-semibold text-foreground">{label}</div>
     </div>
   );
 }

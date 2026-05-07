@@ -10,7 +10,7 @@ export const TestimonialsSection = async () => {
   if (!testimonials.length) return null;
 
   return (
-    <section className="bg-surface py-20">
+    <section className="bg-background py-20">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeader
           title={t("testimonials.title")}

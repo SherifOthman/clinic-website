@@ -100,25 +100,25 @@ export const Footer = async () => {
               <div>
                 <p className="font-medium">📍 Address</p>
                 <p>
-                  123 Healthcare Street
+                  Egypt, Kafr El Sheikh
                   <br />
-                  Medical District, City 12345
+                  Borg El Bruls
                 </p>
               </div>
               <div>
                 <p className="font-medium">📞 Phone</p>
-                <p>+1 (555) 123-4567</p>
+                <p>+20 01098021259</p>
               </div>
               <div>
                 <p className="font-medium">✉️ Email</p>
-                <p>info@cliniccare.com</p>
+                <p>sheriff.a.othman@gmail.com</p>
               </div>
               <div>
                 <p className="font-medium">🕒 Hours</p>
                 <p>
-                  Mon-Fri: 8:00 AM - 6:00 PM
+                  Sun-Thu: 8:00 AM - 5:00 PM
                   <br />
-                  Sat: 9:00 AM - 4:00 PM
+                  Fri-Sat: Closed
                 </p>
               </div>
             </div>

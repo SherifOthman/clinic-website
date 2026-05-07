@@ -1,13 +1,12 @@
 "use client";
 
-import { Button, Switch } from "@heroui/react";
-import { Globe, Moon, Sun } from "lucide-react";
+import { Button } from "@heroui/react";
+import { Globe } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 
 /**
  * Minimal navbar for auth pages (login, register, forgot-password, etc.)
@@ -15,13 +14,9 @@ import { useEffect, useState } from "react";
  * No nav links, no login/dashboard button.
  */
 export function AuthNavbar() {
-  const [mounted, setMounted] = useState(false);
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => { setMounted(true); }, []);
 
   const switchLocale = () => {
     const path = pathname.split("/").slice(2).join("/");
@@ -39,24 +34,7 @@ export function AuthNavbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          {mounted && (
-            <Switch
-              size="sm"
-              isSelected={theme === "dark"}
-              onChange={(checked) => setTheme(checked ? "dark" : "light")}
-              aria-label="Toggle dark mode"
-            >
-              {({ isSelected }: { isSelected: boolean }) => (
-                <Switch.Control>
-                  <Switch.Thumb>
-                    <Switch.Icon>
-                      {isSelected ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
-                    </Switch.Icon>
-                  </Switch.Thumb>
-                </Switch.Control>
-              )}
-            </Switch>
-          )}
+          <ThemeSwitch />
           <Button variant="ghost" size="sm" onPress={switchLocale}>
             <Globe className="me-1 h-4 w-4" />
             {locale === "en" ? "العربية" : "English"}

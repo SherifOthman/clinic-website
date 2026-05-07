@@ -1,5 +1,5 @@
 import type { PlanFeature, SubscriptionPlan } from "@/src/core/types";
-import { Button, Card, Chip } from "@heroui/react";
+import { Button, Card } from "@heroui/react";
 import { Check, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -18,15 +18,15 @@ export const PlanCard = async ({ plan, isAr, features }: PlanCardProps) => {
 
   return (
     <Card
-      className={`relative flex flex-col ${
+      className={`relative flex flex-col overflow-hidden ${
         plan.isPopular ? "border-2 border-accent shadow-xl scale-[1.02]" : ""
       }`}
     >
       {plan.isPopular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <Chip color="accent" variant="primary" className="px-4 font-semibold">
-            {t("pricing.popular")}
-          </Chip>
+        <div className={`absolute top-6 z-10 w-36 bg-accent py-1.5 text-center text-xs font-bold uppercase tracking-wide text-accent-foreground shadow-md ${
+          isAr ? "-left-8 -rotate-45" : "-right-8 rotate-45"
+        }`}>
+          {t("pricing.popular")}
         </div>
       )}
 

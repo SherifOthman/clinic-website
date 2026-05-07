@@ -1,1 +1,1 @@
-export { AboutPage } from "./pages/AboutPage";
+export * from "./components";

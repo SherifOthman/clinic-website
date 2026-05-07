@@ -16,7 +16,7 @@ export const CTASection = async () => {
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <CtaButton
             href={`/${locale}/register`}
-            className="bg-white text-accent hover:bg-white/90"
+            className="bg-white !text-accent hover:bg-white/90"
           >
             {t("hero.cta")}
           </CtaButton>

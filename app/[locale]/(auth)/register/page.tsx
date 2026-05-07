@@ -2,8 +2,10 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useRegisterForm } from "@/src/features/auth/hooks/useRegisterForm";
-import { Alert, Button, Input, Label, Separator, TextField } from "@heroui/react";
+import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
+import { CheckCircle2, HeartHandshake, ShieldCheck, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -17,86 +19,164 @@ export default function RegisterPage() {
     locale,
   );
 
+  const features = [
+    { icon: CheckCircle2,   text: t("feature1") },
+    { icon: Zap,            text: t("feature2") },
+    { icon: ShieldCheck,    text: t("feature3") },
+    { icon: HeartHandshake, text: t("feature4") },
+  ];
+
+  // HeroUI Select onChange gives a Key, we need to sync it to form.gender
+  const handleGenderChange = (value: React.Key | null) => {
+    if (value) {
+      // Simulate a synthetic event to reuse the existing setField pattern
+      const syntheticEvent = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
+      setField("gender")(syntheticEvent);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
-      </div>
+    <div className="flex min-h-screen w-full">
+      {/* ── Left panel — branding ── */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
+        <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
+          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
+          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
+        </Link>
 
-      <form onSubmit={submit} className="flex flex-col gap-4">
-        {error && (
-          <Alert status="danger">
-            <Alert.Indicator />
-            <Alert.Content>
-              <Alert.Description>{error}</Alert.Description>
-            </Alert.Content>
-          </Alert>
-        )}
-
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("fullName")}</Label>
-          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} className="w-full" />
-        </TextField>
-
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("username")}</Label>
-          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} className="w-full" />
-        </TextField>
-
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("email")}</Label>
-          <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} className="w-full" />
-        </TextField>
-
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("phone")}</Label>
-          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} className="w-full" />
-        </TextField>
-
-        <PasswordInput
-          label={t("password")}
-          value={form.password}
-          onChange={setField("password")}
-          autoComplete="new-password"
-          required
-        />
-
-        <div className="flex flex-col gap-1">
-          <Label>{t("gender")}</Label>
-          <select
-            value={form.gender}
-            onChange={setField("gender")}
-            className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-accent"
-          >
-            <option value="Male">{t("male")}</option>
-            <option value="Female">{t("female")}</option>
-          </select>
+        <div className="space-y-8">
+          <div className="space-y-3">
+            <h1 className="text-4xl font-bold leading-tight">{t("panelHeading")}</h1>
+            <p className="text-lg opacity-80">{t("panelSubtitle")}</p>
+          </div>
+          <div className="space-y-4">
+            {features.map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className="text-sm opacity-90">{text}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <Button type="submit" variant="primary" fullWidth isPending={loading}>
-          {({ isPending }) => isPending ? t("submitting") : t("submit")}
-        </Button>
-      </form>
-
-      <p className="text-center text-sm text-muted">
-        {t("haveAccount")}{" "}
-        <Link href={`/${locale}/login`} className="text-accent hover:underline">{t("signIn")}</Link>
-      </p>
-
-      <div className="flex items-center gap-3">
-        <Separator className="flex-1" />
-        <span className="text-xs text-muted">OR</span>
-        <Separator className="flex-1" />
+        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
       </div>
 
-      <a
-        href={googleOAuthUrl}
-        className="flex items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-surface"
-      >
-        <GoogleIcon />
-        Sign up with Google
-      </a>
+      {/* ── Right panel — form ── */}
+      <div className="flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
+        {/* Mobile logo */}
+        <Link href={`/${locale}`} className="mb-8 flex items-center gap-2 no-underline lg:hidden">
+          <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
+          <span className="text-xl font-bold">ClinicCare</span>
+        </Link>
+
+        <div className="w-full max-w-sm space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
+            <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
+          </div>
+
+          <form onSubmit={submit} className="space-y-4">
+            {error && (
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+              </Alert>
+            )}
+
+            {/* Full Name + Username */}
+            <div className="grid grid-cols-2 gap-3">
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("fullName")}</Label>
+                <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
+              </TextField>
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("username")}</Label>
+                <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
+              </TextField>
+            </div>
+
+            {/* Email */}
+            <TextField isRequired className="flex flex-col gap-1.5">
+              <Label>{t("email")}</Label>
+              <Input type="email" autoComplete="email" value={form.email} onChange={setField("email")} variant="secondary" className="w-full" />
+            </TextField>
+
+            {/* Phone + Gender */}
+            <div className="grid grid-cols-2 gap-3">
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("phone")}</Label>
+                <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
+              </TextField>
+
+              {/* HeroUI Select for gender */}
+              <Select
+                isRequired
+                variant="secondary"
+                defaultValue="Male"
+                value={form.gender}
+                onChange={handleGenderChange}
+                placeholder={t("selectGender")}
+                className="flex flex-col gap-1.5"
+              >
+                <Label>{t("gender")}</Label>
+                <Select.Trigger>
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+                <Select.Popover>
+                  <ListBox>
+                    <ListBox.Item id="Male" textValue={t("male")}>
+                      {t("male")}
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                    <ListBox.Item id="Female" textValue={t("female")}>
+                      {t("female")}
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                  </ListBox>
+                </Select.Popover>
+              </Select>
+            </div>
+
+            {/* Password */}
+            <PasswordInput
+              label={t("password")}
+              value={form.password}
+              onChange={setField("password")}
+              autoComplete="new-password"
+              required
+            />
+
+            <Button type="submit" variant="primary" fullWidth isPending={loading}>
+              {({ isPending }) => isPending ? t("submitting") : t("submit")}
+            </Button>
+          </form>
+
+          <p className="text-center text-sm text-muted">
+            {t("haveAccount")}{" "}
+            <Link href={`/${locale}/login`} className="font-medium text-accent hover:underline">
+              {t("signIn")}
+            </Link>
+          </p>
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted">{t("or")}</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <a
+            href={googleOAuthUrl}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-surface-secondary"
+          >
+            <GoogleIcon />
+            {t("signUpWithGoogle")}
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

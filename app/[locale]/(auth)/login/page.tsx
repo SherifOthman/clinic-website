@@ -3,6 +3,7 @@
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useLoginForm } from "@/src/features/auth/hooks/useLoginForm";
 import { Alert, Button, Input, Label, Separator, TextField } from "@heroui/react";
+import { HeartHandshake, ShieldCheck, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,111 +23,131 @@ export default function LoginPage() {
 
   if (checking) return null;
 
+  const features = [
+    { icon: Zap,            text: t("feature1") },
+    { icon: ShieldCheck,    text: t("feature2") },
+    { icon: HeartHandshake, text: t("feature3") },
+  ];
+
   return (
-    <div className="w-full max-w-[22rem]">
-      <div className="rounded-2xl border border-border bg-background shadow-lg px-8 py-8 flex flex-col gap-5">
+    <div className="flex min-h-screen w-full">
+      {/* ── Left panel — branding ── */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
+        <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
+          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
+          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
+        </Link>
 
-        {/* Logo + brand */}
-        <div className="flex flex-col items-center gap-2 mb-1">
-          <Image src="/logo.svg" alt="ClinicCare" width={40} height={40} priority />
-          <span className="text-xl font-bold text-foreground">ClinicCare</span>
-          <p className="text-sm text-muted text-center">{t("subtitle")}</p>
-        </div>
-
-        {/* Demo credentials */}
-        <div className="rounded-lg border border-border bg-surface p-3">
-          <p className="mb-2 text-xs font-medium text-muted">Test accounts</p>
-          <div className="flex flex-wrap gap-1.5">
-            {DEMO_USERS.map((u) => (
-              <Button
-                key={u.email}
-                variant="outline"
-                size="sm"
-                onPress={() => fillDemo(u.email, u.password)}
-              >
-                {u.label}
-              </Button>
+        <div className="space-y-8">
+          <div className="space-y-3">
+            <h1 className="text-4xl font-bold leading-tight">{t("panelHeading")}</h1>
+            <p className="text-lg opacity-80">{t("panelSubtitle")}</p>
+          </div>
+          <div className="space-y-4">
+            {features.map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className="text-sm opacity-90">{text}</span>
+              </div>
             ))}
           </div>
         </div>
 
-        <form onSubmit={submit} className="flex flex-col gap-4">
-          {error && (
-            <Alert status="danger">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Description>{error}</Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
+        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
+      </div>
 
-          {/* Email / username */}
-          <TextField isRequired className="flex flex-col gap-1">
-            <Label>{t("emailOrUsername")}</Label>
-            <Input
-              type="text"
-              autoComplete="username"
-              value={form.emailOrUsername}
-              onChange={setField("emailOrUsername")}
-              className="w-full"
-            />
-          </TextField>
+      {/* ── Right panel — form ── */}
+      <div className="flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
+        {/* Mobile logo */}
+        <Link href={`/${locale}`} className="mb-8 flex items-center gap-2 no-underline lg:hidden">
+          <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
+          <span className="text-xl font-bold">ClinicCare</span>
+        </Link>
 
-          {/* Password */}
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">{t("password")}</span>
-              <Link href={`/${locale}/forgot-password`} className="text-xs text-accent hover:underline">
-                {t("forgotPassword")}
-              </Link>
-            </div>
-            <PasswordInput
-              label=""
-              value={form.password}
-              onChange={setField("password")}
-              autoComplete="current-password"
-              required
-            />
+        <div className="w-full max-w-sm space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
+            <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
 
-          <Button type="submit" variant="primary" fullWidth isPending={loading}>
-            {({ isPending }) => isPending ? t("signingIn") : t("signIn")}
-          </Button>
-        </form>
+          {/* Demo credentials */}
+          <div className="rounded-xl border border-border bg-surface p-3">
+            <p className="mb-2 text-xs font-medium text-muted">{t("testAccounts")}</p>
+            <div className="flex flex-wrap gap-1.5">
+              {DEMO_USERS.map((u) => (
+                <Button key={u.email} variant="outline" size="sm" onPress={() => fillDemo(u.email, u.password)}>
+                  {u.label}
+                </Button>
+              ))}
+            </div>
+          </div>
 
-        <p className="text-center text-sm text-muted">
-          {t("noAccount")}{" "}
-          <Link href={`/${locale}/register`} className="text-accent hover:underline">
-            {t("signUp")}
-          </Link>
-        </p>
+          <form onSubmit={submit} className="space-y-4">
+            {error && (
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+              </Alert>
+            )}
 
-        <OAuthSeparator />
-        <GoogleButton href={googleOAuthUrl} />
+            <TextField isRequired className="flex flex-col gap-1.5">
+              <Label>{t("emailOrUsername")}</Label>
+              <Input
+                type="text"
+                autoComplete="username"
+                value={form.emailOrUsername}
+                onChange={setField("emailOrUsername")}
+                variant="secondary"
+                className="w-full"
+              />
+            </TextField>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">{t("password")}</span>
+                <Link href={`/${locale}/forgot-password`} className="text-xs text-accent hover:underline">
+                  {t("forgotPassword")}
+                </Link>
+              </div>
+              <PasswordInput
+                label=""
+                value={form.password}
+                onChange={setField("password")}
+                autoComplete="current-password"
+                required
+              />
+            </div>
+
+            <Button type="submit" variant="primary" fullWidth isPending={loading}>
+              {({ isPending }) => isPending ? t("signingIn") : t("signIn")}
+            </Button>
+          </form>
+
+          <p className="text-center text-sm text-muted">
+            {t("noAccount")}{" "}
+            <Link href={`/${locale}/register`} className="font-medium text-accent hover:underline">
+              {t("signUp")}
+            </Link>
+          </p>
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted">{t("or")}</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <a
+            href={googleOAuthUrl}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-surface-secondary"
+          >
+            <GoogleIcon />
+            {t("continueWithGoogle")}
+          </a>
+        </div>
       </div>
     </div>
-  );
-}
-
-function OAuthSeparator() {
-  return (
-    <div className="flex items-center gap-3">
-      <Separator className="flex-1" />
-      <span className="text-xs text-muted">OR</span>
-      <Separator className="flex-1" />
-    </div>
-  );
-}
-
-function GoogleButton({ href }: { href: string }) {
-  return (
-    <a
-      href={href}
-      className="flex items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium transition hover:bg-surface"
-    >
-      <GoogleIcon />
-      Continue with Google
-    </a>
   );
 }
 

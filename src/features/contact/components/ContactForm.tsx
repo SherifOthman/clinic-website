@@ -72,6 +72,7 @@ export function ContactForm() {
                 placeholder={t("contact.form.messagePlaceholder")}
                 required
                 rows={4}
+                variant="secondary"
                 className="w-full resize-none"
               />
             </TextField>
@@ -111,6 +112,7 @@ function FormField({ label, value, onChange, placeholder, type = "text", require
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        variant="secondary"
         className="w-full"
       />
     </TextField>

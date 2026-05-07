@@ -24,7 +24,15 @@
       "noAccount": "Don't have an account?",
       "signUp": "Sign up",
       "accountLocked": "Account locked. Please try again later.",
-      "accountInactive": "Your account has been deactivated. Contact your clinic owner."
+      "accountInactive": "Your account has been deactivated. Contact your clinic owner.",
+      "testAccounts": "Test accounts",
+      "continueWithGoogle": "Continue with Google",
+      "or": "OR",
+      "panelHeading": "Welcome back to your clinic",
+      "panelSubtitle": "Manage appointments, patients, and staff — all in one place.",
+      "feature1": "Real-time appointment scheduling",
+      "feature2": "Secure patient data management",
+      "feature3": "Multi-branch clinic support"
     },
     "register": {
       "title": "Create Account",
@@ -37,10 +45,19 @@
       "gender": "Gender",
       "male": "Male",
       "female": "Female",
+      "selectGender": "Select gender",
       "submit": "Create Account",
       "submitting": "Creating...",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "signUpWithGoogle": "Sign up with Google",
+      "or": "OR",
+      "panelHeading": "Start managing your clinic today",
+      "panelSubtitle": "Join hundreds of clinics already using ClinicCare to streamline their operations.",
+      "feature1": "Free 14-day trial, no credit card required",
+      "feature2": "Set up in under 5 minutes",
+      "feature3": "HIPAA-compliant data security",
+      "feature4": "Dedicated onboarding support"
     },
     "forgotPassword": {
       "title": "Forgot Password",

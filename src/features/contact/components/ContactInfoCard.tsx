@@ -15,9 +15,9 @@ export function ContactInfoSidebar() {
   const t = useTranslations();
 
   const items: ContactInfoItem[] = [
-    { icon: Mail,   title: t("contact.info.email.title"),   value: "support@cliniccare.com",        href: "mailto:support@cliniccare.com" },
-    { icon: Phone,  title: t("contact.info.phone.title"),   value: "+1 (555) 123-4567",             href: "tel:+15551234567" },
-    { icon: MapPin, title: t("contact.info.address.title"), value: t("contact.info.address.value"), href: "#" },
+    { icon: Mail,   title: t("contact.info.email.title"),   value: "sheriff.a.othman@gmail.com",    href: "mailto:sheriff.a.othman@gmail.com" },
+    { icon: Phone,  title: t("contact.info.phone.title"),   value: "+20 01098021259",               href: "tel:+2001098021259" },
+    { icon: MapPin, title: t("contact.info.address.title"), value: "Egypt, Kafr El Sheikh, Borg El Bruls", href: "#" },
   ];
 
   return (
@@ -35,7 +35,7 @@ export function ContactInfoSidebar() {
         <Card.Content className="space-y-4 p-6 text-center">
           <h3 className="text-xl font-semibold">{t("contact.quickActions.title")}</h3>
           <p className="opacity-90">{t("contact.quickActions.subtitle")}</p>
-          <CtaButton href="/en/register" className="bg-white text-accent hover:bg-white/90">
+          <CtaButton href="/en/register" className="bg-white !text-accent hover:bg-white/90">
             {t("hero.cta")}
           </CtaButton>
         </Card.Content>

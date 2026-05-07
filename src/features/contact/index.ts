@@ -1,1 +1,1 @@
-export { ContactPage } from "./pages/ContactPage";
+export * from "./components";

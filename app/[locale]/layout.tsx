@@ -1,8 +1,8 @@
 import { routing } from "@/i18n/routing";
-import { NavbarWrapper } from "@/src/core/components/layout/NavbarWrapper";
 import { Footer } from "@/src/core/components/layout/Footer";
 import { Navbar } from "@/src/core/components/layout/Navbar";
-import { fontSans } from "@/src/core/config/fonts";
+import { NavbarWrapper } from "@/src/core/components/layout/NavbarWrapper";
+import { cairo, roboto } from "@/src/core/config/fonts";
 import clsx from "clsx";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -27,25 +27,22 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  const isRTL = locale === "ar";
+
   return (
     <html
       suppressHydrationWarning
       lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"}
+      dir={isRTL ? "rtl" : "ltr"}
+      // Inject both font CSS variables so they're available globally
+      className={clsx(cairo.variable, roboto.variable)}
     >
-      <head>
-        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body
         suppressHydrationWarning
         className={clsx(
           "min-h-screen bg-background text-foreground antialiased",
-          locale === "ar" ? "font-cairo" : "font-roboto",
-          fontSans.variable,
+          // Apply the correct font family based on locale
+          isRTL ? "font-cairo" : "font-roboto",
         )}
       >
         <NextIntlClientProvider messages={messages}>
