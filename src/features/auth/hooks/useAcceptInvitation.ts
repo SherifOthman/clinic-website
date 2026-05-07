@@ -8,7 +8,9 @@ export interface InvitationDetail {
   email: string;
   role: string;
   clinicName: string;
+  specializationName?: string | null;
   isExpired: boolean;
+  isAccepted: boolean;
 }
 
 export interface AcceptInvitationForm {
@@ -23,7 +25,7 @@ export interface AcceptInvitationForm {
  * Encapsulates all state and logic for the accept-invitation page.
  * Fetches invitation details on mount, handles form submission.
  */
-export function useAcceptInvitation(token: string | null, invalidLabel: string, expiredLabel: string) {
+export function useAcceptInvitation(token: string | null, invalidLabel: string, expiredLabel: string, acceptedLabel: string) {
   const [invitation, setInvitation] = useState<InvitationDetail | null>(null);
   const [loadError, setLoadError]   = useState<string | null>(null);
   const [form, setForm]             = useState<AcceptInvitationForm>({
@@ -37,13 +39,14 @@ export function useAcceptInvitation(token: string | null, invalidLabel: string, 
     if (!token) { setLoadError(invalidLabel); return; }
     invitationApi.getDetail(token).then((res) => {
       if (res.ok) {
-        if (res.data.isExpired) setLoadError(expiredLabel);
+        if (res.data.isAccepted) setLoadError(acceptedLabel);
+        else if (res.data.isExpired) setLoadError(expiredLabel);
         else setInvitation(res.data);
       } else {
         setLoadError(invalidLabel);
       }
     });
-  }, [token, invalidLabel, expiredLabel]);
+  }, [token, invalidLabel, expiredLabel, acceptedLabel]);
 
   function setField(field: keyof AcceptInvitationForm) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>

@@ -81,7 +81,11 @@
     "invitation": {
       "title": "Accept Invitation",
       "subtitle": "You've been invited to join",
+      "formTitle": "Complete your profile",
+      "formSubtitle": "Fill in your details to activate your account",
+      "clinic": "Clinic",
       "role": "Role",
+      "specialization": "Specialization",
       "fullName": "Full Name",
       "username": "Username",
       "password": "Password",
@@ -92,6 +96,9 @@
       "submit": "Accept Invitation",
       "submitting": "Accepting...",
       "accepted": "Invitation accepted! Redirecting to login...",
+      "alreadyAccepted": "This invitation has already been accepted.",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
       "expired": "This invitation has expired.",
       "invalid": "Invalid invitation link."
     },

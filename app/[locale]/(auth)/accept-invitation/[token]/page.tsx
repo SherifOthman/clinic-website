@@ -2,8 +2,11 @@
 
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
-import { Alert, Button, Chip, Input, Label, ListBox, Select, TextField } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
+import { Building2, CheckCircle, Stethoscope, UserCog, XCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 // Token is dynamic — can't be pre-rendered at build time
@@ -11,118 +14,215 @@ export const dynamic = "force-dynamic";
 
 export default function AcceptInvitationPage() {
   const t = useTranslations("auth.invitation");
-  const { token } = useParams<{ token: string }>();
+  const tNav = useTranslations("navigation");
+  const { locale, token } = useParams<{ locale: string; token: string }>();
 
   const { invitation, loadError, form, error, loading, done, setField, submit } =
-    useAcceptInvitation(token ?? null, t("invalid"), t("expired"));
+    useAcceptInvitation(token ?? null, t("invalid"), t("expired"), t("alreadyAccepted"));
 
   const handleGenderChange = (value: React.Key | null) => {
     if (value) {
-      const syntheticEvent = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
-      setField("gender")(syntheticEvent);
+      const e = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
+      setField("gender")(e);
     }
   };
 
+  // ── Error state ────────────────────────────────────────────────────────────
   if (loadError) {
     return (
-      <div className="flex flex-col items-center gap-4 text-center">
-        <p className="text-danger">{loadError}</p>
+      <div className="flex min-h-screen items-center justify-center bg-background px-6">
+        <div className="flex w-full max-w-sm flex-col items-center gap-4 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-danger/10">
+            <XCircle className="h-8 w-8 text-danger" />
+          </div>
+          <h1 className="text-xl font-bold text-foreground">{loadError}</h1>
+          <Link href={`/${locale}`} className="text-sm text-accent hover:underline">
+            {tNav("home")}
+          </Link>
+        </div>
       </div>
     );
   }
 
+  // ── Loading ────────────────────────────────────────────────────────────────
   if (!invitation) {
-    return <div className="text-center text-muted">Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+      </div>
+    );
   }
 
+  // ── Success ────────────────────────────────────────────────────────────────
   if (done) {
     return (
-      <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10 text-3xl">✓</div>
-        <p className="font-semibold text-success">{t("accepted")}</p>
+      <div className="flex min-h-screen items-center justify-center bg-background px-6">
+        <div className="flex w-full max-w-sm flex-col items-center gap-4 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10">
+            <CheckCircle className="h-8 w-8 text-success" />
+          </div>
+          <p className="text-lg font-semibold text-success">{t("accepted")}</p>
+        </div>
       </div>
     );
   }
 
+  // ── Main form — split panel ────────────────────────────────────────────────
   return (
-    <div className="flex flex-col gap-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-muted">
-          {t("subtitle")} <span className="font-semibold text-foreground">{invitation.clinicName}</span>
-        </p>
-        <span className="mt-2 inline-block">
-          <Chip color="accent" variant="soft" size="sm">
-            {invitation.role}
-          </Chip>
-        </span>
+    <div className="flex min-h-screen w-full">
+
+      {/* Left panel — invitation context */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
+        <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
+          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
+          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
+        </Link>
+
+        <div className="space-y-8">
+          <div className="space-y-3">
+            <h1 className="text-4xl font-bold leading-tight">{t("title")}</h1>
+            <p className="text-lg opacity-80">
+              {t("subtitle")} <span className="font-bold opacity-100">{invitation.clinicName}</span>
+            </p>
+          </div>
+
+          {/* Invitation details */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                <Building2 className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs opacity-70">{t("clinic")}</p>
+                <p className="font-semibold">{invitation.clinicName}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                <UserCog className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs opacity-70">{t("role")}</p>
+                <p className="font-semibold">{invitation.role}</p>
+              </div>
+            </div>
+            {invitation.specializationName && (
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                  <Stethoscope className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs opacity-70">{t("specialization")}</p>
+                  <p className="font-semibold">{invitation.specializationName}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
       </div>
 
-      <form onSubmit={submit} className="flex flex-col gap-4">
-        {error && (
-          <Alert status="danger">
-            <Alert.Indicator />
-            <Alert.Content>
-              <Alert.Description>{error}</Alert.Description>
-            </Alert.Content>
-          </Alert>
-        )}
+      {/* Right panel — registration form */}
+      <div className="flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
 
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("fullName")}</Label>
-          <Input type="text" autoComplete="name" value={form.fullName} onChange={setField("fullName")} variant="secondary" className="w-full" />
-        </TextField>
+        {/* Mobile logo */}
+        <Link href={`/${locale}`} className="mb-6 flex items-center gap-2 no-underline lg:hidden">
+          <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
+          <span className="text-xl font-bold">ClinicCare</span>
+        </Link>
 
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("username")}</Label>
-          <Input type="text" autoComplete="username" value={form.userName} onChange={setField("userName")} variant="secondary" className="w-full" />
-        </TextField>
+        <div className="w-full max-w-sm space-y-6">
+          {/* Mobile: show invitation context as chips */}
+          <div className="lg:hidden space-y-2 text-center">
+            <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
+            <p className="text-sm text-muted">
+              {t("subtitle")} <span className="font-semibold text-foreground">{invitation.clinicName}</span>
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 pt-1">
+              <Chip color="accent" variant="soft" size="sm">{invitation.role}</Chip>
+              {invitation.specializationName && (
+                <Chip color="default" variant="soft" size="sm">{invitation.specializationName}</Chip>
+              )}
+            </div>
+          </div>
 
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("phone")}</Label>
-          <Input type="tel" autoComplete="tel" value={form.phoneNumber} onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
-        </TextField>
+          {/* Desktop heading */}
+          <div className="hidden lg:block">
+            <h2 className="text-2xl font-bold text-foreground">{t("formTitle")}</h2>
+            <p className="mt-1 text-sm text-muted">{t("formSubtitle")}</p>
+          </div>
 
-        <PasswordInput
-          label={t("password")}
-          value={form.password}
-          onChange={setField("password")}
-          autoComplete="new-password"
-          required
-        />
+          <form onSubmit={submit} className="space-y-4">
+            {error && (
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+              </Alert>
+            )}
 
-        <Select
-          isRequired
-          variant="secondary"
-          defaultValue="Male"
-          value={form.gender}
-          onChange={handleGenderChange}
-          placeholder={t("gender")}
-          className="flex flex-col gap-1"
-        >
-          <Label>{t("gender")}</Label>
-          <Select.Trigger>
-            <Select.Value />
-            <Select.Indicator />
-          </Select.Trigger>
-          <Select.Popover>
-            <ListBox>
-              <ListBox.Item id="Male" textValue={t("male")}>
-                {t("male")}
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-              <ListBox.Item id="Female" textValue={t("female")}>
-                {t("female")}
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-            </ListBox>
-          </Select.Popover>
-        </Select>
+            {/* Full name + username */}
+            <div className="grid grid-cols-2 gap-3">
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("fullName")}</Label>
+                <Input type="text" autoComplete="name" value={form.fullName}
+                  onChange={setField("fullName")} variant="secondary" className="w-full" />
+              </TextField>
+              <TextField isRequired className="flex flex-col gap-1.5">
+                <Label>{t("username")}</Label>
+                <Input type="text" autoComplete="username" value={form.userName}
+                  onChange={setField("userName")} variant="secondary" className="w-full" />
+              </TextField>
+            </div>
 
-        <Button type="submit" variant="primary" fullWidth isPending={loading}>
-          {({ isPending }) => isPending ? t("submitting") : t("submit")}
-        </Button>
-      </form>
+            {/* Phone */}
+            <TextField isRequired className="flex flex-col gap-1.5">
+              <Label>{t("phone")}</Label>
+              <Input type="tel" autoComplete="tel" value={form.phoneNumber}
+                onChange={setField("phoneNumber")} variant="secondary" className="w-full" />
+            </TextField>
+
+            {/* Password */}
+            <PasswordInput
+              label={t("password")}
+              value={form.password}
+              onChange={setField("password")}
+              autoComplete="new-password"
+              required
+            />
+
+            {/* Gender */}
+            <Select isRequired variant="secondary" defaultValue="Male"
+              value={form.gender} onChange={handleGenderChange}
+              placeholder={t("gender")} className="flex flex-col gap-1.5"
+            >
+              <Label>{t("gender")}</Label>
+              <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
+                  <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
+                </ListBox>
+              </Select.Popover>
+            </Select>
+
+            <Button type="submit" variant="primary" fullWidth isPending={loading}>
+              {({ isPending }) => isPending ? t("submitting") : t("submit")}
+            </Button>
+          </form>
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted">{t("haveAccount")}</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <Link href={`/${locale}/login`}
+            className="flex w-full items-center justify-center rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-surface-secondary">
+            {t("signIn")}
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
