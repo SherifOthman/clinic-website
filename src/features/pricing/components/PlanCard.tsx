@@ -34,7 +34,7 @@ export const PlanCard = async ({ plan, locale, isAr, features }: PlanCardProps) 
       <Card.Header className="p-8 pb-4">
         <div className="space-y-3">
           <Text type="h3" weight="bold" className="text-2xl">{name}</Text>
-          <Text type="body-sm" color="muted">{description}</Text>
+          <p className="text-sm text-muted">{description}</p>
           <div>
             <span className="text-4xl font-bold text-accent">
               ${plan.monthlyFee.toFixed(0)}

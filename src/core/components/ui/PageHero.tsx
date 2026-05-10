@@ -30,9 +30,9 @@ export async function PageHero({ locale, titleKey, subtitleKey, gradient = "br" 
         <Text type="h1" className="text-4xl lg:text-6xl font-bold text-foreground">
           {t(titleKey as any)}
         </Text>
-        <Text type="body" color="muted" className="text-xl leading-relaxed max-w-3xl mx-auto">
+        <p className="text-xl text-muted leading-relaxed max-w-3xl mx-auto">
           {t(subtitleKey as any)}
-        </Text>
+        </p>
       </div>
     </section>
   );

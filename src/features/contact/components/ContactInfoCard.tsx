@@ -27,8 +27,8 @@ export async function ContactInfoSidebar({ locale }: ContactInfoSidebarProps) {
   return (
     <div className="space-y-6">
       <div>
-      <Text type="h2" weight="bold" className="text-3xl">{t("contact.info.title")}</Text>
-      <Text type="body" color="muted" className="mt-2">{t("contact.info.subtitle")}</Text>
+        <Text type="h2" weight="bold" className="text-3xl">{t("contact.info.title")}</Text>
+        <p className="mt-2 text-muted">{t("contact.info.subtitle")}</p>
       </div>
 
       {items.map((item) => (
@@ -38,7 +38,7 @@ export async function ContactInfoSidebar({ locale }: ContactInfoSidebarProps) {
       <Card className="bg-accent text-accent-foreground">
         <Card.Content className="space-y-4 p-6 text-center">
           <Text type="h3" weight="semibold" className="text-xl">{t("contact.quickActions.title")}</Text>
-          <Text type="body" className="opacity-90">{t("contact.quickActions.subtitle")}</Text>
+          <p className="opacity-90">{t("contact.quickActions.subtitle")}</p>
           <CtaButton href={`/${locale}/register`} className="bg-white !text-accent hover:bg-white/90">
             {t("hero.cta")}
           </CtaButton>
@@ -59,7 +59,7 @@ function ContactInfoItemCard({ icon: Icon, title, value, href }: ContactInfoItem
           <div>
             <Text type="h3" weight="semibold">{title}</Text>
             {href === "#"
-              ? <Text type="body-sm" color="muted">{value}</Text>
+              ? <p className="text-muted text-sm">{value}</p>
               : <Link href={href} className="text-accent hover:underline">{value}</Link>
             }
           </div>

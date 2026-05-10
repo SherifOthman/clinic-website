@@ -41,9 +41,9 @@ export async function CtaSection({
           <Text type="h2" className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}>
             {t(titleKey as any)}
           </Text>
-          <Text type="body" className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
+          <p className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
             {t(subtitleKey as any)}
-          </Text>
+          </p>
         </div>
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
