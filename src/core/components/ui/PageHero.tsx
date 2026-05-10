@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 interface PageHeroProps {
+  locale: string;
   titleKey: string;
   subtitleKey: string;
   /** Gradient direction — defaults to "br" (bottom-right) */
@@ -9,10 +10,13 @@ interface PageHeroProps {
 
 /**
  * Shared hero section used on About, Pricing, and similar pages.
- * Renders a centred heading + subtitle on a soft accent gradient background.
+ * 'use cache' — pure translation output, cached per locale.
+ * Locale passed as prop so getTranslations doesn't read from headers().
  */
-export async function PageHero({ titleKey, subtitleKey, gradient = "br" }: PageHeroProps) {
-  const t = await getTranslations();
+export async function PageHero({ locale, titleKey, subtitleKey, gradient = "br" }: PageHeroProps) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
 
   const gradientClass =
     gradient === "bl"
@@ -23,10 +27,10 @@ export async function PageHero({ titleKey, subtitleKey, gradient = "br" }: PageH
     <section className={`py-20 ${gradientClass}`}>
       <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
         <h1 className="text-4xl lg:text-6xl font-bold text-foreground">
-          {t(titleKey)}
+          {t(titleKey as any)}
         </h1>
         <p className="text-xl text-muted leading-relaxed max-w-3xl mx-auto">
-          {t(subtitleKey)}
+          {t(subtitleKey as any)}
         </p>
       </div>
     </section>

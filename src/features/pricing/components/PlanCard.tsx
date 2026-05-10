@@ -5,12 +5,13 @@ import { getTranslations } from "next-intl/server";
 
 interface PlanCardProps {
   plan: SubscriptionPlan;
+  locale: string;
   isAr: boolean;
   features: PlanFeature[];
 }
 
-export const PlanCard = async ({ plan, isAr, features }: PlanCardProps) => {
-  const t = await getTranslations();
+export const PlanCard = async ({ plan, locale, isAr, features }: PlanCardProps) => {
+  const t = await getTranslations({ locale });
 
   const name = isAr ? plan.nameAr : plan.name;
   const description = isAr ? plan.descriptionAr : plan.description;

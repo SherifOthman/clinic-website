@@ -1,8 +1,13 @@
 import { CtaSection } from "@/src/core/components/ui/CtaSection";
 
-export function PricingCTA() {
+interface Props {
+  locale: string;
+}
+
+export function PricingCTA({ locale }: Props) {
   return (
     <CtaSection
+      locale={locale}
       titleKey="pricing.cta.title"
       subtitleKey="pricing.cta.subtitle"
       variant="plain"

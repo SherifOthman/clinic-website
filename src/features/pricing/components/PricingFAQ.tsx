@@ -3,13 +3,23 @@ import { Accordion } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-export const PricingFAQ = async () => {
-  const t = await getTranslations();
+interface Props {
+  locale: string;
+}
+
+/**
+ * 'use cache' — pure translation output, cached per locale.
+ * Locale passed as prop so getTranslations doesn't read from headers().
+ */
+export async function PricingFAQ({ locale }: Props) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
 
   const faqs = [1, 2, 3, 4].map((i) => ({
     id: String(i),
-    question: t(`pricing.faq.question${i}`),
-    answer: t(`pricing.faq.answer${i}`),
+    question: t(`pricing.faq.question${i}` as any),
+    answer:   t(`pricing.faq.answer${i}`   as any),
   }));
 
   return (
@@ -41,4 +51,4 @@ export const PricingFAQ = async () => {
       </div>
     </section>
   );
-};
+}

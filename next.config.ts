@@ -4,7 +4,14 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  // Security headers
+  /**
+   * Cache Components (Next.js 16+)
+   * - Data fetching is DYNAMIC by default
+   * - Mark components with 'use cache' to cache their output
+   * - Incompatible with: export const dynamic = "force-dynamic" / "force-static"
+   */
+  cacheComponents: true,
+
   async headers() {
     return [
       {

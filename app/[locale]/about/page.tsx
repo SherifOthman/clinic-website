@@ -5,8 +5,6 @@ import { AboutMission } from "@/src/features/about/components/AboutMission";
 import { AboutValues } from "@/src/features/about/components/AboutValues";
 import { setRequestLocale } from "next-intl/server";
 
-export const dynamic = "force-static";
-
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -21,10 +19,10 @@ export default async function AboutPage({
 
   return (
     <>
-      <AboutHero />
-      <AboutMission />
-      <AboutValues />
-      <AboutCta />
+      <AboutHero locale={locale} />
+      <AboutMission locale={locale} />
+      <AboutValues locale={locale} />
+      <AboutCta locale={locale} />
     </>
   );
 }

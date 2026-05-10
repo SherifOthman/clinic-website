@@ -1,9 +1,18 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
-export const HeroContent = async () => {
-  const t = await getTranslations();
-  const locale = await getLocale();
+interface Props {
+  locale: string;
+}
+
+/**
+ * 'use cache' — pure translation output, cached per locale.
+ * Locale passed as prop so getTranslations doesn't read from headers().
+ */
+export async function HeroContent({ locale }: Props) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
 
   return (
     <div className="space-y-8">
@@ -24,4 +33,4 @@ export const HeroContent = async () => {
       </div>
     </div>
   );
-};
+}

@@ -1,8 +1,18 @@
 import { Award, Clock, Shield, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-export async function AboutMission() {
-  const t = await getTranslations();
+interface Props {
+  locale: string;
+}
+
+/**
+ * 'use cache' — pure translation output, cached per locale.
+ * Locale passed as prop so getTranslations doesn't read from headers().
+ */
+export async function AboutMission({ locale }: Props) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
 
   return (
     <section className="py-20">
@@ -30,10 +40,10 @@ export async function AboutMission() {
           <div className="relative">
             <div className="aspect-square bg-gradient-to-br from-accent/10 to-accent/20 rounded-2xl flex items-center justify-center">
               <div className="grid grid-cols-2 gap-4 p-8">
-                <FeatureTile icon={Clock} label={t("about.features.support247")} />
-                <FeatureTile icon={Award} label={t("about.features.qualityCare")} />
+                <FeatureTile icon={Clock}  label={t("about.features.support247")} />
+                <FeatureTile icon={Award}  label={t("about.features.qualityCare")} />
                 <FeatureTile icon={Shield} label={t("about.features.secureData")} />
-                <FeatureTile icon={Users} label={t("about.features.teamWork")} />
+                <FeatureTile icon={Users}  label={t("about.features.teamWork")} />
               </div>
             </div>
           </div>

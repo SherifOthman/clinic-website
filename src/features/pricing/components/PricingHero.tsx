@@ -1,5 +1,9 @@
 import { PageHero } from "@/src/core/components/ui/PageHero";
 
-export function PricingHero() {
-  return <PageHero titleKey="pricing.hero.title" subtitleKey="pricing.hero.subtitle" gradient="bl" />;
+interface Props {
+  locale: string;
+}
+
+export function PricingHero({ locale }: Props) {
+  return <PageHero locale={locale} titleKey="pricing.hero.title" subtitleKey="pricing.hero.subtitle" gradient="bl" />;
 }

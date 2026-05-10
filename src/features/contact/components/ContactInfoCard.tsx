@@ -2,7 +2,7 @@ import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { Card, Link } from "@heroui/react";
 import type { LucideIcon } from "lucide-react";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 interface ContactInfoItem {
   icon: LucideIcon;
@@ -11,8 +11,12 @@ interface ContactInfoItem {
   href: string;
 }
 
-export function ContactInfoSidebar() {
-  const t = useTranslations();
+interface ContactInfoSidebarProps {
+  locale: string;
+}
+
+export async function ContactInfoSidebar({ locale }: ContactInfoSidebarProps) {
+  const t = await getTranslations();
 
   const items: ContactInfoItem[] = [
     { icon: Mail,   title: t("contact.info.email.title"),   value: "sheriff.a.othman@gmail.com",    href: "mailto:sheriff.a.othman@gmail.com" },
@@ -28,14 +32,14 @@ export function ContactInfoSidebar() {
       </div>
 
       {items.map((item) => (
-        <ContactInfoItem key={item.title} {...item} />
+        <ContactInfoItemCard key={item.title} {...item} />
       ))}
 
       <Card className="bg-accent text-accent-foreground">
         <Card.Content className="space-y-4 p-6 text-center">
           <h3 className="text-xl font-semibold">{t("contact.quickActions.title")}</h3>
           <p className="opacity-90">{t("contact.quickActions.subtitle")}</p>
-          <CtaButton href="/en/register" className="bg-white !text-accent hover:bg-white/90">
+          <CtaButton href={`/${locale}/register`} className="bg-white !text-accent hover:bg-white/90">
             {t("hero.cta")}
           </CtaButton>
         </Card.Content>
@@ -44,7 +48,7 @@ export function ContactInfoSidebar() {
   );
 }
 
-function ContactInfoItem({ icon: Icon, title, value, href }: ContactInfoItem) {
+function ContactInfoItemCard({ icon: Icon, title, value, href }: ContactInfoItem) {
   return (
     <Card>
       <Card.Content className="p-6">
