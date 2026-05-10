@@ -3,8 +3,23 @@ import { getTestimonials } from "@/src/core/utils/serverApi";
 import { getTranslations } from "next-intl/server";
 import { TestimonialCard } from "./TestimonialCard";
 
-export const TestimonialsSection = async () => {
-  const t = await getTranslations();
+interface Props {
+  locale: string;
+}
+
+/**
+ * 'use cache' — testimonials fetched from API, cached per locale.
+ *
+ * Locale is passed as a prop (not read from headers) so this component
+ * can be safely cached. The locale prop becomes part of the cache key,
+ * so each locale gets its own cached entry.
+ *
+ * Pattern from: https://aurorascharff.no/posts/implementing-nextjs-16-use-cache-with-next-intl-internationalization/
+ */
+export async function TestimonialsSection({ locale }: Props) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
   const testimonials = await getTestimonials();
 
   if (!testimonials.length) return null;
@@ -32,4 +47,4 @@ export const TestimonialsSection = async () => {
       </div>
     </section>
   );
-};
+}

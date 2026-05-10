@@ -2,30 +2,24 @@ import { Card } from "@heroui/react";
 import { HeartHandshake, Shield, Users, Zap } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-export async function AboutValues() {
-  const t = await getTranslations();
+interface Props {
+  locale: string;
+}
+
+/**
+ * 'use cache' — pure translation output, cached per locale.
+ * Locale passed as prop so getTranslations doesn't read from headers().
+ */
+export async function AboutValues({ locale }: Props) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "" });
 
   const values = [
-    {
-      icon: HeartHandshake,
-      title: t("about.values.care.title"),
-      description: t("about.values.care.description"),
-    },
-    {
-      icon: Shield,
-      title: t("about.values.security.title"),
-      description: t("about.values.security.description"),
-    },
-    {
-      icon: Zap,
-      title: t("about.values.innovation.title"),
-      description: t("about.values.innovation.description"),
-    },
-    {
-      icon: Users,
-      title: t("about.values.collaboration.title"),
-      description: t("about.values.collaboration.description"),
-    },
+    { icon: HeartHandshake, title: t("about.values.care.title"),          description: t("about.values.care.description") },
+    { icon: Shield,         title: t("about.values.security.title"),      description: t("about.values.security.description") },
+    { icon: Zap,            title: t("about.values.innovation.title"),    description: t("about.values.innovation.description") },
+    { icon: Users,          title: t("about.values.collaboration.title"), description: t("about.values.collaboration.description") },
   ];
 
   return (

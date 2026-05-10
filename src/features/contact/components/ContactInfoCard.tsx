@@ -1,8 +1,8 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
-import { Card, Link } from "@heroui/react";
+import { Card, Link, Text } from "@heroui/react";
 import type { LucideIcon } from "lucide-react";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 interface ContactInfoItem {
   icon: LucideIcon;
@@ -11,8 +11,12 @@ interface ContactInfoItem {
   href: string;
 }
 
-export function ContactInfoSidebar() {
-  const t = useTranslations();
+interface ContactInfoSidebarProps {
+  locale: string;
+}
+
+export async function ContactInfoSidebar({ locale }: ContactInfoSidebarProps) {
+  const t = await getTranslations();
 
   const items: ContactInfoItem[] = [
     { icon: Mail,   title: t("contact.info.email.title"),   value: "sheriff.a.othman@gmail.com",    href: "mailto:sheriff.a.othman@gmail.com" },
@@ -23,19 +27,19 @@ export function ContactInfoSidebar() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold">{t("contact.info.title")}</h2>
-        <p className="mt-2 text-muted">{t("contact.info.subtitle")}</p>
+      <Text type="h2" weight="bold" className="text-3xl">{t("contact.info.title")}</Text>
+      <Text type="body" color="muted" className="mt-2">{t("contact.info.subtitle")}</Text>
       </div>
 
       {items.map((item) => (
-        <ContactInfoItem key={item.title} {...item} />
+        <ContactInfoItemCard key={item.title} {...item} />
       ))}
 
       <Card className="bg-accent text-accent-foreground">
         <Card.Content className="space-y-4 p-6 text-center">
-          <h3 className="text-xl font-semibold">{t("contact.quickActions.title")}</h3>
-          <p className="opacity-90">{t("contact.quickActions.subtitle")}</p>
-          <CtaButton href="/en/register" className="bg-white !text-accent hover:bg-white/90">
+          <Text type="h3" weight="semibold" className="text-xl">{t("contact.quickActions.title")}</Text>
+          <Text type="body" className="opacity-90">{t("contact.quickActions.subtitle")}</Text>
+          <CtaButton href={`/${locale}/register`} className="bg-white !text-accent hover:bg-white/90">
             {t("hero.cta")}
           </CtaButton>
         </Card.Content>
@@ -44,7 +48,7 @@ export function ContactInfoSidebar() {
   );
 }
 
-function ContactInfoItem({ icon: Icon, title, value, href }: ContactInfoItem) {
+function ContactInfoItemCard({ icon: Icon, title, value, href }: ContactInfoItem) {
   return (
     <Card>
       <Card.Content className="p-6">
@@ -53,9 +57,9 @@ function ContactInfoItem({ icon: Icon, title, value, href }: ContactInfoItem) {
             <Icon className="h-6 w-6 text-accent" />
           </div>
           <div>
-            <h3 className="font-semibold">{title}</h3>
+            <Text type="h3" weight="semibold">{title}</Text>
             {href === "#"
-              ? <p className="text-muted">{value}</p>
+              ? <Text type="body-sm" color="muted">{value}</Text>
               : <Link href={href} className="text-accent hover:underline">{value}</Link>
             }
           </div>

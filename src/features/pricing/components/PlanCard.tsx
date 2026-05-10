@@ -1,16 +1,17 @@
 import type { PlanFeature, SubscriptionPlan } from "@/src/core/types";
-import { Button, Card } from "@heroui/react";
+import { Button, Card, Text } from "@heroui/react";
 import { Check, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 interface PlanCardProps {
   plan: SubscriptionPlan;
+  locale: string;
   isAr: boolean;
   features: PlanFeature[];
 }
 
-export const PlanCard = async ({ plan, isAr, features }: PlanCardProps) => {
-  const t = await getTranslations();
+export const PlanCard = async ({ plan, locale, isAr, features }: PlanCardProps) => {
+  const t = await getTranslations({ locale });
 
   const name = isAr ? plan.nameAr : plan.name;
   const description = isAr ? plan.descriptionAr : plan.description;
@@ -32,8 +33,8 @@ export const PlanCard = async ({ plan, isAr, features }: PlanCardProps) => {
 
       <Card.Header className="p-8 pb-4">
         <div className="space-y-3">
-          <h3 className="text-2xl font-bold">{name}</h3>
-          <p className="text-sm text-muted">{description}</p>
+          <Text type="h3" weight="bold" className="text-2xl">{name}</Text>
+          <Text type="body-sm" color="muted">{description}</Text>
           <div>
             <span className="text-4xl font-bold text-accent">
               ${plan.monthlyFee.toFixed(0)}
