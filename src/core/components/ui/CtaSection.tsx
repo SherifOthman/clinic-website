@@ -1,4 +1,5 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
+import { Text } from "@heroui/react";
 import { getTranslations } from "next-intl/server";
 
 interface CtaSectionProps {
@@ -37,12 +38,12 @@ export async function CtaSection({
     <section className={`py-20 ${isAccent ? "bg-accent text-accent-foreground" : ""}`}>
       <div className="mx-auto max-w-4xl space-y-8 px-6 text-center">
         <div className="space-y-4">
-          <h2 className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}>
+          <Text type="h2" className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}>
             {t(titleKey as any)}
-          </h2>
-          <p className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
+          </Text>
+          <Text type="body" className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
             {t(subtitleKey as any)}
-          </p>
+          </Text>
         </div>
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
