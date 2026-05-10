@@ -1,4 +1,5 @@
 import { NavbarActions } from "@/src/core/components/layout/NavbarActions";
+import { NavbarLinks } from "@/src/core/components/layout/NavbarLinks";
 import { NavbarMobile } from "@/src/core/components/layout/NavbarMobile";
 import { Link } from "@heroui/react";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -7,8 +8,9 @@ import Image from "next/image";
 /**
  * Main navigation bar — server component.
  *
- * Static parts (logo, desktop nav links) render on the server.
+ * Static parts (logo) render on the server.
  * Interactive parts are isolated into small client components:
+ *   - NavbarLinks    → desktop nav links with active state (needs usePathname)
  *   - NavbarActions  → login/dashboard button, locale switcher, theme toggle
  *   - NavbarMobile   → hamburger + drawer (needs useState/useEffect)
  */
@@ -17,10 +19,10 @@ export async function Navbar() {
   const t = await getTranslations("navigation");
 
   const menuItems = [
-    { key: "home",    href: "/" },
-    { key: "about",   href: "/about" },
-    { key: "pricing", href: "/pricing" },
-    { key: "contact", href: "/contact" },
+    { key: "home",    href: "/",        label: t("home") },
+    { key: "about",   href: "/about",   label: t("about") },
+    { key: "pricing", href: "/pricing", label: t("pricing") },
+    { key: "contact", href: "/contact", label: t("contact") },
   ];
 
   return (
@@ -35,18 +37,8 @@ export async function Navbar() {
               <span className="text-lg font-bold text-foreground">ClinicCare</span>
             </Link>
 
-            {/* Desktop links — static, rendered on server */}
-            <div className="hidden items-center gap-6 sm:flex">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.key}
-                  href={`/${locale}${item.href}`}
-                  className="text-sm text-foreground hover:text-accent transition-colors no-underline"
-                >
-                  {t(item.key as any)}
-                </Link>
-              ))}
-            </div>
+            {/* Desktop links — client component for active state */}
+            <NavbarLinks locale={locale} items={menuItems} />
           </div>
 
           {/* Desktop actions (client) + Mobile hamburger (client) */}
