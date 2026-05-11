@@ -1,5 +1,5 @@
 import { routing } from "@/i18n/routing";
-import { ForgotPasswordForm } from "@/src/features/auth/components/ForgotPasswordForm";
+import { ForgotPasswordOtpForm } from "@/src/features/auth/components/ForgotPasswordOtpForm";
 import { Suspense } from "react";
 
 export function generateStaticParams() {
@@ -9,7 +9,7 @@ export function generateStaticParams() {
 export default function ForgotPasswordPage() {
   return (
     <Suspense>
-      <ForgotPasswordForm />
+      <ForgotPasswordOtpForm />
     </Suspense>
   );
 }

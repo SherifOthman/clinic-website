@@ -19,7 +19,7 @@ export function RegisterForm() {
   const pathname = usePathname();
 
   const { form, error, loading, googleOAuthUrl, setField, setPhone, submit } = useRegisterForm(
-    (loc) => router.push(`/${loc}/login?registered=1`),
+    (loc) => router.push(`/${loc}/verify-email?email=${encodeURIComponent(form.email)}`),
     locale,
   );
 
