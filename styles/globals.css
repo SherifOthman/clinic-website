@@ -7,4 +7,6 @@
   --font-roboto: var(--font-roboto);
 }
 
-[dir="rtl"] { direction: rtl; }
+[dir="rtl"] {
+  direction: rtl;
+}
