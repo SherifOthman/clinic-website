@@ -11,15 +11,8 @@ interface CtaSectionProps {
   secondaryHref?: string;
   primaryLabelKey?: string;
   secondaryLabelKey?: string;
-  /** "accent" renders a solid accent background; "plain" renders on the page background */
-  variant?: "accent" | "plain";
 }
 
-/**
- * Shared CTA section used on Home, About, and Pricing pages.
- * 'use cache' — pure translation + locale-based hrefs, cached per locale.
- * Locale passed as prop so getTranslations doesn't read from headers().
- */
 export async function CtaSection({
   locale,
   titleKey,
@@ -28,63 +21,31 @@ export async function CtaSection({
   secondaryHref,
   primaryLabelKey = "hero.cta",
   secondaryLabelKey = "navigation.contact",
-  variant = "plain",
 }: CtaSectionProps) {
   "use cache";
   cacheLife("max");
 
   const t = await getTranslations({ locale, namespace: "" });
-  const isAccent = variant === "accent";
 
   return (
-    <section
-      className={`py-20 ${isAccent ? "bg-accent text-accent-foreground" : ""}`}
-    >
+    <section className="bg-accent/5 py-20">
       <div className="mx-auto max-w-4xl space-y-8 px-6 text-center">
         <div className="space-y-4">
-          <Text
-            type="h2"
-            className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}
-          >
+          <Text type="h2" className="text-3xl font-bold text-foreground lg:text-4xl">
             {t(titleKey as any)}
           </Text>
-          <p className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
+          <p className="text-xl text-muted">
             {t(subtitleKey as any)}
           </p>
         </div>
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          {isAccent ? (
-            <>
-              <CtaButton
-                href={primaryHref ?? `/${locale}/register`}
-                className="bg-white !text-accent hover:bg-white/90"
-              >
-                {t(primaryLabelKey as any)}
-              </CtaButton>
-              <CtaButton
-                href={secondaryHref ?? `/${locale}/contact`}
-                variant="outline-white"
-              >
-                {t(secondaryLabelKey as any)}
-              </CtaButton>
-            </>
-          ) : (
-            <>
-              <CtaButton
-                href={primaryHref ?? `/${locale}/register`}
-                variant="primary"
-              >
-                {t(primaryLabelKey as any)}
-              </CtaButton>
-              <CtaButton
-                href={secondaryHref ?? `/${locale}/contact`}
-                variant="outline"
-              >
-                {t(secondaryLabelKey as any)}
-              </CtaButton>
-            </>
-          )}
+          <CtaButton href={primaryHref ?? `/${locale}/register`} variant="primary">
+            {t(primaryLabelKey as any)}
+          </CtaButton>
+          <CtaButton href={secondaryHref ?? `/${locale}/contact`} variant="outline">
+            {t(secondaryLabelKey as any)}
+          </CtaButton>
         </div>
       </div>
     </section>

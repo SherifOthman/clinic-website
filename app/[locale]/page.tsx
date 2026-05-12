@@ -45,7 +45,7 @@ export default async function HomePage({
       </Suspense>
 
       <AboutSection locale={locale} />
-      <CtaSection locale={locale} titleKey="cta.title" subtitleKey="cta.subtitle" variant="accent" />
+      <CtaSection locale={locale} titleKey="cta.title" subtitleKey="cta.subtitle" />
     </>
   );
 }
