@@ -31,7 +31,7 @@ export async function PricingFAQ({ locale }: Props) {
           title={t("pricing.faq.title")}
           subtitle={t("pricing.faq.subtitle")}
         />
-        <Accordion variant="surface">
+        <Accordion variant="surface" className="w-full">
           {faqs.map((faq) => (
             <Accordion.Item key={faq.id} id={faq.id}>
               <Accordion.Heading>

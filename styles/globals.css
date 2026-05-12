@@ -8,3 +8,9 @@
 }
 
 [dir="rtl"] { direction: rtl; }
+
+[data-slot="accordion-trigger"] {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+}
