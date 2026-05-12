@@ -1,7 +1,19 @@
 import type { SubscriptionPlan } from "@/src/core/types";
 import type { TestimonialDto } from "@/src/features/home/types";
 import { cacheLife } from "next/cache";
-import { serverFetch } from "./api";
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+
+async function fetchJson<T>(path: string): Promise<T> {
+  const res = await fetch(`${API}${path}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? err.title ?? `HTTP ${res.status}`);
+  }
+  return (await res.json().catch(() => undefined)) as T;
+}
 
 /**
  * Server-side data fetching utilities.
@@ -24,7 +36,7 @@ export async function getSubscriptionPlans(): Promise<SubscriptionPlan[]> {
   cacheLife("daily");
 
   // Throws on failure — prevents empty array from being cached
-  const data = await serverFetch<SubscriptionPlan[]>("/subscription-plans");
+  const data = await fetchJson<SubscriptionPlan[]>("/subscription-plans");
   return data
     .filter((p) => p.isActive)
     .sort((a, b) => a.displayOrder - b.displayOrder);
@@ -43,7 +55,7 @@ export async function getPublicStats(): Promise<PublicStats> {
   cacheLife("daily");
 
   // Throws on failure — prevents null from being cached
-  return await serverFetch<PublicStats>("/dashboard/stats/public");
+  return await fetchJson<PublicStats>("/dashboard/stats/public");
 }
 
 // ── Testimonials ──────────────────────────────────────────────────────────────
@@ -53,5 +65,5 @@ export async function getTestimonials(): Promise<TestimonialDto[]> {
   cacheLife("daily");
 
   // Throws on failure — prevents empty array from being cached
-  return await serverFetch<TestimonialDto[]>("/testimonials?count=3");
+  return await fetchJson<TestimonialDto[]>("/testimonials?count=3");
 }

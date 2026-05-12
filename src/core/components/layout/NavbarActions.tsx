@@ -5,7 +5,7 @@ import { Globe, LayoutDashboard, LogIn } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/src/core/utils/api";
+import { apiFetch } from "@/src/core/utils/api";
 import { DASHBOARD_URL } from "@/src/core/constants/env";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 
@@ -25,7 +25,7 @@ export function NavbarActions({ locale }: NavbarActionsProps) {
   const pathname = usePathname();
 
   useEffect(() => {
-    apiClient.get("/auth/me").then((result) => {
+    apiFetch("GET", "/auth/me").then((result) => {
       if (result.ok) setIsLoggedIn(true);
     });
   }, []);

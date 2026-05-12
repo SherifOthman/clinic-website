@@ -1,6 +1,6 @@
 "use client";
 
-import { apiClient } from "@/src/core/utils/api";
+import { apiFetch } from "@/src/core/utils/api";
 import { useState } from "react";
 
 export interface ContactForm {
@@ -41,7 +41,7 @@ export function useContactForm(somethingWentWrong: string) {
     setError(null);
     setLoading(true);
     try {
-      const result = await apiClient.post("/contact", form);
+      const result = await apiFetch("POST", "/contact", form);
       if (result.ok) setSent(true);
       else setError(result.error ?? somethingWentWrong);
     } finally {

@@ -1,6 +1,6 @@
 "use client";
 
-import { apiClient } from "@/src/core/utils/api";
+import { apiFetch } from "@/src/core/utils/api";
 import { authApi } from "@/src/features/auth/api";
 import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ export function useLoginForm() {
 
   // Redirect to dashboard if already authenticated
   useEffect(() => {
-    apiClient.get("/auth/me").then((result) => {
+    apiFetch("GET", "/auth/me").then((result) => {
       if (result.ok) window.location.replace(DASHBOARD_URL);
       else setChecking(false);
     });

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/src/core/utils/api";
+import { apiFetch } from "@/src/core/utils/api";
 import { DASHBOARD_URL } from "@/src/core/constants/env";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 
@@ -27,7 +27,7 @@ export function NavbarMobile({ locale }: NavbarMobileProps) {
   const isRTL = locale === "ar";
 
   useEffect(() => {
-    apiClient.get("/auth/me").then((r) => { if (r.ok) setIsLoggedIn(true); });
+    apiFetch("GET", "/auth/me").then((r) => { if (r.ok) setIsLoggedIn(true); });
   }, []);
 
   const menuItems = [
