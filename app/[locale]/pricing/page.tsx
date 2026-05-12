@@ -1,10 +1,7 @@
 import { routing } from "@/i18n/routing";
-import {
-  PricingCTA,
-  PricingFAQ,
-  PricingHero,
-  PricingPlans,
-} from "@/src/features/pricing/components";
+import { CtaSection } from "@/src/core/components/ui/CtaSection";
+import { PageHero } from "@/src/core/components/ui/PageHero";
+import { PricingFAQ, PricingPlans } from "@/src/features/pricing/components";
 import { getSubscriptionPlans } from "@/src/core/utils/serverApi";
 import { setRequestLocale } from "next-intl/server";
 
@@ -31,10 +28,10 @@ export default async function PricingPage({
 
   return (
     <>
-      <PricingHero locale={locale} />
+      <PageHero locale={locale} titleKey="pricing.hero.title" subtitleKey="pricing.hero.subtitle" gradient="bl" />
       <PricingPlans locale={locale} plans={plans} />
       <PricingFAQ locale={locale} />
-      <PricingCTA locale={locale} />
+      <CtaSection locale={locale} titleKey="pricing.cta.title" subtitleKey="pricing.cta.subtitle" variant="plain" />
     </>
   );
 }

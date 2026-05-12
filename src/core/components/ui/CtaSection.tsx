@@ -1,7 +1,7 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { Text } from "@heroui/react";
-import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
+import { cacheLife } from "next/cache";
 
 interface CtaSectionProps {
   locale: string;
@@ -31,16 +31,21 @@ export async function CtaSection({
   variant = "plain",
 }: CtaSectionProps) {
   "use cache";
-  cacheLife("daily");
+  cacheLife("max");
 
   const t = await getTranslations({ locale, namespace: "" });
   const isAccent = variant === "accent";
 
   return (
-    <section className={`py-20 ${isAccent ? "bg-accent text-accent-foreground" : ""}`}>
+    <section
+      className={`py-20 ${isAccent ? "bg-accent text-accent-foreground" : ""}`}
+    >
       <div className="mx-auto max-w-4xl space-y-8 px-6 text-center">
         <div className="space-y-4">
-          <Text type="h2" className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}>
+          <Text
+            type="h2"
+            className={`text-3xl font-bold lg:text-4xl ${isAccent ? "" : "text-foreground"}`}
+          >
             {t(titleKey as any)}
           </Text>
           <p className={`text-xl ${isAccent ? "opacity-90" : "text-muted"}`}>
@@ -57,16 +62,25 @@ export async function CtaSection({
               >
                 {t(primaryLabelKey as any)}
               </CtaButton>
-              <CtaButton href={secondaryHref ?? `/${locale}/contact`} variant="outline-white">
+              <CtaButton
+                href={secondaryHref ?? `/${locale}/contact`}
+                variant="outline-white"
+              >
                 {t(secondaryLabelKey as any)}
               </CtaButton>
             </>
           ) : (
             <>
-              <CtaButton href={primaryHref ?? `/${locale}/register`} variant="primary">
+              <CtaButton
+                href={primaryHref ?? `/${locale}/register`}
+                variant="primary"
+              >
                 {t(primaryLabelKey as any)}
               </CtaButton>
-              <CtaButton href={secondaryHref ?? `/${locale}/contact`} variant="outline">
+              <CtaButton
+                href={secondaryHref ?? `/${locale}/contact`}
+                variant="outline"
+              >
                 {t(secondaryLabelKey as any)}
               </CtaButton>
             </>

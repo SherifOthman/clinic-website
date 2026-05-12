@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
    * All public website components (hero, features, footer, pricing, etc.) use
    * this profile. Content is effectively static between deploys, so daily
    * revalidation is more than frequent enough.
+   *
    */
   cacheLife: {
     daily: {

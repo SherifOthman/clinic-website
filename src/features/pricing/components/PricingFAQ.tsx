@@ -14,7 +14,7 @@ interface Props {
  */
 export async function PricingFAQ({ locale }: Props) {
   "use cache";
-  cacheLife("daily");
+  cacheLife("max");
 
   const t = await getTranslations({ locale, namespace: "" });
 

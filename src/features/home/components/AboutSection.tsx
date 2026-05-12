@@ -15,7 +15,7 @@ interface Props {
  */
 export async function AboutSection({ locale }: Props) {
   "use cache";
-  cacheLife("daily");
+  cacheLife("max");
 
   const t = await getTranslations({ locale, namespace: "" });
 

@@ -17,7 +17,7 @@ interface PageHeroProps {
  */
 export async function PageHero({ locale, titleKey, subtitleKey, gradient = "br" }: PageHeroProps) {
   "use cache";
-  cacheLife("daily");
+  cacheLife("max");
 
   const t = await getTranslations({ locale, namespace: "" });
 

@@ -1,5 +1,4 @@
 export { AboutSection } from "./AboutSection";
-export { CTASection } from "./CTASection";
 export { FeaturesSection } from "./FeaturesSection";
 export { HeroContent } from "./HeroContent";
 export { HeroImage } from "./HeroImage";

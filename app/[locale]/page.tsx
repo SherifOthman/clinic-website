@@ -1,7 +1,7 @@
 import { routing } from "@/i18n/routing";
+import { CtaSection } from "@/src/core/components/ui/CtaSection";
 import {
   AboutSection,
-  CTASection,
   FeaturesSection,
   HeroSection,
   StatsSection,
@@ -45,7 +45,7 @@ export default async function HomePage({
       </Suspense>
 
       <AboutSection locale={locale} />
-      <CTASection locale={locale} />
+      <CtaSection locale={locale} titleKey="cta.title" subtitleKey="cta.subtitle" variant="accent" />
     </>
   );
 }

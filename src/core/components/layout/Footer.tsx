@@ -19,7 +19,7 @@ interface Props {
  */
 export async function Footer({ locale }: Props) {
   "use cache";
-  cacheLife("daily");
+  cacheLife("max");
 
   const t     = await getTranslations({ locale, namespace: "footer" });
   const tNav  = await getTranslations({ locale, namespace: "navigation" });
