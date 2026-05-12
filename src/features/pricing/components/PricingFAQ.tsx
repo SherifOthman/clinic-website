@@ -36,10 +36,12 @@ export async function PricingFAQ({ locale }: Props) {
             <Accordion.Item key={faq.id} id={faq.id}>
               <Accordion.Heading>
                 <Accordion.Trigger>
-                  {faq.question}
-                  <Accordion.Indicator>
-                    <ChevronDown className="h-4 w-4" />
-                  </Accordion.Indicator>
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <span className="text-start">{faq.question}</span>
+                    <Accordion.Indicator>
+                      <ChevronDown className="h-4 w-4 shrink-0" />
+                    </Accordion.Indicator>
+                  </div>
                 </Accordion.Trigger>
               </Accordion.Heading>
               <Accordion.Panel>
