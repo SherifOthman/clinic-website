@@ -35,8 +35,8 @@ export async function PricingFAQ({ locale }: Props) {
           {faqs.map((faq) => (
             <Accordion.Item key={faq.id} id={faq.id}>
               <Accordion.Heading>
-                <Accordion.Trigger className="w-full justify-between">
-                  <span className="text-start">{faq.question}</span>
+                <Accordion.Trigger style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                  {faq.question}
                   <Accordion.Indicator>
                     <ChevronDown className="h-4 w-4" />
                   </Accordion.Indicator>
