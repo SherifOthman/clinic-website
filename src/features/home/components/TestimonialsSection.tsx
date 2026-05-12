@@ -22,6 +22,8 @@ export async function TestimonialsSection({ locale }: Props) {
   cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
+  // getTestimonials() throws on failure — prevents empty array from being cached.
+  // The parent Suspense boundary catches the error and renders nothing.
   const testimonials = await getTestimonials();
 
   if (!testimonials.length) return null;

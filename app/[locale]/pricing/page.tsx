@@ -20,8 +20,14 @@ export default async function PricingPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // getSubscriptionPlans has 'use cache' — result is cached, not re-fetched per request
-  const plans = await getSubscriptionPlans();
+  // getSubscriptionPlans throws on failure (prevents caching empty results).
+  // Catch here so the page still renders — PricingPlans shows a graceful empty state.
+  let plans: Awaited<ReturnType<typeof getSubscriptionPlans>> = [];
+  try {
+    plans = await getSubscriptionPlans();
+  } catch {
+    // API unreachable at build/request time — render empty state
+  }
 
   return (
     <>

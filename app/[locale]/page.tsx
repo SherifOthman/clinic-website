@@ -5,6 +5,7 @@ import {
   FeaturesSection,
   HeroSection,
   StatsSection,
+  StatsSectionSkeleton,
   TestimonialsSection,
 } from "@/src/features/home/components";
 import { setRequestLocale } from "next-intl/server";
@@ -25,16 +26,24 @@ export default async function HomePage({
   return (
     <>
       <HeroSection locale={locale} />
-      <StatsSection locale={locale} />
-      <FeaturesSection locale={locale} />
+
       {/*
-        TestimonialsSection has 'use cache' and fetches from the API.
-        Suspense lets the static shell render immediately while the
-        cached testimonials stream in.
-      */}
-      <Suspense>
+       * StatsSection and TestimonialsSection fetch from the API.
+       * Wrapped in Suspense so:
+       *   1. The static shell renders immediately without waiting for the API
+       *   2. If the API throws (unreachable), the fallback is shown instead
+       *      of breaking the page — and the failure is NOT cached
+       */}
+      <Suspense fallback={<StatsSectionSkeleton />}>
+        <StatsSection locale={locale} />
+      </Suspense>
+
+      <FeaturesSection locale={locale} />
+
+      <Suspense fallback={null}>
         <TestimonialsSection locale={locale} />
       </Suspense>
+
       <AboutSection locale={locale} />
       <CTASection locale={locale} />
     </>
