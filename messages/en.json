@@ -110,7 +110,7 @@
       "panelHeading": "One last step",
       "panelSubtitle": "Verify your email to activate your account and get started.",
       "hint1": "Check your spam folder if you don't see it",
-      "hint2": "The code expires in 15 minutes",
+      "hint2": "The code expires in 5 minutes",
       "hint3": "You can request a new code if needed"
     },
     "invitation": {
