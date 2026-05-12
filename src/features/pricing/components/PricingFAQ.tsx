@@ -1,8 +1,8 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
 import { Accordion } from "@heroui/react";
-import { cacheLife } from "next/cache";
 import { ChevronDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { cacheLife } from "next/cache";
 
 interface Props {
   locale: string;
@@ -21,7 +21,7 @@ export async function PricingFAQ({ locale }: Props) {
   const faqs = [1, 2, 3, 4].map((i) => ({
     id: String(i),
     question: t(`pricing.faq.question${i}` as any),
-    answer:   t(`pricing.faq.answer${i}`   as any),
+    answer: t(`pricing.faq.answer${i}` as any),
   }));
 
   return (
@@ -31,11 +31,11 @@ export async function PricingFAQ({ locale }: Props) {
           title={t("pricing.faq.title")}
           subtitle={t("pricing.faq.subtitle")}
         />
-        <Accordion variant="surface" className="w-full">
+        <Accordion variant="surface">
           {faqs.map((faq) => (
             <Accordion.Item key={faq.id} id={faq.id}>
               <Accordion.Heading>
-                <Accordion.Trigger style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                <Accordion.Trigger>
                   {faq.question}
                   <Accordion.Indicator>
                     <ChevronDown className="h-4 w-4" />
