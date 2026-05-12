@@ -22,7 +22,7 @@ export default async function AboutPage({
       <PageHero locale={locale} titleKey="about.hero.title" subtitleKey="about.hero.subtitle" />
       <AboutMission locale={locale} />
       <AboutValues locale={locale} />
-      <CtaSection locale={locale} titleKey="about.cta.title" subtitleKey="about.cta.subtitle" variant="plain" />
+      <CtaSection locale={locale} titleKey="about.cta.title" subtitleKey="about.cta.subtitle" />
     </>
   );
 }

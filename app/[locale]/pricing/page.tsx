@@ -28,10 +28,10 @@ export default async function PricingPage({
 
   return (
     <>
-      <PageHero locale={locale} titleKey="pricing.hero.title" subtitleKey="pricing.hero.subtitle" gradient="bl" />
+      <PageHero locale={locale} titleKey="pricing.hero.title" subtitleKey="pricing.hero.subtitle" />
       <PricingPlans locale={locale} plans={plans} />
       <PricingFAQ locale={locale} />
-      <CtaSection locale={locale} titleKey="pricing.cta.title" subtitleKey="pricing.cta.subtitle" variant="plain" />
+      <CtaSection locale={locale} titleKey="pricing.cta.title" subtitleKey="pricing.cta.subtitle" />
     </>
   );
 }

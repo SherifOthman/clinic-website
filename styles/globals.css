@@ -6,14 +6,3 @@
   --font-cairo: var(--font-cairo);
   --font-roboto: var(--font-roboto);
 }
-
-[dir="rtl"] { direction: rtl; }
-
-[data-slot="accordion-trigger"] {
-  display: flex !important;
-  width: 100% !important;
-}
-
-[data-slot="accordion-indicator"] {
-  margin-inline-start: auto !important;
-}

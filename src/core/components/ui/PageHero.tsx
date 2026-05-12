@@ -6,7 +6,7 @@ interface PageHeroProps {
   locale: string;
   titleKey: string;
   subtitleKey: string;
-  /** Gradient direction — defaults to "br" (bottom-right) */
+  /** Gradient direction — defaults to "bl" (bottom-left) */
   gradient?: "br" | "bl";
 }
 
@@ -15,7 +15,7 @@ interface PageHeroProps {
  * 'use cache' — pure translation output, cached per locale.
  * Locale passed as prop so getTranslations doesn't read from headers().
  */
-export async function PageHero({ locale, titleKey, subtitleKey, gradient = "br" }: PageHeroProps) {
+export async function PageHero({ locale, titleKey, subtitleKey, gradient = "bl" }: PageHeroProps) {
   "use cache";
   cacheLife("max");
 
