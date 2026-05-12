@@ -1,4 +1,5 @@
 import { Link } from "@heroui/react";
+import { cacheLife } from "next/cache";
 import {
   Facebook,
   HeartHandshake,
@@ -18,6 +19,7 @@ interface Props {
  */
 export async function Footer({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t     = await getTranslations({ locale, namespace: "footer" });
   const tNav  = await getTranslations({ locale, namespace: "navigation" });

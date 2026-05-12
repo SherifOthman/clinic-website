@@ -1,4 +1,5 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
  */
 export async function HeroContent({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

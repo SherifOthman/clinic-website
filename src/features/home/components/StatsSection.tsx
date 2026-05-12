@@ -1,4 +1,5 @@
 import { getPublicStats } from "@/src/core/utils/serverApi";
+import { cacheLife } from "next/cache";
 import { Award, HeartPulse, UserCheck, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { StatItem } from "./StatItem";
@@ -19,6 +20,7 @@ function fmt(n: number): string {
  */
 export async function StatsSection({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
   const data = await getPublicStats();

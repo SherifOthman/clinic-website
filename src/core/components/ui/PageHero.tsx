@@ -1,4 +1,5 @@
 import { Text } from "@heroui/react";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
 interface PageHeroProps {
@@ -16,6 +17,7 @@ interface PageHeroProps {
  */
 export async function PageHero({ locale, titleKey, subtitleKey, gradient = "br" }: PageHeroProps) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

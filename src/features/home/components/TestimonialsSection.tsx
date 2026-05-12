@@ -1,5 +1,6 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
 import { getTestimonials } from "@/src/core/utils/serverApi";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { TestimonialCard } from "./TestimonialCard";
 
@@ -18,6 +19,7 @@ interface Props {
  */
 export async function TestimonialsSection({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
   const testimonials = await getTestimonials();

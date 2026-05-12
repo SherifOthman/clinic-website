@@ -1,5 +1,6 @@
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { Text } from "@heroui/react";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
 interface CtaSectionProps {
@@ -30,6 +31,7 @@ export async function CtaSection({
   variant = "plain",
 }: CtaSectionProps) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
   const isAccent = variant === "accent";

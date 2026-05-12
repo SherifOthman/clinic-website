@@ -1,5 +1,6 @@
 import { AboutFeatureBox } from "@/src/core/components/ui/AboutFeatureBox";
 import { CtaButton } from "@/src/core/components/ui/CtaButton";
+import { cacheLife } from "next/cache";
 import { Award, Clock, HeartHandshake, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -14,6 +15,7 @@ interface Props {
  */
 export async function AboutSection({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

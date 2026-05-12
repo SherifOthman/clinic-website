@@ -1,5 +1,6 @@
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
 import { Accordion } from "@heroui/react";
+import { cacheLife } from "next/cache";
 import { ChevronDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -13,6 +14,7 @@ interface Props {
  */
 export async function PricingFAQ({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

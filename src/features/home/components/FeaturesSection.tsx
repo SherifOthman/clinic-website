@@ -1,5 +1,6 @@
 import { FeatureCard } from "@/src/core/components/ui/FeatureCard";
 import { SectionHeader } from "@/src/core/components/ui/SectionHeader";
+import { cacheLife } from "next/cache";
 import {
   BarChart3,
   CalendarClock,
@@ -23,6 +24,7 @@ interface Props {
  */
 export async function FeaturesSection({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

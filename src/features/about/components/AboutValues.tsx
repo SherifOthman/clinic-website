@@ -1,4 +1,5 @@
 import { Card } from "@heroui/react";
+import { cacheLife } from "next/cache";
 import { HeartHandshake, Shield, Users, Zap } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -12,6 +13,7 @@ interface Props {
  */
 export async function AboutValues({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

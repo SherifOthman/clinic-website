@@ -1,4 +1,5 @@
 import { Award, Clock, Shield, Users } from "lucide-react";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
  */
 export async function AboutMission({ locale }: Props) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
 

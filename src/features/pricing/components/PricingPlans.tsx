@@ -1,4 +1,5 @@
 import type { PlanFeature, SubscriptionPlan } from "@/src/core/types";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { PlanCard } from "./PlanCard";
 
@@ -13,6 +14,7 @@ interface PricingPlansProps {
  */
 export async function PricingPlans({ locale, plans }: PricingPlansProps) {
   "use cache";
+  cacheLife("daily");
 
   const t = await getTranslations({ locale, namespace: "" });
   const isAr = locale === "ar";
