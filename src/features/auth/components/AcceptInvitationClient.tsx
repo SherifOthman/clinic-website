@@ -182,7 +182,6 @@ export function AcceptInvitationClient({ token }: Props) {
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                   required
-                  searchPlaceholder={t("searchCountry")}
                   isInvalid={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
                 />

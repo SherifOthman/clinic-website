@@ -122,7 +122,7 @@ export function RegisterForm() {
             {/* Phone */}
             <PhoneInput label={t("phone")} value={form.watch("phoneNumber")}
               onChange={(value) => form.setValue("phoneNumber", value, { shouldValidate: true })}
-              required searchPlaceholder={t("searchCountry")}
+              required
               isInvalid={!!err.phoneNumber} errorMessage={err.phoneNumber?.message} />
 
             {/* Gender */}
