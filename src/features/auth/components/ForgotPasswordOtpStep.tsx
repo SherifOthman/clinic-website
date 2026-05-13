@@ -24,7 +24,7 @@ export function ForgotPasswordOtpStep({
 }: Props) {
   const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
 
-  const otpErr = otp.length > 0 && otp.length !== 6 ? "Code must be exactly 6 digits" : undefined;
+  const otpErr = otp.length > 0 && otp.length !== 6 ? tErr("otpLength") : undefined;
 
   return (
     <>

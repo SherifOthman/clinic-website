@@ -77,7 +77,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
         setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
     } catch {
-      setResendError("Failed to resend code");
+      setResendError("resendFailed");
     }
   }
 

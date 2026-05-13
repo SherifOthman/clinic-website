@@ -59,7 +59,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
         setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
     } catch {
-      setResendError("Failed to resend code");
+      setResendError("resendFailed");
     } finally {
       setResending(false);
     }
@@ -117,7 +117,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
               value={otp}
               onChange={setOtp}
               isPending={isPending}
-              error={otp.length > 0 && otp.length !== 6 ? "Code must be exactly 6 digits" : undefined}
+              error={otp.length > 0 && otp.length !== 6 ? tErr("otpLength") : undefined}
               otpSentAt={otpSentAt}
               isExpired={isExpired}
               expiresInLabel={t("expiresIn", { time: formatMs(expiresIn) })}
