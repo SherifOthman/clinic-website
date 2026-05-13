@@ -98,8 +98,8 @@ export function ForgotPasswordOtpForm() {
 
           <form onSubmit={(e) => { e.preventDefault(); submitOtp(); }} noValidate className="flex flex-col items-center gap-6">
             <OtpInput
-              control={form.control}
-              name="otp"
+              value={form.watch("otp")}
+              onChange={(v) => form.setValue("otp", v)}
               isPending={isPending}
               error={otpErr}
               otpSentAt={otpSentAt}

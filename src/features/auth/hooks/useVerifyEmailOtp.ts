@@ -1,37 +1,31 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
-import { createVerifyEmailOtpSchema } from "@/src/features/auth/schemas/verifyEmailOtp";
-import { useValidation } from "@/src/core/hooks/useValidation";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import type { VerifyEmailOtpFormData } from "@/src/features/auth/schemas/verifyEmailOtp";
 
 export function useVerifyEmailOtp(email: string, onSuccess: () => void) {
+  const [otp, setOtp] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendError, setResendError] = useState<string | null>(null);
   const [otpSentAt, setOtpSentAt] = useState<number | null>(null);
-  const schema = useValidation(createVerifyEmailOtpSchema);
-
-  const form = useForm<VerifyEmailOtpFormData>({
-    resolver: zodResolver(schema) as any,
-    defaultValues: { otp: "" },
-  });
 
   useEffect(() => {
     if (email) setOtpSentAt(Date.now());
   }, [email]);
 
-  async function submit(data: VerifyEmailOtpFormData) {
+  async function submit() {
+    if (otp.length !== 6) return;
     setError(null);
+    setIsPending(true);
     try {
-      const result = await authApi.verifyEmailOtp({ email, otp: data.otp });
+      const result = await authApi.verifyEmailOtp({ email, otp });
       if (result.ok) onSuccess();
       else setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
     } finally {
-      form.reset({ otp: "" }, { keepDefaultValues: true });
+      setOtp("");
+      setIsPending(false);
     }
   }
 
@@ -42,7 +36,7 @@ export function useVerifyEmailOtp(email: string, onSuccess: () => void) {
       const result = await authApi.resendEmailVerification({ email });
       if (result.ok) {
         setOtpSentAt(Date.now());
-        form.reset({ otp: "" });
+        setOtp("");
       } else {
         setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
@@ -56,7 +50,7 @@ export function useVerifyEmailOtp(email: string, onSuccess: () => void) {
   const clearResendError = useCallback(() => setResendError(null), []);
 
   return {
-    form, error, isPending: form.formState.isSubmitting,
+    otp, setOtp, error, isPending,
     resending, submit, resend, otpSentAt, resendError, clearResendError,
   };
 }

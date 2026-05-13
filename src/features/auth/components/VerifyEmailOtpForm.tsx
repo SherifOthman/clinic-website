@@ -21,10 +21,8 @@ export function VerifyEmailOtpForm({ email }: Props) {
 
   const [verified, setVerified] = useState(false);
 
-  const { form, error, isPending, resending, submit, resend, otpSentAt, resendError, clearResendError } =
-    useVerifyEmailOtp(email, () => {
-      setVerified(true);
-    });
+  const { otp, setOtp, error, isPending, resending, submit, resend, otpSentAt, resendError, clearResendError } =
+    useVerifyEmailOtp(email, () => setVerified(true));
 
   useEffect(() => {
     if (verified) {
@@ -35,14 +33,12 @@ export function VerifyEmailOtpForm({ email }: Props) {
 
   const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
 
-  const otpValue = form.watch("otp");
-
   useEffect(() => {
-    if (otpValue.length === 6 && !isPending) {
-      const t = setTimeout(() => form.handleSubmit(submit)(), 50);
+    if (otp.length === 6 && !isPending) {
+      const t = setTimeout(() => submit(), 50);
       return () => clearTimeout(t);
     }
-  }, [otpValue, isPending]);
+  }, [otp, isPending, submit]);
 
   useEffect(() => {
     if (resendError) {
@@ -71,8 +67,6 @@ export function VerifyEmailOtpForm({ email }: Props) {
     ? email.replace(/(.{2}).+(@.+)/, "$1***$2")
     : "your email";
 
-  const otpErr = form.formState.errors.otp?.message;
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
       <Card className="w-full max-w-[26rem]">
@@ -93,12 +87,12 @@ export function VerifyEmailOtpForm({ email }: Props) {
             </Alert>
           )}
 
-          <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col items-center gap-6">
+          <form onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate className="flex flex-col items-center gap-6">
             <OtpInput
-              control={form.control}
-              name="otp"
+              value={otp}
+              onChange={setOtp}
               isPending={isPending}
-              error={otpErr}
+              error={otp.length > 0 && otp.length !== 6 ? "Code must be exactly 6 digits" : undefined}
               otpSentAt={otpSentAt}
               isExpired={isExpired}
               expiresInLabel={t("expiresIn", { time: formatMs(expiresIn) })}
@@ -109,7 +103,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
               type="submit"
               variant="primary"
               fullWidth
-              isDisabled={otpValue.length !== 6 || isExpired}
+              isDisabled={otp.length !== 6 || isExpired}
               isPending={isPending}
             >
               {({ isPending: ip }) => ip ? t("verifying") : t("verify")}
