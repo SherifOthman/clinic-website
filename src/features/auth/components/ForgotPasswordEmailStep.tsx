@@ -1,0 +1,51 @@
+"use client";
+
+import { FormField } from "@/src/core/components/ui/FormField";
+import { Alert, Button } from "@heroui/react";
+import Link from "next/link";
+import { useLocale } from "next-intl";
+import type { UseFormReturn } from "react-hook-form";
+
+interface Props {
+  form: UseFormReturn<{ email: string; otp: string; newPassword: string }>;
+  error: string | null;
+  isPending: boolean;
+  submitEmail: () => void;
+  t: (key: string, values?: Record<string, unknown>) => string;
+  tErr: (key: string) => string;
+}
+
+export function ForgotPasswordEmailStep({ form, error, isPending, submitEmail, t, tErr }: Props) {
+  const currentLocale = useLocale();
+  const emailErr = form.formState.errors.email?.message;
+
+  return (
+    <>
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
+      </div>
+
+      {error && (
+        <Alert status="danger">
+          <Alert.Indicator />
+          <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
+        </Alert>
+      )}
+
+      <form onSubmit={(e) => { e.preventDefault(); submitEmail(); }} noValidate className="flex flex-col gap-4">
+        <FormField label={t("email")} error={emailErr} type="email" autoComplete="email"
+          {...form.register("email")} />
+        <Button type="submit" variant="primary" fullWidth isPending={isPending}>
+          {({ isPending: ip }) => ip ? t("sending") : t("send")}
+        </Button>
+      </form>
+
+      <p className="text-center text-sm">
+        <Link href={`/${currentLocale}/login`} className="text-accent hover:underline">
+          {t("backToLogin")}
+        </Link>
+      </p>
+    </>
+  );
+}
