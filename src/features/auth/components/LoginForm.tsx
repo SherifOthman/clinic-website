@@ -2,11 +2,14 @@
 
 import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
+import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useLoginForm } from "@/src/features/auth/hooks/useLoginForm";
-import { Alert, Button, Card, Separator } from "@heroui/react";
+import { Alert, Button, Separator } from "@heroui/react";
+import { Globe } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
 
 const DEMO_USERS = [
@@ -31,21 +34,76 @@ const DEMO_USERS = [
 export function LoginForm() {
   const t = useTranslations("auth.login");
   const tErr = useTranslations("auth.errors");
+  const tNav = useTranslations("navigation");
   const currentLocale = useLocale();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const isVerified = searchParams.get("verified") === "1";
   const { form, error, isPending, checking, googleOAuthUrl, fillDemo, submit } =
     useLoginForm();
+
+  const switchLocale = () => {
+    const newLocale = currentLocale === "en" ? "ar" : "en";
+    router.push(pathname.replace(`/${currentLocale}/`, `/${newLocale}/`));
+  };
 
   if (checking) return null;
 
   const emailErr = form.formState.errors.emailOrUsername?.message;
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
-      <Card className="w-full max-w-[26rem]">
-        <Card.Content className="p-6 space-y-6">
-          <div className="text-center">
+    <div className="flex min-h-screen w-full">
+      {/* Left side — branding */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
+        <Link href={`/${currentLocale}`} className="flex items-center gap-3 no-underline">
+          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
+          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
+        </Link>
+
+        <div className="space-y-8">
+          <div className="space-y-3">
+            <h2 className="text-3xl font-bold leading-tight">{t("panelHeading")}</h2>
+            <p className="text-base opacity-80">{t("panelSubtitle")}</p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                <span className="text-sm">01</span>
+              </div>
+              <p className="text-sm font-medium opacity-90">{t("feature1")}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                <span className="text-sm">02</span>
+              </div>
+              <p className="text-sm font-medium opacity-90">{t("feature2")}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                <span className="text-sm">03</span>
+              </div>
+              <p className="text-sm font-medium opacity-90">{t("feature3")}</p>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
+      </div>
+
+      {/* Right side — form */}
+      <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
+        <div className="absolute top-4 inset-x-4 flex items-center justify-between">
+          <Button variant="ghost" size="sm" onPress={switchLocale}>
+            <Globe className="me-1 h-4 w-4" />
+            {currentLocale === "en" ? "العربية" : "English"}
+          </Button>
+          <ThemeSwitch />
+        </div>
+
+        <div className="w-full max-w-sm space-y-6">
+          <div>
             <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
             <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
@@ -159,8 +217,8 @@ export function LoginForm() {
             <GoogleIcon />
             {t("continueWithGoogle")}
           </a>
-        </Card.Content>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

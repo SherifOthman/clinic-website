@@ -166,12 +166,11 @@ export function AcceptInvitationClient({ token }: Props) {
               </Alert>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <FormField label={t("fullName")} error={fullNameErr} autoComplete="name"
-                {...form.register("fullName")} />
-              <FormField label={t("username")} error={userNameErr} autoComplete="username"
-                {...form.register("userName")} />
-            </div>
+            <FormField label={t("fullName")} error={fullNameErr} autoComplete="name"
+              {...form.register("fullName")} />
+
+            <FormField label={t("username")} error={userNameErr} autoComplete="username"
+              {...form.register("userName")} />
 
             <Controller
               name="phoneNumber"
