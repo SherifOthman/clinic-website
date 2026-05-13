@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ApiResult } from "@/src/core/utils/api";
 
 interface Options {
@@ -15,6 +15,10 @@ export function useAvailabilityCheck(
   options?: Options,
 ) {
   const [checking, setChecking] = useState(false);
+  const checkFnRef = useRef(checkFn);
+  checkFnRef.current = checkFn;
+  const onTakenRef = useRef(onTaken);
+  onTakenRef.current = onTaken;
 
   useEffect(() => {
     if (!debouncedValue) return;
@@ -24,15 +28,15 @@ export function useAvailabilityCheck(
     let cancelled = false;
     setChecking(true);
 
-    checkFn(debouncedValue).then((res) => {
+    checkFnRef.current(debouncedValue).then((res) => {
       if (cancelled) return;
-      if (res.ok && !res.data.isAvailable) onTaken();
+      if (res.ok && !res.data.isAvailable) onTakenRef.current();
     }).finally(() => {
       if (!cancelled) setChecking(false);
     });
 
     return () => { cancelled = true; };
-  }, [debouncedValue, checkFn, onTaken, options?.minLength, options?.pattern]);
+  }, [debouncedValue, options?.minLength, options?.pattern]);
 
   return checking;
 }

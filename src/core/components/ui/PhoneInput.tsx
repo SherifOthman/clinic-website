@@ -14,10 +14,19 @@ interface PhoneInputProps {
   errorMessage?: string;
 }
 
-export function PhoneInput({ label, value, onChange, required, isInvalid, errorMessage }: PhoneInputProps) {
+export function PhoneInput({
+  label,
+  value,
+  onChange,
+  required,
+  errorMessage,
+}: PhoneInputProps) {
   return (
     <div className="flex flex-col gap-1.5">
-      <Label>{label}{required && " *"}</Label>
+      <Label>
+        {label}
+        {required && " *"}
+      </Label>
       <div dir="ltr" className="phone-input-theme relative">
         <LibPhoneInput
           value={value}
@@ -25,13 +34,16 @@ export function PhoneInput({ label, value, onChange, required, isInvalid, errorM
           defaultCountry="eg"
           inputClassName="w-full h-10 bg-transparent px-3 text-sm outline-none"
           countrySelectorStyleProps={{
-            buttonClassName: "flex h-10 items-center border border-border bg-surface-secondary text-sm transition hover:bg-surface-tertiary",
+            buttonClassName:
+              "flex h-10 items-center border border-border bg-surface-secondary text-sm transition hover:bg-surface-tertiary",
             buttonStyle: { paddingInline: "1rem" },
             buttonContentWrapperStyle: { gap: "0.75rem" },
           }}
         />
       </div>
-      {errorMessage && <FieldErrorComponent>{errorMessage}</FieldErrorComponent>}
+      {errorMessage && (
+        <FieldErrorComponent>{errorMessage}</FieldErrorComponent>
+      )}
     </div>
   );
 }
