@@ -39,7 +39,7 @@ export function useLoginForm() {
     try {
       const result = await authApi.login(data);
       if (result.ok) window.location.replace(DASHBOARD_URL);
-      else setError(result.error);
+      else setError(result.problem.detail ?? result.problem.title);
     } finally {
       form.reset();
     }

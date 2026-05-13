@@ -62,8 +62,8 @@ export function useAcceptInvitationForm(token: string) {
       setDone(true);
       setTimeout(() => { window.location.href = DASHBOARD_URL; }, 1500);
     } else {
-      const firstError = result.errors ? Object.values(result.errors)[0]?.[0] : null;
-      setError(firstError ?? result.error);
+      const firstError = result.problem.errors ? Object.values(result.problem.errors)[0]?.[0] : null;
+      setError(firstError ?? result.problem.detail ?? result.problem.title);
     }
   }
 

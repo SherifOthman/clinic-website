@@ -1,8 +1,18 @@
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
 
+export interface ApiProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string | null;
+  code: string | null;
+  errors: Record<string, string[]> | null;
+  traceId: string | null;
+}
+
 export type ApiResult<T = void> =
   | { ok: true; data: T }
-  | { ok: false; error: string; errors?: Record<string, string[]> };
+  | { ok: false; problem: ApiProblemDetails };
 
 export async function apiFetch<T = void>(
   method: string,
@@ -18,13 +28,36 @@ export async function apiFetch<T = void>(
     });
 
     if (res.ok) {
-      const data = await res.json().catch(() => undefined) as T;
+      if (res.status === 204) return { ok: true, data: undefined as T };
+      const data = await res.json() as T;
       return { ok: true, data };
     }
 
-    const err = await res.json().catch(() => ({}));
-    return { ok: false, error: err.detail ?? err.title ?? `Error ${res.status}`, errors: err.errors };
+    const err = await res.json().catch(() => ({})) as Partial<ApiProblemDetails>;
+    return {
+      ok: false,
+      problem: {
+        type: err.type ?? "",
+        title: err.title ?? `Error ${res.status}`,
+        status: err.status ?? res.status,
+        detail: err.detail ?? null,
+        code: err.code ?? null,
+        errors: err.errors ?? null,
+        traceId: err.traceId ?? null,
+      },
+    };
   } catch {
-    return { ok: false, error: "Network error. Please check your connection." };
+    return {
+      ok: false,
+      problem: {
+        type: "",
+        title: "Network Error",
+        status: 0,
+        detail: "Network error. Please check your connection.",
+        code: "NETWORK_ERROR",
+        errors: null,
+        traceId: null,
+      },
+    };
   }
 }

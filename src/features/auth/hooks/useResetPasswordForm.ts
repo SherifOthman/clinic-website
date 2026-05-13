@@ -29,7 +29,7 @@ export function useResetPasswordForm(
       form.reset();
       onSuccess();
     } else {
-      setError(result.error);
+      setError(result.problem.detail ?? result.problem.title);
     }
   }
 

@@ -36,7 +36,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
     try {
       const result = await authApi.forgotPassword({ email });
       if (result.ok) setStep("otp");
-      else setError(result.error);
+      else setError(result.problem.detail ?? result.problem.title);
     } catch {}
   }
 
@@ -51,7 +51,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
         setResetToken(result.data.token);
         setStep("password");
       } else {
-        setError(result.error);
+        setError(result.problem.detail ?? result.problem.title);
       }
     } catch {}
   }
@@ -64,7 +64,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
     try {
       const result = await authApi.resetPassword({ email, token: resetToken, newPassword });
       if (result.ok) onSuccess();
-      else setError(result.error);
+      else setError(result.problem.detail ?? result.problem.title);
     } catch {}
   }
 

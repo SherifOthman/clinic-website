@@ -25,7 +25,7 @@ export function useContactForm() {
     try {
       const result = await apiFetch("POST", "/contact", data);
       if (result.ok) setSent(true);
-      else setError(result.error ?? t("common.somethingWentWrong"));
+      else setError(result.problem.detail ?? result.problem.title ?? t("common.somethingWentWrong"));
     } finally {
       form.reset();
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ApiResult } from "@/src/core/utils/api";
 
 interface Options {
@@ -11,32 +11,26 @@ interface Options {
 export function useAvailabilityCheck(
   debouncedValue: string,
   checkFn: (val: string) => Promise<ApiResult<{ isAvailable: boolean }>>,
-  onTaken: () => void,
   options?: Options,
 ) {
-  const [checking, setChecking] = useState(false);
-  const checkFnRef = useRef(checkFn);
-  checkFnRef.current = checkFn;
-  const onTakenRef = useRef(onTaken);
-  onTakenRef.current = onTaken;
+  const [state, setState] = useState<{ checking: boolean; taken: boolean }>({ checking: false, taken: false });
 
   useEffect(() => {
-    if (!debouncedValue) return;
-    if (options?.minLength && debouncedValue.length < options.minLength) return;
-    if (options?.pattern && !options.pattern.test(debouncedValue)) return;
+    if (!debouncedValue) { setState({ checking: false, taken: false }); return; }
+    if (options?.minLength && debouncedValue.length < options.minLength) { setState({ checking: false, taken: false }); return; }
+    if (options?.pattern && !options.pattern.test(debouncedValue)) { setState({ checking: false, taken: false }); return; }
 
     let cancelled = false;
-    setChecking(true);
+    setState({ checking: true, taken: false });
 
-    checkFnRef.current(debouncedValue).then((res) => {
-      if (cancelled) return;
-      if (res.ok && !res.data.isAvailable) onTakenRef.current();
-    }).finally(() => {
-      if (!cancelled) setChecking(false);
+    checkFn(debouncedValue).then((res) => {
+      if (!cancelled) setState({ checking: false, taken: res.ok && !res.data.isAvailable });
+    }).catch(() => {
+      if (!cancelled) setState({ checking: false, taken: false });
     });
 
     return () => { cancelled = true; };
   }, [debouncedValue, options?.minLength, options?.pattern]);
 
-  return checking;
+  return state;
 }

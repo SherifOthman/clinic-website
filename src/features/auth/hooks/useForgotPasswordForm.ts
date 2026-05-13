@@ -23,7 +23,7 @@ export function useForgotPasswordForm() {
     try {
       const result = await authApi.forgotPassword(data);
       if (result.ok) setSent(true);
-      else setError(result.error);
+      else setError(result.problem.detail ?? result.problem.title);
     } finally {
       form.reset();
     }

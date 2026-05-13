@@ -23,7 +23,7 @@ export function useVerifyEmailOtp(email: string, onSuccess: () => void) {
     try {
       const result = await authApi.verifyEmailOtp({ email, otp: data.otp });
       if (result.ok) onSuccess();
-      else setError(result.error);
+      else setError(result.problem.detail ?? result.problem.title);
     } finally {
       form.reset({ otp: "" }, { keepDefaultValues: true });
     }
