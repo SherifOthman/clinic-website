@@ -13,9 +13,9 @@ export const authApi = {
     apiFetch("POST", "/auth/forgot-password", data),
 
   verifyResetOtp: (data: { email: string; otp: string }) =>
-    apiFetch<{ email: string; token: string }>("POST", "/auth/verify-reset-otp", data),
+    apiFetch("POST", "/auth/verify-reset-otp", data),
 
-  resetPassword: (data: { token: string; email: string; newPassword: string }) =>
+  resetPassword: (data: { email: string; otp: string; newPassword: string }) =>
     apiFetch("POST", "/auth/reset-password", data),
 
   verifyEmailOtp: (data: { email: string; otp: string }) =>

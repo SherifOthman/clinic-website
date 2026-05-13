@@ -5,9 +5,13 @@ import { Alert, Button } from "@heroui/react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
+import type { z } from "zod";
+import type { createForgotPasswordOtpSchema } from "@/src/features/auth/schemas/forgotPasswordOtp";
+
+type FormData = z.infer<ReturnType<typeof createForgotPasswordOtpSchema>>;
 
 interface Props {
-  form: UseFormReturn<{ email: string; otp: string; newPassword: string }>;
+  form: UseFormReturn<FormData>;
   error: string | null;
   isPending: boolean;
   submitEmail: () => void;

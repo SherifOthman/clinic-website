@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export function validatePassword(v: string): string | null {
+  if (v.length < 8) return "passwordMin";
+  if (!/[A-Z]/.test(v)) return "passwordUppercase";
+  if (!/[a-z]/.test(v)) return "passwordLowercase";
+  if (!/\d/.test(v)) return "passwordDigit";
+  if (!/[^a-zA-Z0-9]/.test(v)) return "passwordSpecial";
+  return null;
+}
+
 export function createValidators(t: (key: string) => string) {
   return {
     requiredString: (max?: number) => {

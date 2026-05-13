@@ -3,7 +3,6 @@
 import { OtpInput } from "@/src/features/auth/components/OtpInput";
 import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
 import { Alert, Button } from "@heroui/react";
-import { useEffect } from "react";
 
 interface Props {
   otp: string;
@@ -24,13 +23,6 @@ export function ForgotPasswordOtpStep({
   submitOtp, resendOtp, otpSentAt, maskedEmail, t, tErr,
 }: Props) {
   const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
-
-  useEffect(() => {
-    if (otp.length === 6 && !isPending) {
-      const id = setTimeout(() => submitOtp(), 50);
-      return () => clearTimeout(id);
-    }
-  }, [otp, isPending, submitOtp]);
 
   const otpErr = otp.length > 0 && otp.length !== 6 ? "Code must be exactly 6 digits" : undefined;
 

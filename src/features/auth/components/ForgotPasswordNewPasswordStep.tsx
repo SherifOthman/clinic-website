@@ -4,9 +4,13 @@ import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { Alert, Button } from "@heroui/react";
 import type { Control } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import type { z } from "zod";
+import type { createForgotPasswordOtpSchema } from "@/src/features/auth/schemas/forgotPasswordOtp";
+
+type FormData = z.infer<ReturnType<typeof createForgotPasswordOtpSchema>>;
 
 interface Props {
-  control: Control<{ email: string; otp: string; newPassword: string }>;
+  control: Control<FormData>;
   error: string | null;
   isPending: boolean;
   submitPassword: () => void;

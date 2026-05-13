@@ -14,7 +14,7 @@ export function ForgotPasswordOtpForm() {
   const currentLocale = useLocale();
   const router = useRouter();
 
-  const { step, error, form, isPending, submitEmail, submitOtp, submitPassword, resendOtp, otpSentAt, resendError } =
+  const { step, form, error, isPending, submitEmail, submitOtp, submitPassword, resendOtp, otpSentAt, resendError } =
     useForgotPasswordOtp(() => router.push(`/${currentLocale}/login?reset=1`));
 
   const email = form.watch("email");

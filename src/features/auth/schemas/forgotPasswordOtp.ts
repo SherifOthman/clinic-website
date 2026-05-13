@@ -1,10 +1,11 @@
 import { createValidators } from "@/src/core/validators";
+import { z } from "zod";
 
-export function createForgotPasswordOtpSchemas(t: (key: string) => string) {
+export function createForgotPasswordOtpSchema(t: (key: string) => string) {
   const v = createValidators(t);
-  return {
+  return z.object({
     email: v.email(),
     otp: v.otp(),
     newPassword: v.password(),
-  };
+  });
 }
