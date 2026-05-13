@@ -40,7 +40,7 @@ export function AcceptInvitationClient({ token }: Props) {
   };
 
   const TopBar = () => (
-    <div className="absolute top-4 end-4 flex items-center gap-2 z-10">
+    <div className="absolute top-4 inset-x-4 flex items-center justify-between z-10">
       <Button variant="ghost" size="sm" onPress={switchLocale}>
         <Globe className="me-1 h-4 w-4" />
         {locale === "en" ? "العربية" : "English"}
@@ -148,18 +148,13 @@ export function AcceptInvitationClient({ token }: Props) {
       </div>
 
       <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
-        <div className="absolute top-4 end-4 flex items-center gap-2">
+        <div className="absolute top-4 inset-x-4 flex items-center justify-between">
           <Button variant="ghost" size="sm" onPress={switchLocale}>
             <Globe className="me-1 h-4 w-4" />
             {locale === "en" ? "العربية" : "English"}
           </Button>
           <ThemeSwitch />
         </div>
-
-        <Link href={`/${locale}`} className="mb-6 flex items-center gap-2 no-underline lg:hidden">
-          <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
-          <span className="text-xl font-bold">ClinicCare</span>
-        </Link>
 
         <div className="w-full max-w-sm space-y-6">
           <div>
