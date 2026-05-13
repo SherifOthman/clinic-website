@@ -68,7 +68,7 @@ export function LoginForm() {
                 name="password"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                <PasswordInput label="" value={field.value} onChange={field.onChange} variant="secondary"
+                <PasswordInput label="" value={field.value} onChange={field.onChange}
                   autoComplete="current-password" required error={fieldState.error?.message} />
                 )}
               />

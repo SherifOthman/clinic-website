@@ -3,7 +3,7 @@
 import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useForgotPasswordOtp } from "@/src/features/auth/hooks/useForgotPasswordOtp";
-import { Alert, Button, Card, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
+import { Alert, Button, Card, FieldError, Input, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -89,28 +89,19 @@ export function ForgotPasswordOtpForm() {
               name="otp"
               control={form.control}
               render={({ field, fieldState }) => (
-                <div className="flex flex-col items-center gap-2">
-                  <InputOTP
-                    maxLength={6}
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    pattern={REGEXP_ONLY_DIGITS}
-                    isDisabled={isPending}
-                    autoFocus
-                    isInvalid={!!fieldState.error}
-                  >
-                    <InputOTP.Group>
-                      <InputOTP.Slot index={0} />
-                      <InputOTP.Slot index={1} />
-                      <InputOTP.Slot index={2} />
-                    </InputOTP.Group>
-                    <InputOTP.Separator />
-                    <InputOTP.Group>
-                      <InputOTP.Slot index={3} />
-                      <InputOTP.Slot index={4} />
-                      <InputOTP.Slot index={5} />
-                    </InputOTP.Group>
-                  </InputOTP>
+                <div className="flex w-full flex-col gap-1">
+                  <TextField isInvalid={!!fieldState.error}>
+                    <Input
+                      {...field}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      placeholder="000000"
+                      disabled={isPending}
+                      autoFocus
+                      className="text-center text-lg tracking-[0.5em]"
+                    />
+                  </TextField>
                   <FieldError>{otpErr}</FieldError>
                 </div>
               )}
@@ -158,7 +149,6 @@ export function ForgotPasswordOtpForm() {
                   label={t("newPassword")}
                   value={field.value}
                   onChange={field.onChange}
-                  variant="secondary"
                   autoComplete="new-password"
                   required
                   minLength={8}

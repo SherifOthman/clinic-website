@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 // ─── Checking indicator for availability validation ─────────────────────────
 
@@ -131,9 +132,14 @@ export function RegisterForm() {
               error={err.gender?.message} />
 
             {/* Password */}
-            <PasswordInput label={t("password")} value={form.watch("password")} variant="secondary"
-              onChange={form.register("password").onChange} autoComplete="new-password" required
-              error={err.password?.message} />
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordInput label={t("password")} value={field.value} onChange={field.onChange}
+                  autoComplete="new-password" required error={fieldState.error?.message} />
+              )}
+            />
 
             <Button type="submit" variant="primary" fullWidth isPending={isPending}>
               {({ isPending: ip }) => ip ? t("submitting") : t("submit")}

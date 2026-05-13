@@ -59,8 +59,11 @@ export function useRegisterForm(
       form.reset();
       onSuccess(locale);
     } else {
-      const firstError = result.problem.errors ? Object.values(result.problem.errors)[0]?.[0] : null;
-      setError(firstError ?? result.problem.detail ?? result.problem.title);
+      if (result.problem.errors) {
+        setError(null);
+      } else {
+        setError(result.problem.detail ?? result.problem.title);
+      }
     }
   }
 
