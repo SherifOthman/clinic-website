@@ -1,11 +1,12 @@
 "use client";
 
 import { useVerifyEmailOtp } from "@/src/features/auth/hooks/useVerifyEmailOtp";
-import { Alert, Button, Card, FieldError, Input, TextField } from "@heroui/react";
+import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
+import { Alert, Button, Card, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 
 interface Props {
@@ -14,13 +15,25 @@ interface Props {
 
 export function VerifyEmailOtpForm({ email }: Props) {
   const t = useTranslations("auth.verifyEmail");
+  const tErr = useTranslations("auth.errors");
   const currentLocale = useLocale();
   const router = useRouter();
 
-  const { form, error, isPending, resending, submit, resend } =
+  const [verified, setVerified] = useState(false);
+
+  const { form, error, isPending, resending, submit, resend, otpSentAt, resendError, clearResendError } =
     useVerifyEmailOtp(email, () => {
-      router.push(`/${currentLocale}/login?verified=1`);
+      setVerified(true);
     });
+
+  useEffect(() => {
+    if (verified) {
+      const id = setTimeout(() => router.push(`/${currentLocale}/login?verified=1`), 1500);
+      return () => clearTimeout(id);
+    }
+  }, [verified, currentLocale, router]);
+
+  const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
 
   const otpValue = form.watch("otp");
 
@@ -30,6 +43,29 @@ export function VerifyEmailOtpForm({ email }: Props) {
       return () => clearTimeout(t);
     }
   }, [otpValue, isPending]);
+
+  useEffect(() => {
+    if (resendError) {
+      const id = setTimeout(clearResendError, 5000);
+      return () => clearTimeout(id);
+    }
+  }, [resendError, clearResendError]);
+
+  if (verified) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
+        <Card className="w-full max-w-[26rem]">
+          <Card.Content className="p-6 space-y-6">
+            <div className="text-center">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-2xl text-success">✓</div>
+              <h2 className="text-2xl font-bold text-foreground">{t("verifiedTitle")}</h2>
+              <p className="mt-1 text-sm text-muted">{t("verifiedMessage")}</p>
+            </div>
+          </Card.Content>
+        </Card>
+      </div>
+    );
+  }
 
   const maskedEmail = email
     ? email.replace(/(.{2}).+(@.+)/, "$1***$2")
@@ -53,7 +89,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
           {error && (
             <Alert status="danger">
               <Alert.Indicator />
-              <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+              <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
             </Alert>
           )}
 
@@ -62,20 +98,38 @@ export function VerifyEmailOtpForm({ email }: Props) {
               name="otp"
               control={form.control}
               render={({ field, fieldState }) => (
-                <div className="flex w-full flex-col gap-1">
-                  <TextField isInvalid={!!fieldState.error}>
-                    <Input
-                      {...field}
-                      type="text"
-                      inputMode="numeric"
+                <div className="flex flex-col items-center gap-2">
+                  <div dir="ltr">
+                    <InputOTP
                       maxLength={6}
-                      placeholder="000000"
-                      disabled={isPending}
+                      value={field.value}
+                      onChange={field.onChange}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      isDisabled={isPending}
                       autoFocus
-                      className="text-center text-lg tracking-[0.5em]"
-                    />
-                  </TextField>
+                      isInvalid={!!fieldState.error}
+                      variant="secondary"
+                      dir="ltr"
+                    >
+                      <InputOTP.Group>
+                        <InputOTP.Slot index={0} />
+                        <InputOTP.Slot index={1} />
+                        <InputOTP.Slot index={2} />
+                      </InputOTP.Group>
+                      <InputOTP.Separator />
+                      <InputOTP.Group>
+                        <InputOTP.Slot index={3} />
+                        <InputOTP.Slot index={4} />
+                        <InputOTP.Slot index={5} />
+                      </InputOTP.Group>
+                    </InputOTP>
+                  </div>
                   <FieldError>{otpErr}</FieldError>
+                  {otpSentAt && (isExpired ? (
+                    <p className="text-xs text-danger">{t("codeExpired")}</p>
+                  ) : (
+                    <p className="text-xs text-muted">{t("expiresIn", { time: formatMs(expiresIn) })}</p>
+                  ))}
                 </div>
               )}
             />
@@ -84,22 +138,29 @@ export function VerifyEmailOtpForm({ email }: Props) {
               type="submit"
               variant="primary"
               fullWidth
-              isDisabled={otpValue.length !== 6}
+              isDisabled={otpValue.length !== 6 || isExpired}
               isPending={isPending}
             >
               {({ isPending: ip }) => ip ? t("verifying") : t("verify")}
             </Button>
           </form>
 
+          {resendError && (
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content><Alert.Description>{tErr(resendError)}</Alert.Description></Alert.Content>
+            </Alert>
+          )}
+
           <p className="text-center text-sm text-muted">
             {t("noCode")}{" "}
             <button
               type="button"
               onClick={resend}
-              disabled={resending}
+              disabled={resending || !canResend}
               className="font-medium text-accent hover:underline disabled:opacity-50"
             >
-              {resending ? t("resending") : t("resend")}
+              {resending ? t("resending") : canResend ? t("resend") : t("resendIn", { time: formatMs(cooldownLeft) })}
             </button>
           </p>
 

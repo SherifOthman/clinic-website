@@ -25,6 +25,7 @@
       "signUp": "Sign up",
       "accountLocked": "Account locked. Please try again later.",
       "accountInactive": "Your account has been deactivated. Contact your clinic owner.",
+      "emailVerified": "Your email has been verified. You can now sign in.",
       "testAccounts": "Test accounts",
       "continueWithGoogle": "Continue with Google",
       "or": "OR",
@@ -87,7 +88,10 @@
       "newPasswordPanelSubtitle": "Set a new password to secure your account.",
       "newPassword": "New Password",
       "submit": "Reset Password",
-      "submitting": "Resetting..."
+      "submitting": "Resetting...",
+      "expiresIn": "Code expires in {time}",
+      "codeExpired": "Code expired. Request a new one.",
+      "resendIn": "Resend in {time}"
     },
     "resetPassword": {
       "title": "Reset Password",
@@ -109,6 +113,11 @@
       "backToLogin": "Back to login",
       "panelHeading": "One last step",
       "panelSubtitle": "Verify your email to activate your account and get started.",
+      "expiresIn": "Code expires in {time}",
+      "codeExpired": "Code expired. Request a new one.",
+      "resendIn": "Resend in {time}",
+      "verifiedTitle": "Email Verified!",
+      "verifiedMessage": "Redirecting to login...",
       "hint1": "Check your spam folder if you don't see it",
       "hint2": "The code expires in 5 minutes",
       "hint3": "You can request a new code if needed"
@@ -150,7 +159,14 @@
       "otpLength": "Code must be exactly 6 digits",
       "emailTaken": "This email is already registered",
       "usernameTaken": "This username is already taken",
-      "checking": "Checking..."
+      "checking": "Checking...",
+      "INVALID_CREDENTIALS": "Invalid email/username or password",
+      "ACCOUNT_LOCKED": "Account locked. Please try again later.",
+      "EMAIL_NOT_CONFIRMED": "Email not verified. Check your inbox for the verification code.",
+      "EMAIL_ALREADY_CONFIRMED": "Email is already confirmed",
+      "TOKEN_INVALID": "Invalid or expired code",
+      "NETWORK_ERROR": "Network error. Please check your connection.",
+      "VALIDATION_ERROR": "Please check your input and try again."
     }
   },
   "notFound": {

@@ -22,7 +22,7 @@ export function PasswordInput({
   const [show, setShow] = useState(false);
 
   return (
-    <TextField isRequired={required} isInvalid={!!error} className={`flex flex-col gap-1 ${className ?? ""}`}>
+    <TextField isRequired={required} isInvalid={!!error} variant="secondary" className={`flex flex-col gap-1 ${className ?? ""}`}>
       <Label>{label}</Label>
       <InputGroup>
         <InputGroup.Input

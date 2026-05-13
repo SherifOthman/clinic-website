@@ -3,7 +3,8 @@
 import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useForgotPasswordOtp } from "@/src/features/auth/hooks/useForgotPasswordOtp";
-import { Alert, Button, Card, FieldError, Input, TextField } from "@heroui/react";
+import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
+import { Alert, Button, Card, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -12,11 +13,14 @@ import { Controller } from "react-hook-form";
 
 export function ForgotPasswordOtpForm() {
   const t = useTranslations("auth.forgotPassword");
+  const tErr = useTranslations("auth.errors");
   const currentLocale = useLocale();
   const router = useRouter();
 
-  const { step, error, form, isPending, submitEmail, submitOtp, submitPassword, resendOtp } =
+  const { step, error, form, isPending, submitEmail, submitOtp, submitPassword, resendOtp, otpSentAt, resendError, clearResendError } =
     useForgotPasswordOtp(() => router.push(`/${currentLocale}/login?reset=1`));
+
+  const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
 
   const otp = form.watch("otp");
 
@@ -26,6 +30,13 @@ export function ForgotPasswordOtpForm() {
       return () => clearTimeout(t);
     }
   }, [otp, isPending]);
+
+  useEffect(() => {
+    if (resendError) {
+      const id = setTimeout(clearResendError, 5000);
+      return () => clearTimeout(id);
+    }
+  }, [resendError, clearResendError]);
 
   const email = form.watch("email");
   const maskedEmail = email.replace(/(.{2}).+(@.+)/, "$1***$2");
@@ -45,7 +56,7 @@ export function ForgotPasswordOtpForm() {
       {error && (
         <Alert status="danger">
           <Alert.Indicator />
-          <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+          <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
         </Alert>
       )}
 
@@ -89,20 +100,38 @@ export function ForgotPasswordOtpForm() {
               name="otp"
               control={form.control}
               render={({ field, fieldState }) => (
-                <div className="flex w-full flex-col gap-1">
-                  <TextField isInvalid={!!fieldState.error}>
-                    <Input
-                      {...field}
-                      type="text"
-                      inputMode="numeric"
+                <div className="flex flex-col items-center gap-2">
+                  <div dir="ltr">
+                    <InputOTP
                       maxLength={6}
-                      placeholder="000000"
-                      disabled={isPending}
+                      value={field.value}
+                      onChange={field.onChange}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      isDisabled={isPending}
                       autoFocus
-                      className="text-center text-lg tracking-[0.5em]"
-                    />
-                  </TextField>
+                      isInvalid={!!fieldState.error}
+                      variant="secondary"
+                      dir="ltr"
+                    >
+                      <InputOTP.Group>
+                        <InputOTP.Slot index={0} />
+                        <InputOTP.Slot index={1} />
+                        <InputOTP.Slot index={2} />
+                      </InputOTP.Group>
+                      <InputOTP.Separator />
+                      <InputOTP.Group>
+                        <InputOTP.Slot index={3} />
+                        <InputOTP.Slot index={4} />
+                        <InputOTP.Slot index={5} />
+                      </InputOTP.Group>
+                    </InputOTP>
+                  </div>
                   <FieldError>{otpErr}</FieldError>
+                  {otpSentAt && (isExpired ? (
+                    <p className="text-xs text-danger">{t("codeExpired")}</p>
+                  ) : (
+                    <p className="text-xs text-muted">{t("expiresIn", { time: formatMs(expiresIn) })}</p>
+                  ))}
                 </div>
               )}
             />
@@ -111,22 +140,29 @@ export function ForgotPasswordOtpForm() {
               type="submit"
               variant="primary"
               fullWidth
-              isDisabled={otp.length !== 6}
+              isDisabled={otp.length !== 6 || isExpired}
               isPending={isPending}
             >
               {({ isPending: ip }) => ip ? t("verifying") : t("verifyCode")}
             </Button>
           </form>
 
+          {resendError && (
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content><Alert.Description>{tErr(resendError)}</Alert.Description></Alert.Content>
+            </Alert>
+          )}
+
           <p className="text-center text-sm text-muted">
             {t("noCode")}{" "}
             <button
               type="button"
               onClick={resendOtp}
-              disabled={isPending}
+              disabled={isPending || !canResend}
               className="font-medium text-accent hover:underline disabled:opacity-50"
             >
-              {t("resend")}
+              {canResend ? t("resend") : t("resendIn", { time: formatMs(cooldownLeft) })}
             </button>
           </p>
         </>

@@ -56,13 +56,13 @@ export function useRegisterForm(
     setError(null);
     const result = await authApi.register(data);
     if (result.ok) {
-      form.reset();
       onSuccess(locale);
+      form.reset();
     } else {
       if (result.problem.errors) {
         setError(null);
       } else {
-        setError(result.problem.detail ?? result.problem.title);
+        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
     }
   }

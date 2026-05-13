@@ -25,7 +25,7 @@ export default function RootLayout({
           __html: `(function(){var p=location.pathname.split("/")[1],r=p==="ar";if(p){document.documentElement.lang=p;document.documentElement.dir=r?"rtl":"ltr"}})()`
         }} />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body suppressHydrationWarning className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProviders>
           {children}
         </ThemeProviders>

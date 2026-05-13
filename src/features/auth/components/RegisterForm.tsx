@@ -75,6 +75,7 @@ export function RegisterForm() {
   const currentLocale = useLocale();
   const router = useRouter();
 
+  const tErr = useTranslations("auth.errors");
   const { form, error, isPending, googleOAuthUrl, submit, emailChecking, usernameChecking } = useRegisterForm(
     (loc) => router.push(`/${loc}/verify-email?email=${encodeURIComponent(form.getValues("email"))}`),
     currentLocale,
@@ -98,7 +99,7 @@ export function RegisterForm() {
             {error && (
               <Alert status="danger">
                 <Alert.Indicator />
-                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+                <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
               </Alert>
             )}
 

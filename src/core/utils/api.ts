@@ -28,9 +28,8 @@ export async function apiFetch<T = void>(
     });
 
     if (res.ok) {
-      if (res.status === 204) return { ok: true, data: undefined as T };
-      const data = await res.json() as T;
-      return { ok: true, data };
+      const text = await res.text();
+      return { ok: true, data: (text ? JSON.parse(text) : undefined) as T };
     }
 
     const err = await res.json().catch(() => ({})) as Partial<ApiProblemDetails>;

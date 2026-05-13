@@ -4,7 +4,7 @@ import { authApi } from "@/src/features/auth/api";
 import { createForgotPasswordOtpSchemas } from "@/src/features/auth/schemas/forgotPasswordOtp";
 import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -14,6 +14,8 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
   const [step, setStep] = useState<Step>("email");
   const [resetToken, setResetToken] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [otpSentAt, setOtpSentAt] = useState<number | null>(null);
+  const [resendError, setResendError] = useState<string | null>(null);
 
   const schemas = useValidation(createForgotPasswordOtpSchemas);
 
@@ -35,8 +37,12 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
     setError(null);
     try {
       const result = await authApi.forgotPassword({ email });
-      if (result.ok) setStep("otp");
-      else setError(result.problem.detail ?? result.problem.title);
+      if (result.ok) {
+        setOtpSentAt(Date.now());
+        setStep("otp");
+      } else {
+        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      }
     } catch {}
   }
 
@@ -51,7 +57,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
         setResetToken(result.data.token);
         setStep("password");
       } else {
-        setError(result.problem.detail ?? result.problem.title);
+        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
     } catch {}
   }
@@ -64,21 +70,31 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
     try {
       const result = await authApi.resetPassword({ email, token: resetToken, newPassword });
       if (result.ok) onSuccess();
-      else setError(result.problem.detail ?? result.problem.title);
+      else setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
     } catch {}
   }
 
   async function resendOtp() {
     const email = form.getValues("email");
-    setError(null);
+    setResendError(null);
     try {
-      await authApi.forgotPassword({ email });
-      form.setValue("otp", "");
-    } catch {}
+      const result = await authApi.forgotPassword({ email });
+      if (result.ok) {
+        setOtpSentAt(Date.now());
+        form.setValue("otp", "");
+      } else {
+        setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      }
+    } catch {
+      setResendError("Failed to resend code");
+    }
   }
+
+  const clearResendError = useCallback(() => setResendError(null), []);
 
   return {
     step, error, form, isPending: form.formState.isSubmitting,
     submitEmail, submitOtp, submitPassword, resendOtp,
+    otpSentAt, resendError, clearResendError,
   };
 }

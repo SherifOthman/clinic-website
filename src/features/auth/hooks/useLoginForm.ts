@@ -6,6 +6,7 @@ import { authApi } from "@/src/features/auth/api";
 import { createLoginSchema } from "@/src/features/auth/schemas/login";
 import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { LoginFormData } from "@/src/features/auth/schemas/login";
@@ -13,6 +14,7 @@ import type { LoginFormData } from "@/src/features/auth/schemas/login";
 export function useLoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(true);
+  const locale = useLocale();
   const schema = useValidation(createLoginSchema);
 
   const form = useForm<LoginFormData>({
@@ -38,8 +40,14 @@ export function useLoginForm() {
     setError(null);
     try {
       const result = await authApi.login(data);
-      if (result.ok) window.location.replace(DASHBOARD_URL);
-      else setError(result.problem.detail ?? result.problem.title);
+      if (result.ok) {
+        window.location.replace(DASHBOARD_URL);
+      } else if (result.problem.code === "EMAIL_NOT_CONFIRMED") {
+        const email = result.problem.detail ?? data.emailOrUsername;
+        window.location.replace(`/${locale}/verify-email?email=${encodeURIComponent(email)}`);
+      } else {
+        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      }
     } finally {
       form.reset();
     }

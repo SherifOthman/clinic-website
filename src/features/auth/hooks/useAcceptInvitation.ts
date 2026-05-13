@@ -65,7 +65,7 @@ export function useAcceptInvitationForm(token: string) {
       if (result.problem.errors) {
         setError(null);
       } else {
-        setError(result.problem.detail ?? result.problem.title);
+        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
       }
     }
   }

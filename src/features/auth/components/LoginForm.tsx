@@ -7,7 +7,7 @@ import { Alert, Button, Card, Separator } from "@heroui/react";
 import { HeartHandshake, ShieldCheck, Zap } from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
 
 const DEMO_USERS = [
@@ -19,8 +19,11 @@ const DEMO_USERS = [
 
 export function LoginForm() {
   const t = useTranslations("auth.login");
+  const tErr = useTranslations("auth.errors");
   const currentLocale = useLocale();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isVerified = searchParams.get("verified") === "1";
   const { form, error, isPending, checking, googleOAuthUrl, fillDemo, submit } = useLoginForm();
 
   if (checking) return null;
@@ -49,10 +52,16 @@ export function LoginForm() {
           </div>
 
           <form onSubmit={form.handleSubmit(submit)} noValidate className="space-y-4">
+            {isVerified && (
+              <Alert status="success">
+                <Alert.Indicator />
+                <Alert.Content><Alert.Description>{t("emailVerified")}</Alert.Description></Alert.Content>
+              </Alert>
+            )}
             {error && (
               <Alert status="danger">
                 <Alert.Indicator />
-                <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
+                <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
               </Alert>
             )}
             <FormField label={t("emailOrUsername")} error={emailErr} autoComplete="username"

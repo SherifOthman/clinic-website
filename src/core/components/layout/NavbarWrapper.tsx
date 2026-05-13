@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 // Segments that belong to auth pages (full-screen split panels with their own top bar)
 const AUTH_SEGMENTS = [
-  "login", "register", "forgot-password", "reset-password", "accept-invitation",
+  "login", "register", "forgot-password", "reset-password", "verify-email", "accept-invitation",
 ];
 
 interface NavbarWrapperProps {
