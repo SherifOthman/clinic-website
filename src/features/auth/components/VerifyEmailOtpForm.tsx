@@ -1,6 +1,6 @@
 "use client";
 
-import { useVerifyEmailOtp } from "@/src/features/auth/hooks/useVerifyEmailOtp";
+import { authApi } from "@/src/features/auth/api";
 import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
 import { OtpInput } from "@/src/features/auth/components/OtpInput";
 import { Alert, Button, Card } from "@heroui/react";
@@ -19,10 +19,51 @@ export function VerifyEmailOtpForm({ email }: Props) {
   const currentLocale = useLocale();
   const router = useRouter();
 
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [resendError, setResendError] = useState<string | null>(null);
+  const [otpSentAt, setOtpSentAt] = useState<number | null>(null);
   const [verified, setVerified] = useState(false);
 
-  const { otp, setOtp, error, isPending, resending, submit, resend, otpSentAt, resendError, clearResendError } =
-    useVerifyEmailOtp(email, () => setVerified(true));
+  useEffect(() => {
+    if (email) setOtpSentAt(Date.now());
+  }, [email]);
+
+  const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
+
+  async function submit() {
+    if (otp.length !== 6) return;
+    setError(null);
+    setIsPending(true);
+    try {
+      const result = await authApi.verifyEmailOtp({ email, otp });
+      if (result.ok) setVerified(true);
+      else setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+    } finally {
+      setOtp("");
+      setIsPending(false);
+    }
+  }
+
+  async function resend() {
+    setResendError(null);
+    setResending(true);
+    try {
+      const result = await authApi.resendEmailVerification({ email });
+      if (result.ok) {
+        setOtpSentAt(Date.now());
+        setOtp("");
+      } else {
+        setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      }
+    } catch {
+      setResendError("Failed to resend code");
+    } finally {
+      setResending(false);
+    }
+  }
 
   useEffect(() => {
     if (verified) {
@@ -30,22 +71,6 @@ export function VerifyEmailOtpForm({ email }: Props) {
       return () => clearTimeout(id);
     }
   }, [verified, currentLocale, router]);
-
-  const { expiresIn, cooldownLeft, isExpired, canResend } = useOtpTimer(otpSentAt);
-
-  useEffect(() => {
-    if (otp.length === 6 && !isPending) {
-      const t = setTimeout(() => submit(), 50);
-      return () => clearTimeout(t);
-    }
-  }, [otp, isPending, submit]);
-
-  useEffect(() => {
-    if (resendError) {
-      const id = setTimeout(clearResendError, 5000);
-      return () => clearTimeout(id);
-    }
-  }, [resendError, clearResendError]);
 
   if (verified) {
     return (
