@@ -2,12 +2,12 @@
 
 import { useVerifyEmailOtp } from "@/src/features/auth/hooks/useVerifyEmailOtp";
 import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
-import { Alert, Button, Card, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
+import { OtpInput } from "@/src/features/auth/components/OtpInput";
+import { Alert, Button, Card } from "@heroui/react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
 
 interface Props {
   email: string;
@@ -94,44 +94,15 @@ export function VerifyEmailOtpForm({ email }: Props) {
           )}
 
           <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col items-center gap-6">
-            <Controller
-              name="otp"
+            <OtpInput
               control={form.control}
-              render={({ field, fieldState }) => (
-                <div className="flex flex-col items-center gap-2">
-                  <div dir="ltr">
-                    <InputOTP
-                      maxLength={6}
-                      value={field.value}
-                      onChange={field.onChange}
-                      pattern={REGEXP_ONLY_DIGITS}
-                      isDisabled={isPending}
-                      autoFocus
-                      isInvalid={!!fieldState.error}
-                      variant="secondary"
-                      dir="ltr"
-                    >
-                      <InputOTP.Group>
-                        <InputOTP.Slot index={0} />
-                        <InputOTP.Slot index={1} />
-                        <InputOTP.Slot index={2} />
-                      </InputOTP.Group>
-                      <InputOTP.Separator />
-                      <InputOTP.Group>
-                        <InputOTP.Slot index={3} />
-                        <InputOTP.Slot index={4} />
-                        <InputOTP.Slot index={5} />
-                      </InputOTP.Group>
-                    </InputOTP>
-                  </div>
-                  <FieldError>{otpErr}</FieldError>
-                  {otpSentAt && (isExpired ? (
-                    <p className="text-xs text-danger">{t("codeExpired")}</p>
-                  ) : (
-                    <p className="text-xs text-muted">{t("expiresIn", { time: formatMs(expiresIn) })}</p>
-                  ))}
-                </div>
-              )}
+              name="otp"
+              isPending={isPending}
+              error={otpErr}
+              otpSentAt={otpSentAt}
+              isExpired={isExpired}
+              expiresInLabel={t("expiresIn", { time: formatMs(expiresIn) })}
+              codeExpiredLabel={t("codeExpired")}
             />
 
             <Button
