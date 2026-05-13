@@ -12,6 +12,7 @@ interface PasswordInputProps {
   required?: boolean;
   minLength?: number;
   placeholder?: string;
+  variant?: "secondary" | "primary";
   error?: string;
   className?: string;
 }
@@ -28,6 +29,7 @@ export function PasswordInput({
   required,
   minLength,
   placeholder,
+  variant,
   error,
   className,
 }: PasswordInputProps) {
@@ -48,6 +50,7 @@ export function PasswordInput({
           autoComplete={autoComplete}
           minLength={minLength}
           placeholder={placeholder ?? "••••••••"}
+          variant={variant}
           className="w-full pe-10"
         />
         <button

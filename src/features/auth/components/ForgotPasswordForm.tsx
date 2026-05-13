@@ -9,12 +9,8 @@ import { useParams } from "next/navigation";
 
 export function ForgotPasswordForm() {
   const t = useTranslations("auth.forgotPassword");
-  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
-  const { form, sent, error, isPending, submit } = useForgotPasswordForm({
-    required: tErr("required"),
-    invalidEmail: tErr("invalidEmail"),
-  });
+  const { form, sent, error, isPending, submit } = useForgotPasswordForm();
 
   if (sent) {
     return (

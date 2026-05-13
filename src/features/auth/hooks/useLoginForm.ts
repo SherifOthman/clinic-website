@@ -3,18 +3,20 @@
 import { apiFetch } from "@/src/core/utils/api";
 import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
 import { authApi } from "@/src/features/auth/api";
-import { loginSchema, createLoginSchema } from "@/src/features/auth/schemas/login";
+import { createLoginSchema } from "@/src/features/auth/schemas/login";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { LoginFormData } from "@/src/features/auth/schemas/login";
 
-export function useLoginForm(messages?: { required: string }) {
+export function useLoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(true);
+  const schema = useValidation(createLoginSchema);
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(messages ? createLoginSchema(messages) : loginSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { emailOrUsername: "", password: "" },
   });
 

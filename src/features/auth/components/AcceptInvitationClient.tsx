@@ -19,7 +19,6 @@ interface Props {
 
 export function AcceptInvitationClient({ token }: Props) {
   const t = useTranslations("auth.invitation");
-  const tErr = useTranslations("auth.errors");
   const tNav = useTranslations("navigation");
   const locale = useLocale();
   const router = useRouter();
@@ -29,10 +28,7 @@ export function AcceptInvitationClient({ token }: Props) {
     token, t("invalid"), t("expired"), t("alreadyAccepted"),
   );
 
-  const { form, error, isPending, done, submit } = useAcceptInvitationForm(
-    token,
-    { required: tErr("required"), passwordMin: tErr("passwordMin") },
-  );
+  const { form, error, isPending, done, submit } = useAcceptInvitationForm(token);
 
   const switchLocale = () => {
     const newLocale = locale === "en" ? "ar" : "en";
@@ -212,11 +208,9 @@ export function AcceptInvitationClient({ token }: Props) {
               name="gender"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Select isRequired isInvalid={!!fieldState.error} variant="secondary" defaultSelectedKey="Male"
-                  selectedKey={field.value}
-                  onSelectionChange={(key) => {
-                    if (key) field.onChange(String(key));
-                  }}
+                <Select isRequired isInvalid={!!fieldState.error} variant="secondary" defaultValue="Male"
+                  value={field.value}
+                  onChange={(key) => { field.onChange(key as string); }}
                   placeholder={t("gender")} className="flex flex-col gap-1.5"
                 >
                   <Label>{t("gender")}</Label>

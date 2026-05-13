@@ -2,31 +2,29 @@
 
 import { authApi } from "@/src/features/auth/api";
 import { createForgotPasswordOtpSchemas } from "@/src/features/auth/schemas/forgotPasswordOtp";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type Step = "email" | "otp" | "password";
 
-export function useForgotPasswordOtp(
-  onSuccess: () => void,
-  messages?: { required: string; invalidEmail: string; otpLength: string; passwordMin: string },
-) {
+export function useForgotPasswordOtp(onSuccess: () => void) {
   const [step, setStep] = useState<Step>("email");
   const [resetToken, setResetToken] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const schemas = messages ? createForgotPasswordOtpSchemas(messages) : null;
+  const schemas = useValidation(createForgotPasswordOtpSchemas);
 
-  const fullSchema = z.object({
-    email: schemas?.email ?? z.string().email(),
-    otp: schemas?.otp ?? z.string().length(6),
-    newPassword: schemas?.newPassword ?? z.string().min(8),
-  });
+  const fullSchema = useMemo(() => z.object({
+    email: schemas.email,
+    otp: schemas.otp,
+    newPassword: schemas.newPassword,
+  }), [schemas]);
 
   const form = useForm({
-    resolver: zodResolver(fullSchema),
+    resolver: zodResolver(fullSchema) as any,
     defaultValues: { email: "", otp: "", newPassword: "" },
   });
 
@@ -80,13 +78,7 @@ export function useForgotPasswordOtp(
   }
 
   return {
-    step,
-    error,
-    form,
-    isPending: form.formState.isSubmitting,
-    submitEmail,
-    submitOtp,
-    submitPassword,
-    resendOtp,
+    step, error, form, isPending: form.formState.isSubmitting,
+    submitEmail, submitOtp, submitPassword, resendOtp,
   };
 }

@@ -3,12 +3,11 @@
 import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { useLoginForm } from "@/src/features/auth/hooks/useLoginForm";
-import { Alert, Button, Separator } from "@heroui/react";
+import { Alert, Button, Card, Separator } from "@heroui/react";
 import { HeartHandshake, ShieldCheck, Zap } from "lucide-react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
 
 const DEMO_USERS = [
@@ -20,57 +19,20 @@ const DEMO_USERS = [
 
 export function LoginForm() {
   const t = useTranslations("auth.login");
-  const tErr = useTranslations("auth.errors");
-  const { locale } = useParams<{ locale: string }>();
-  const { form, error, isPending, checking, googleOAuthUrl, fillDemo, submit } = useLoginForm({
-    required: tErr("required"),
-  });
+  const currentLocale = useLocale();
+  const router = useRouter();
+  const { form, error, isPending, checking, googleOAuthUrl, fillDemo, submit } = useLoginForm();
 
   if (checking) return null;
 
   const emailErr = form.formState.errors.emailOrUsername?.message;
   const passErr = form.formState.errors.password?.message;
 
-  const features = [
-    { icon: Zap,            text: t("feature1") },
-    { icon: ShieldCheck,    text: t("feature2") },
-    { icon: HeartHandshake, text: t("feature3") },
-  ];
-
   return (
-    <div className="flex min-h-screen w-full">
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
-        <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
-          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
-          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
-        </Link>
-        <div className="space-y-8">
-          <div className="space-y-3">
-            <h1 className="text-4xl font-bold leading-tight">{t("panelHeading")}</h1>
-            <p className="text-lg opacity-80">{t("panelSubtitle")}</p>
-          </div>
-          <div className="space-y-4">
-            {features.map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <span className="text-sm opacity-90">{text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
-      </div>
-
-      <div className="flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
-        <Link href={`/${locale}`} className="mb-8 flex items-center gap-2 no-underline lg:hidden">
-          <Image src="/logo.svg" alt="ClinicCare" width={32} height={32} />
-          <span className="text-xl font-bold">ClinicCare</span>
-        </Link>
-
-        <div className="w-full max-w-sm space-y-6">
-          <div>
+    <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
+      <Card className="w-full max-w-[26rem]">
+        <Card.Content className="p-6 space-y-6">
+          <div className="text-center">
             <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
             <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
@@ -98,7 +60,7 @@ export function LoginForm() {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">{t("password")}</span>
-                <Link href={`/${locale}/forgot-password`} className="text-xs text-accent hover:underline">
+                <Link href={`/${currentLocale}/forgot-password`} className="text-xs text-accent hover:underline">
                   {t("forgotPassword")}
                 </Link>
               </div>
@@ -106,8 +68,8 @@ export function LoginForm() {
                 name="password"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <PasswordInput label="" value={field.value} onChange={field.onChange}
-                    autoComplete="current-password" required error={fieldState.error?.message} />
+                <PasswordInput label="" value={field.value} onChange={field.onChange} variant="secondary"
+                  autoComplete="current-password" required error={fieldState.error?.message} />
                 )}
               />
             </div>
@@ -118,7 +80,7 @@ export function LoginForm() {
 
           <p className="text-center text-sm text-muted">
             {t("noAccount")}{" "}
-            <Link href={`/${locale}/register`} className="font-medium text-accent hover:underline">
+            <Link href={`/${currentLocale}/register`} className="font-medium text-accent hover:underline">
               {t("signUp")}
             </Link>
           </p>
@@ -134,8 +96,8 @@ export function LoginForm() {
             <GoogleIcon />
             {t("continueWithGoogle")}
           </a>
-        </div>
-      </div>
+        </Card.Content>
+      </Card>
     </div>
   );
 }

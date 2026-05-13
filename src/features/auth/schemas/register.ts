@@ -1,27 +1,16 @@
+import { createValidators } from "@/src/core/validators";
 import { z } from "zod";
 
-export const registerSchema = z.object({
-  fullName: z.string().min(1),
-  userName: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(8),
-  phoneNumber: z.string().min(1),
-  gender: z.string().min(1),
-});
-
-export type RegisterFormData = z.infer<typeof registerSchema>;
-
-export function createRegisterSchema(messages: {
-  required: string;
-  invalidEmail: string;
-  passwordMin: string;
-}) {
+export function createRegisterSchema(t: (key: string) => string) {
+  const v = createValidators(t);
   return z.object({
-    fullName: z.string().min(1, messages.required),
-    userName: z.string().min(1, messages.required),
-    email: z.string().min(1, messages.required).email(messages.invalidEmail),
-    password: z.string().min(8, messages.passwordMin),
-    phoneNumber: z.string().min(1, messages.required),
-    gender: z.string().min(1, messages.required),
+    fullName: v.name(),
+    userName: z.string().min(3, t("usernameMin")).max(50),
+    email: v.email(),
+    password: v.password(),
+    phoneNumber: v.phoneNumber(),
+    gender: z.string().min(1, t("required")),
   });
 }
+
+export type RegisterFormData = z.infer<ReturnType<typeof createRegisterSchema>>;

@@ -1,13 +1,11 @@
+import { createValidators } from "@/src/core/validators";
 import { z } from "zod";
 
-export const verifyEmailOtpSchema = z.object({
-  otp: z.string().length(6),
-});
-
-export type VerifyEmailOtpFormData = z.infer<typeof verifyEmailOtpSchema>;
-
-export function createVerifyEmailOtpSchema(messages: { otpLength: string }) {
+export function createVerifyEmailOtpSchema(t: (key: string) => string) {
+  const v = createValidators(t);
   return z.object({
-    otp: z.string().length(6, messages.otpLength),
+    otp: v.otp(),
   });
 }
+
+export type VerifyEmailOtpFormData = z.infer<ReturnType<typeof createVerifyEmailOtpSchema>>;

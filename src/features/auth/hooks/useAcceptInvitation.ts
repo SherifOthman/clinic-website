@@ -1,8 +1,9 @@
 "use client";
 
 import { DASHBOARD_URL } from "@/src/core/constants/env";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { invitationApi } from "@/src/features/auth/api";
-import { acceptInvitationSchema, createAcceptInvitationSchema } from "@/src/features/auth/schemas/acceptInvitation";
+import { createAcceptInvitationSchema } from "@/src/features/auth/schemas/acceptInvitation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,15 +43,13 @@ export function useInvitationDetail(
   return { invitation, error, isLoading: !error && !invitation };
 }
 
-export function useAcceptInvitationForm(
-  token: string,
-  messages?: { required: string; passwordMin: string },
-) {
+export function useAcceptInvitationForm(token: string) {
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const schema = useValidation(createAcceptInvitationSchema);
 
   const form = useForm<AcceptInvitationFormData>({
-    resolver: zodResolver(messages ? createAcceptInvitationSchema(messages) : acceptInvitationSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       fullName: "", userName: "", password: "", phoneNumber: "", gender: "Male",
     },
@@ -58,17 +57,13 @@ export function useAcceptInvitationForm(
 
   async function submit(data: AcceptInvitationFormData) {
     setError(null);
-    try {
-      const result = await invitationApi.accept(token, data);
-      if (result.ok) {
-        setDone(true);
-        setTimeout(() => { window.location.href = DASHBOARD_URL; }, 1500);
-      } else {
-        const firstError = result.errors ? Object.values(result.errors)[0]?.[0] : null;
-        setError(firstError ?? result.error);
-      }
-    } finally {
-      form.reset();
+    const result = await invitationApi.accept(token, data);
+    if (result.ok) {
+      setDone(true);
+      setTimeout(() => { window.location.href = DASHBOARD_URL; }, 1500);
+    } else {
+      const firstError = result.errors ? Object.values(result.errors)[0]?.[0] : null;
+      setError(firstError ?? result.error);
     }
   }
 

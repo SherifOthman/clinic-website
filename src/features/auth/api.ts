@@ -25,6 +25,12 @@ export const authApi = {
     apiFetch("POST", "/auth/resend-email-verification", data),
 
   logout: () => apiFetch("POST", "/auth/logout"),
+
+  checkEmail: (email: string) =>
+    apiFetch<{ isAvailable: boolean; message: string | null }>("GET", `/auth/check-email?email=${encodeURIComponent(email)}`),
+
+  checkUsername: (username: string) =>
+    apiFetch<{ isAvailable: boolean; message: string | null }>("GET", `/auth/check-username?username=${encodeURIComponent(username)}`),
 };
 
 export const invitationApi = {

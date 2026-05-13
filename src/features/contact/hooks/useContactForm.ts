@@ -1,21 +1,22 @@
 "use client";
 
 import { apiFetch } from "@/src/core/utils/api";
-import { contactSchema, createContactSchema } from "@/src/features/contact/schemas/contact";
+import { createContactSchema } from "@/src/features/contact/schemas/contact";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { ContactFormData } from "@/src/features/contact/schemas/contact";
+import { useTranslations } from "next-intl";
 
-export function useContactForm(
-  somethingWentWrong: string,
-  messages?: { required: string; invalidEmail: string },
-) {
+export function useContactForm() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations();
+  const schema = useValidation(createContactSchema);
 
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(messages ? createContactSchema(messages) : contactSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { firstName: "", lastName: "", email: "", subject: "", message: "" },
   });
 
@@ -24,7 +25,7 @@ export function useContactForm(
     try {
       const result = await apiFetch("POST", "/contact", data);
       if (result.ok) setSent(true);
-      else setError(result.error ?? somethingWentWrong);
+      else setError(result.error ?? t("common.somethingWentWrong"));
     } finally {
       form.reset();
     }

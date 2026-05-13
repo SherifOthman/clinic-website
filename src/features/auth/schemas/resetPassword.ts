@@ -1,13 +1,11 @@
+import { createValidators } from "@/src/core/validators";
 import { z } from "zod";
 
-export const resetPasswordSchema = z.object({
-  newPassword: z.string().min(8),
-});
-
-export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
-
-export function createResetPasswordSchema(messages: { passwordMin: string }) {
+export function createResetPasswordSchema(t: (key: string) => string) {
+  const v = createValidators(t);
   return z.object({
-    newPassword: z.string().min(8, messages.passwordMin),
+    newPassword: v.password(),
   });
 }
+
+export type ResetPasswordFormData = z.infer<ReturnType<typeof createResetPasswordSchema>>;

@@ -1,13 +1,10 @@
 "use client";
 
-import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useVerifyEmailOtp } from "@/src/features/auth/hooks/useVerifyEmailOtp";
-import { Alert, Button, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
-import { Globe } from "lucide-react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import { Alert, Button, Card, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 
@@ -17,15 +14,13 @@ interface Props {
 
 export function VerifyEmailOtpForm({ email }: Props) {
   const t = useTranslations("auth.verifyEmail");
-  const tErr = useTranslations("auth.errors");
-  const { locale } = useParams<{ locale: string }>();
+  const currentLocale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
 
   const { form, error, isPending, resending, submit, resend } =
     useVerifyEmailOtp(email, () => {
-      router.push(`/${locale}/login?verified=1`);
-    }, { otpLength: tErr("otpLength") });
+      router.push(`/${currentLocale}/login?verified=1`);
+    });
 
   const otpValue = form.watch("otp");
 
@@ -36,11 +31,6 @@ export function VerifyEmailOtpForm({ email }: Props) {
     }
   }, [otpValue, isPending]);
 
-  const switchLocale = () => {
-    const newLocale = locale === "en" ? "ar" : "en";
-    router.push(pathname.replace(`/${locale}/`, `/${newLocale}/`));
-  };
-
   const maskedEmail = email
     ? email.replace(/(.{2}).+(@.+)/, "$1***$2")
     : "your email";
@@ -48,37 +38,9 @@ export function VerifyEmailOtpForm({ email }: Props) {
   const otpErr = form.formState.errors.otp?.message;
 
   return (
-    <div className="flex min-h-screen w-full">
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
-        <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
-          <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
-          <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
-        </Link>
-        <div className="space-y-6">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 text-4xl">✉️</div>
-          <div className="space-y-3">
-            <h1 className="text-4xl font-bold leading-tight">{t("panelHeading")}</h1>
-            <p className="text-lg opacity-80">{t("panelSubtitle")}</p>
-          </div>
-          <ul className="space-y-2 text-sm opacity-80">
-            <li>• {t("hint1")}</li>
-            <li>• {t("hint2")}</li>
-            <li>• {t("hint3")}</li>
-          </ul>
-        </div>
-        <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
-      </div>
-
-      <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
-        <div className="absolute top-4 inset-x-4 flex items-center justify-between">
-          <Button variant="ghost" size="sm" onPress={switchLocale}>
-            <Globe className="me-1 h-4 w-4" />
-            {locale === "en" ? "العربية" : "English"}
-          </Button>
-          <ThemeSwitch />
-        </div>
-
-        <div className="w-full max-w-sm space-y-6">
+    <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
+      <Card className="w-full max-w-[26rem]">
+        <Card.Content className="p-6 space-y-6">
           <div className="text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-2xl">✉️</div>
             <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
@@ -151,12 +113,12 @@ export function VerifyEmailOtpForm({ email }: Props) {
           </p>
 
           <p className="text-center text-sm">
-            <Link href={`/${locale}/login`} className="text-accent hover:underline">
+            <Link href={`/${currentLocale}/login`} className="text-accent hover:underline">
               {t("backToLogin")}
             </Link>
           </p>
-        </div>
-      </div>
+        </Card.Content>
+      </Card>
     </div>
   );
 }

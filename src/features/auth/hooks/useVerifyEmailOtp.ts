@@ -1,18 +1,20 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
-import { verifyEmailOtpSchema, createVerifyEmailOtpSchema } from "@/src/features/auth/schemas/verifyEmailOtp";
+import { createVerifyEmailOtpSchema } from "@/src/features/auth/schemas/verifyEmailOtp";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { VerifyEmailOtpFormData } from "@/src/features/auth/schemas/verifyEmailOtp";
 
-export function useVerifyEmailOtp(email: string, onSuccess: () => void, messages?: { otpLength: string }) {
+export function useVerifyEmailOtp(email: string, onSuccess: () => void) {
   const [error, setError] = useState<string | null>(null);
   const [resending, setResending] = useState(false);
+  const schema = useValidation(createVerifyEmailOtpSchema);
 
   const form = useForm<VerifyEmailOtpFormData>({
-    resolver: zodResolver(messages ? createVerifyEmailOtpSchema(messages) : verifyEmailOtpSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { otp: "" },
   });
 

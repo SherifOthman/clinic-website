@@ -1,43 +1,67 @@
 "use client";
 
 import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
+import { useDebounce } from "@/src/core/hooks/useDebounce";
+import { useValidation } from "@/src/core/hooks/useValidation";
+import { useAvailabilityCheck } from "@/src/features/auth/hooks/useAvailabilityCheck";
 import { authApi } from "@/src/features/auth/api";
-import { registerSchema, createRegisterSchema } from "@/src/features/auth/schemas/register";
+import { createRegisterSchema } from "@/src/features/auth/schemas/register";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { RegisterFormData } from "@/src/features/auth/schemas/register";
+import { useTranslations } from "next-intl";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useRegisterForm(
   onSuccess: (locale: string) => void,
   locale: string,
-  messages?: { required: string; invalidEmail: string; passwordMin: string },
 ) {
   const [error, setError] = useState<string | null>(null);
+  const tErr = useTranslations("auth.errors");
+  const schema = useValidation(createRegisterSchema);
 
   const form = useForm<RegisterFormData>({
-    resolver: zodResolver(messages ? createRegisterSchema(messages) : registerSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       fullName: "", userName: "", email: "", password: "", phoneNumber: "", gender: "Male",
     },
   });
 
+  const debouncedEmail = useDebounce(form.watch("email"), 400);
+  const debouncedUserName = useDebounce(form.watch("userName"), 400);
+
+  const emailChecking = useAvailabilityCheck(
+    debouncedEmail,
+    authApi.checkEmail,
+    () => form.setError("email", { message: tErr("emailTaken") }),
+    { pattern: EMAIL_RE },
+  );
+
+  const usernameChecking = useAvailabilityCheck(
+    debouncedUserName,
+    authApi.checkUsername,
+    () => form.setError("userName", { message: tErr("usernameTaken") }),
+    { minLength: 2 },
+  );
+
   const googleOAuthUrl = `${API_URL}/auth/oauth/google?returnUrl=${encodeURIComponent(DASHBOARD_URL)}`;
 
   async function submit(data: RegisterFormData) {
     setError(null);
-    try {
-      const result = await authApi.register(data);
-      if (result.ok) {
-        onSuccess(locale);
-      } else {
-        const firstError = result.errors ? Object.values(result.errors)[0]?.[0] : null;
-        setError(firstError ?? result.error);
-      }
-    } finally {
+    const result = await authApi.register(data);
+    if (result.ok) {
       form.reset();
+      onSuccess(locale);
+    } else {
+      const firstError = result.errors ? Object.values(result.errors)[0]?.[0] : null;
+      setError(firstError ?? result.error);
     }
   }
 
-  return { form, error, isPending: form.formState.isSubmitting, googleOAuthUrl, submit };
+  return {
+    form, error, isPending: form.formState.isSubmitting,
+    googleOAuthUrl, submit, emailChecking, usernameChecking,
+  };
 }

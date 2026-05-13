@@ -1,13 +1,11 @@
+import { createValidators } from "@/src/core/validators";
 import { z } from "zod";
 
-export const forgotPasswordSchema = z.object({
-  email: z.string().min(1).email(),
-});
-
-export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
-
-export function createForgotPasswordSchema(messages: { required: string; invalidEmail: string }) {
+export function createForgotPasswordSchema(t: (key: string) => string) {
+  const v = createValidators(t);
   return z.object({
-    email: z.string().min(1, messages.required).email(messages.invalidEmail),
+    email: v.email(),
   });
 }
+
+export type ForgotPasswordFormData = z.infer<ReturnType<typeof createForgotPasswordSchema>>;

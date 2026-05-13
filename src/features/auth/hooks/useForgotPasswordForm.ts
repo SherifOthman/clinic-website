@@ -1,18 +1,20 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
-import { forgotPasswordSchema, createForgotPasswordSchema } from "@/src/features/auth/schemas/forgotPassword";
+import { createForgotPasswordSchema } from "@/src/features/auth/schemas/forgotPassword";
+import { useValidation } from "@/src/core/hooks/useValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { ForgotPasswordFormData } from "@/src/features/auth/schemas/forgotPassword";
 
-export function useForgotPasswordForm(messages?: { required: string; invalidEmail: string }) {
+export function useForgotPasswordForm() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const schema = useValidation(createForgotPasswordSchema);
 
   const form = useForm<ForgotPasswordFormData>({
-    resolver: zodResolver(messages ? createForgotPasswordSchema(messages) : forgotPasswordSchema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { email: "" },
   });
 

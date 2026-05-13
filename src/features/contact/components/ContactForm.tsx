@@ -8,11 +8,7 @@ import { useTranslations } from "next-intl";
 
 export function ContactForm() {
   const t = useTranslations();
-  const tErr = useTranslations("auth.errors");
-  const { form, sent, isPending, error, reset, submit } = useContactForm(
-    t("common.somethingWentWrong"),
-    { required: tErr("required"), invalidEmail: tErr("invalidEmail") },
-  );
+  const { form, sent, isPending, error, reset, submit } = useContactForm();
 
   const firstNameErr = form.formState.errors.firstName?.message;
   const lastNameErr = form.formState.errors.lastName?.message;

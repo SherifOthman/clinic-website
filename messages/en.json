@@ -142,8 +142,15 @@
       "required": "This field is required",
       "invalidEmail": "Invalid email address",
       "passwordMin": "Password must be at least 8 characters",
+      "passwordUppercase": "Must contain an uppercase letter",
+      "passwordLowercase": "Must contain a lowercase letter",
+      "passwordDigit": "Must contain a number",
+      "passwordSpecial": "Must contain a special character",
       "usernameMin": "Username must be at least 3 characters",
-      "otpLength": "Code must be exactly 6 digits"
+      "otpLength": "Code must be exactly 6 digits",
+      "emailTaken": "This email is already registered",
+      "usernameTaken": "This username is already taken",
+      "checking": "Checking..."
     }
   },
   "notFound": {

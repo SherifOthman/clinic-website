@@ -10,7 +10,6 @@ import { Controller } from "react-hook-form";
 
 export function ResetPasswordForm() {
   const t = useTranslations("auth.resetPassword");
-  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -22,7 +21,6 @@ export function ResetPasswordForm() {
     token,
     email,
     () => router.push(`/${locale}/login?reset=1`),
-    { passwordMin: tErr("passwordMin") },
   );
 
   if (!email || !token) {
