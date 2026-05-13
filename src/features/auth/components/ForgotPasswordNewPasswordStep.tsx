@@ -10,7 +10,7 @@ interface Props {
   error: string | null;
   isPending: boolean;
   submitPassword: () => void;
-  t: (key: string, values?: Record<string, unknown>) => string;
+  t: (key: string, values?: Record<string, string | number | Date>) => string;
   tErr: (key: string) => string;
 }
 

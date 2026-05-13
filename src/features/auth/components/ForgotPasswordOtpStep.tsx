@@ -15,7 +15,7 @@ interface Props {
   resendOtp: () => void;
   otpSentAt: number | null;
   maskedEmail: string;
-  t: (key: string, values?: Record<string, unknown>) => string;
+  t: (key: string, values?: Record<string, string | number | Date>) => string;
   tErr: (key: string) => string;
 }
 
