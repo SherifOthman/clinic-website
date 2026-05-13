@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Label, TextField } from "@heroui/react";
+import { FieldError as FieldErrorComponent, Input, Label, TextField } from "@heroui/react";
 import { parsePhoneNumber } from "libphonenumber-js/max";
 import { ChevronDown, Search } from "lucide-react";
 import { useLocale } from "next-intl";
@@ -9,10 +9,12 @@ import { defaultCountries, FlagImage, parseCountry } from "react-international-p
 
 interface PhoneInputProps {
   label: string;
-  value: string;           // E.164 e.g. "+201098021259"
+  value: string;
   onChange: (value: string) => void;
   required?: boolean;
   searchPlaceholder?: string;
+  isInvalid?: boolean;
+  errorMessage?: string;
 }
 
 function parseE164(e164: string) {
@@ -29,7 +31,7 @@ function parseE164(e164: string) {
   return { iso2: "eg", dialCode: "20", local: "" };
 }
 
-export function PhoneInput({ label, value, onChange, required, searchPlaceholder = "Search..." }: PhoneInputProps) {
+export function PhoneInput({ label, value, onChange, required, searchPlaceholder = "Search...", isInvalid, errorMessage }: PhoneInputProps) {
   const locale = useLocale();
   const isAr = locale === "ar";
 
@@ -41,7 +43,6 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
   const [open, setOpen]           = useState(false);
   const [search, setSearch]       = useState("");
 
-  // Sync inward when value changes externally (form reset)
   if (value !== undefined && value !== lastEmitted.current) {
     const s = parseE164(value);
     if (s.iso2 !== iso2 || s.local !== localNumber) {
@@ -81,10 +82,9 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
   };
 
   return (
-    <TextField isRequired={required} className="flex flex-col gap-1.5">
+    <TextField isRequired={required} isInvalid={isInvalid} className="flex flex-col gap-1.5">
       <Label>{label}</Label>
       <div className="flex gap-2">
-        {/* Country selector */}
         <div className="relative">
           <button
             type="button"
@@ -99,7 +99,6 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
 
           {open && (
             <div className="absolute start-0 top-full z-50 mt-1 w-64 rounded-xl border border-border bg-overlay shadow-overlay">
-              {/* Search */}
               <div className="border-b border-border p-2">
                 <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-1.5">
                   <Search className="h-3.5 w-3.5 shrink-0 text-muted" />
@@ -112,7 +111,6 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
                   />
                 </div>
               </div>
-              {/* List */}
               <ul className="max-h-52 overflow-y-auto py-1">
                 {filtered.map((c) => (
                   <li key={c.iso2}>
@@ -135,7 +133,6 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
           )}
         </div>
 
-        {/* Local number */}
         <Input
           type="tel"
           inputMode="numeric"
@@ -150,6 +147,7 @@ export function PhoneInput({ label, value, onChange, required, searchPlaceholder
           dir="ltr"
         />
       </div>
+      {errorMessage && <FieldErrorComponent>{errorMessage}</FieldErrorComponent>}
     </TextField>
   );
 }

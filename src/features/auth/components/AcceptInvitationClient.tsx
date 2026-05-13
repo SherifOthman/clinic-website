@@ -1,41 +1,38 @@
 "use client";
 
+import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { PhoneInput } from "@/src/core/components/ui/PhoneInput";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
-import { useAcceptInvitation } from "@/src/features/auth/hooks/useAcceptInvitation";
-import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
+import { useAcceptInvitationForm, useInvitationDetail } from "@/src/features/auth/hooks/useAcceptInvitation";
+import { Alert, Button, FieldError, Label, ListBox, Select, Separator } from "@heroui/react";
 import { Building2, CheckCircle, Globe, Stethoscope, UserCog, XCircle } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 interface Props {
   token: string;
 }
 
-/**
- * Client component for the accept-invitation flow.
- * Extracted from the page so the page can be a server component
- * that wraps this in <Suspense> — required for cacheComponents.
- */
 export function AcceptInvitationClient({ token }: Props) {
   const t = useTranslations("auth.invitation");
+  const tErr = useTranslations("auth.errors");
   const tNav = useTranslations("navigation");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const { invitation, loadError, form, error, loading, done, setField, setPhone, submit } =
-    useAcceptInvitation(token, t("invalid"), t("expired"), t("alreadyAccepted"));
+  const { invitation, error: loadError, isLoading } = useInvitationDetail(
+    token, t("invalid"), t("expired"), t("alreadyAccepted"),
+  );
 
-  const handleGenderChange = (value: React.Key | null) => {
-    if (value) {
-      const e = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
-      setField("gender")(e);
-    }
-  };
+  const { form, error, isPending, done, submit } = useAcceptInvitationForm(
+    token,
+    { required: tErr("required"), passwordMin: tErr("passwordMin") },
+  );
 
   const switchLocale = () => {
     const newLocale = locale === "en" ? "ar" : "en";
@@ -69,7 +66,7 @@ export function AcceptInvitationClient({ token }: Props) {
     );
   }
 
-  if (!invitation) {
+  if (isLoading) {
     return (
       <div className="relative flex min-h-screen items-center justify-center bg-background">
         <TopBar />
@@ -92,9 +89,14 @@ export function AcceptInvitationClient({ token }: Props) {
     );
   }
 
+  const fullNameErr = form.formState.errors.fullName?.message;
+  const userNameErr = form.formState.errors.userName?.message;
+  const phoneErr = form.formState.errors.phoneNumber?.message;
+  const passwordErr = form.formState.errors.password?.message;
+  const genderErr = form.formState.errors.gender?.message;
+
   return (
     <div className="flex min-h-screen w-full">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
         <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
           <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
@@ -105,7 +107,7 @@ export function AcceptInvitationClient({ token }: Props) {
           <div className="space-y-3">
             <h1 className="text-4xl font-bold leading-tight">{t("title")}</h1>
             <p className="text-lg opacity-80">
-              {t("subtitle")} <span className="font-bold opacity-100">{invitation.clinicName}</span>
+              {t("subtitle")} <span className="font-bold opacity-100">{invitation!.clinicName}</span>
             </p>
           </div>
 
@@ -116,7 +118,7 @@ export function AcceptInvitationClient({ token }: Props) {
               </div>
               <div>
                 <p className="text-xs opacity-70">{t("clinic")}</p>
-                <p className="font-semibold">{invitation.clinicName}</p>
+                <p className="font-semibold">{invitation!.clinicName}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -125,17 +127,17 @@ export function AcceptInvitationClient({ token }: Props) {
               </div>
               <div>
                 <p className="text-xs opacity-70">{t("role")}</p>
-                <p className="font-semibold">{invitation.role}</p>
+                <p className="font-semibold">{invitation!.role}</p>
               </div>
             </div>
-            {invitation.specializationName && (
+            {invitation!.specializationName && (
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/20">
                   <Stethoscope className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-xs opacity-70">{t("specialization")}</p>
-                  <p className="font-semibold">{invitation.specializationName}</p>
+                  <p className="font-semibold">{invitation!.specializationName}</p>
                 </div>
               </div>
             )}
@@ -145,7 +147,6 @@ export function AcceptInvitationClient({ token }: Props) {
         <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
       </div>
 
-      {/* Right panel */}
       <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
         <div className="absolute top-4 end-4 flex items-center gap-2">
           <Button variant="ghost" size="sm" onPress={switchLocale}>
@@ -166,7 +167,7 @@ export function AcceptInvitationClient({ token }: Props) {
             <p className="mt-1 text-sm text-muted">{t("formSubtitle")}</p>
           </div>
 
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={form.handleSubmit(submit)} noValidate className="space-y-4">
             {error && (
               <Alert status="danger">
                 <Alert.Indicator />
@@ -175,50 +176,69 @@ export function AcceptInvitationClient({ token }: Props) {
             )}
 
             <div className="grid grid-cols-2 gap-3">
-              <TextField isRequired className="flex flex-col gap-1.5">
-                <Label>{t("fullName")}</Label>
-                <Input type="text" autoComplete="name" value={form.fullName}
-                  onChange={setField("fullName")} variant="secondary" className="w-full" />
-              </TextField>
-              <TextField isRequired className="flex flex-col gap-1.5">
-                <Label>{t("username")}</Label>
-                <Input type="text" autoComplete="username" value={form.userName}
-                  onChange={setField("userName")} variant="secondary" className="w-full" />
-              </TextField>
+              <FormField label={t("fullName")} error={fullNameErr} autoComplete="name"
+                {...form.register("fullName")} />
+              <FormField label={t("username")} error={userNameErr} autoComplete="username"
+                {...form.register("userName")} />
             </div>
 
-            <PhoneInput
-              label={t("phone")}
-              value={form.phoneNumber}
-              onChange={setPhone}
-              required
-              searchPlaceholder={t("searchCountry")}
+            <Controller
+              name="phoneNumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PhoneInput
+                  label={t("phone")}
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  required
+                  searchPlaceholder={t("searchCountry")}
+                  isInvalid={!!fieldState.error}
+                  errorMessage={fieldState.error?.message}
+                />
+              )}
             />
 
-            <PasswordInput
-              label={t("password")}
-              value={form.password}
-              onChange={setField("password")}
-              autoComplete="new-password"
-              required
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordInput
+                  label={t("password")}
+                  value={field.value}
+                  onChange={field.onChange}
+                  autoComplete="new-password"
+                  required
+                  error={fieldState.error?.message}
+                />
+              )}
             />
 
-            <Select isRequired variant="secondary" defaultValue="Male"
-              value={form.gender} onChange={handleGenderChange}
-              placeholder={t("gender")} className="flex flex-col gap-1.5"
-            >
-              <Label>{t("gender")}</Label>
-              <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
-              <Select.Popover>
-                <ListBox>
-                  <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
-                  <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
-                </ListBox>
-              </Select.Popover>
-            </Select>
+            <Controller
+              name="gender"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Select isRequired isInvalid={!!fieldState.error} variant="secondary" defaultSelectedKey="Male"
+                  selectedKey={field.value}
+                  onSelectionChange={(key) => {
+                    if (key) field.onChange(String(key));
+                  }}
+                  placeholder={t("gender")} className="flex flex-col gap-1.5"
+                >
+                  <Label>{t("gender")}</Label>
+                  <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
+                  <Select.Popover>
+                    <ListBox>
+                      <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
+                      <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
+                    </ListBox>
+                  </Select.Popover>
+                  <FieldError>{genderErr}</FieldError>
+                </Select>
+              )}
+            />
 
-            <Button type="submit" variant="primary" fullWidth isPending={loading}>
-              {({ isPending }) => isPending ? t("submitting") : t("submit")}
+            <Button type="submit" variant="primary" fullWidth isPending={isPending}>
+              {({ isPending: ip }) => ip ? t("submitting") : t("submit")}
             </Button>
           </form>
 

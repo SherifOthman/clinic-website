@@ -9,13 +9,13 @@ const AUTH_SEGMENTS = [
 ];
 
 interface NavbarWrapperProps {
-  locale: string;
   navbar: ReactNode;
   footer: ReactNode;
   children: ReactNode;
+  locale: string;
 }
 
-export function NavbarWrapper({ locale, navbar, footer, children }: NavbarWrapperProps) {
+export function NavbarWrapper({ navbar, footer, children, locale }: NavbarWrapperProps) {
   const pathname = usePathname();
 
   const isAuthPage = AUTH_SEGMENTS.some((seg) =>

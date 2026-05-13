@@ -1,11 +1,7 @@
 import { HeroContent } from "./HeroContent";
 import { HeroImage } from "./HeroImage";
 
-interface Props {
-  locale: string;
-}
-
-export function HeroSection({ locale }: Props) {
+export function HeroSection({ locale }: { locale: string }) {
   return (
     <section className="relative">
       <div className="max-w-7xl mx-auto px-6 py-20 lg:py-32">

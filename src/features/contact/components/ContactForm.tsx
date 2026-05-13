@@ -1,19 +1,24 @@
 "use client";
 
+import { FormField } from "@/src/core/components/ui/FormField";
 import { useContactForm } from "@/src/features/contact/hooks/useContactForm";
-import { Alert, Button, Card, Input, Label, TextArea, TextField } from "@heroui/react";
+import { Alert, Button, Card, FieldError, Label, TextArea, TextField } from "@heroui/react";
 import { CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-/**
- * Contact form card — handles its own state via useContactForm.
- * Extracted from ContactPage so the page only composes layout.
- */
 export function ContactForm() {
   const t = useTranslations();
-  const { form, loading, sent, error, setField, reset, submit } = useContactForm(
+  const tErr = useTranslations("auth.errors");
+  const { form, sent, isPending, error, reset, submit } = useContactForm(
     t("common.somethingWentWrong"),
+    { required: tErr("required"), invalidEmail: tErr("invalidEmail") },
   );
+
+  const firstNameErr = form.formState.errors.firstName?.message;
+  const lastNameErr = form.formState.errors.lastName?.message;
+  const emailErr = form.formState.errors.email?.message;
+  const subjectErr = form.formState.errors.subject?.message;
+  const messageErr = form.formState.errors.message?.message;
 
   return (
     <Card>
@@ -21,7 +26,7 @@ export function ContactForm() {
         {sent ? (
           <ContactSuccess onReset={reset} />
         ) : (
-          <form onSubmit={submit} className="space-y-5">
+          <form onSubmit={form.handleSubmit(submit)} noValidate className="space-y-5">
             {error && (
               <Alert status="danger">
                 <Alert.Indicator />
@@ -34,88 +39,61 @@ export function ContactForm() {
             <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 label={t("contact.form.firstName")}
-                value={form.firstName}
-                onChange={setField("firstName")}
                 placeholder={t("contact.form.firstNamePlaceholder")}
                 required
+                error={firstNameErr}
+                {...form.register("firstName")}
               />
               <FormField
                 label={t("contact.form.lastName")}
-                value={form.lastName}
-                onChange={setField("lastName")}
                 placeholder={t("contact.form.lastNamePlaceholder")}
                 required
+                error={lastNameErr}
+                {...form.register("lastName")}
               />
             </div>
 
             <FormField
               label={t("contact.form.email")}
               type="email"
-              value={form.email}
-              onChange={setField("email")}
               placeholder={t("contact.form.emailPlaceholder")}
               required
+              error={emailErr}
+              {...form.register("email")}
             />
             <FormField
               label={t("contact.form.subject")}
-              value={form.subject}
-              onChange={setField("subject")}
               placeholder={t("contact.form.subjectPlaceholder")}
               required
+              error={subjectErr}
+              {...form.register("subject")}
             />
 
-            <TextField isRequired className="flex flex-col gap-1">
+            <TextField isRequired isInvalid={!!messageErr} className="flex flex-col gap-1">
               <Label>{t("contact.form.message")}</Label>
               <TextArea
-                value={form.message}
-                onChange={setField("message") as React.ChangeEventHandler<HTMLTextAreaElement>}
                 placeholder={t("contact.form.messagePlaceholder")}
                 required
                 rows={4}
                 variant="secondary"
                 className="w-full resize-none"
+                {...form.register("message")}
               />
+              <FieldError>{messageErr}</FieldError>
             </TextField>
 
             <Button
               type="submit"
               variant="primary"
               fullWidth
-              isPending={loading}
+              isPending={isPending}
             >
-              {({ isPending }) => isPending ? "Sending..." : t("contact.form.submit")}
+              {({ isPending: ip }) => ip ? "Sending..." : t("contact.form.submit")}
             </Button>
           </form>
         )}
       </Card.Content>
     </Card>
-  );
-}
-
-// ── Local sub-components ──────────────────────────────────────────────────────
-
-interface FormFieldProps {
-  label: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: string;
-  required?: boolean;
-}
-
-function FormField({ label, value, onChange, placeholder, type = "text", required }: FormFieldProps) {
-  return (
-    <TextField isRequired={required} className="flex flex-col gap-1">
-      <Label>{label}</Label>
-      <Input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        variant="secondary"
-        className="w-full"
-      />
-    </TextField>
   );
 }
 

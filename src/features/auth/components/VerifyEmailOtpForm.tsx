@@ -2,37 +2,39 @@
 
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useVerifyEmailOtp } from "@/src/features/auth/hooks/useVerifyEmailOtp";
-import { Alert, Button, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
+import { Alert, Button, FieldError, InputOTP, REGEXP_ONLY_DIGITS } from "@heroui/react";
 import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Controller } from "react-hook-form";
 
 interface Props {
   email: string;
 }
 
-/**
- * Email OTP verification screen shown after registration.
- * Split-panel layout matching other auth pages.
- * Uses HeroUI InputOTP — 6 digit slots split 3|3.
- */
 export function VerifyEmailOtpForm({ email }: Props) {
   const t = useTranslations("auth.verifyEmail");
+  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
   const router = useRouter();
   const pathname = usePathname();
 
-  const { otp, setOtp, error, loading, resending, submit, resend } =
+  const { form, error, isPending, resending, submit, resend } =
     useVerifyEmailOtp(email, () => {
       router.push(`/${locale}/login?verified=1`);
-    });
+    }, { otpLength: tErr("otpLength") });
 
-  function handleChange(value: string) {
-    setOtp(value);
-    if (value.length === 6) setTimeout(() => submit(), 50);
-  }
+  const otpValue = form.watch("otp");
+
+  useEffect(() => {
+    if (otpValue.length === 6 && !isPending) {
+      const t = setTimeout(() => form.handleSubmit(submit)(), 50);
+      return () => clearTimeout(t);
+    }
+  }, [otpValue, isPending]);
 
   const switchLocale = () => {
     const newLocale = locale === "en" ? "ar" : "en";
@@ -43,18 +45,17 @@ export function VerifyEmailOtpForm({ email }: Props) {
     ? email.replace(/(.{2}).+(@.+)/, "$1***$2")
     : "your email";
 
+  const otpErr = form.formState.errors.otp?.message;
+
   return (
     <div className="flex min-h-screen w-full">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
         <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
           <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
           <span className="text-2xl font-bold text-accent-foreground">ClinicCare</span>
         </Link>
         <div className="space-y-6">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 text-4xl">
-            ✉️
-          </div>
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 text-4xl">✉️</div>
           <div className="space-y-3">
             <h1 className="text-4xl font-bold leading-tight">{t("panelHeading")}</h1>
             <p className="text-lg opacity-80">{t("panelSubtitle")}</p>
@@ -68,9 +69,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
         <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
       </div>
 
-      {/* Right panel */}
       <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
-        {/* Top bar */}
         <div className="absolute top-4 end-4 flex items-center gap-2">
           <Button variant="ghost" size="sm" onPress={switchLocale}>
             <Globe className="me-1 h-4 w-4" />
@@ -86,9 +85,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
 
         <div className="w-full max-w-sm space-y-6">
           <div className="text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-2xl">
-              ✉️
-            </div>
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-2xl">✉️</div>
             <h2 className="text-2xl font-bold text-foreground">{t("title")}</h2>
             <p className="mt-1 text-sm text-muted">
               {t("subtitle")}{" "}
@@ -103,36 +100,46 @@ export function VerifyEmailOtpForm({ email }: Props) {
             </Alert>
           )}
 
-          <form onSubmit={submit} className="flex flex-col items-center gap-6">
-            <InputOTP
-              maxLength={6}
-              value={otp}
-              onChange={handleChange}
-              pattern={REGEXP_ONLY_DIGITS}
-              isDisabled={loading}
-              autoFocus
-            >
-              <InputOTP.Group>
-                <InputOTP.Slot index={0} />
-                <InputOTP.Slot index={1} />
-                <InputOTP.Slot index={2} />
-              </InputOTP.Group>
-              <InputOTP.Separator />
-              <InputOTP.Group>
-                <InputOTP.Slot index={3} />
-                <InputOTP.Slot index={4} />
-                <InputOTP.Slot index={5} />
-              </InputOTP.Group>
-            </InputOTP>
+          <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col items-center gap-6">
+            <Controller
+              name="otp"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col items-center gap-2">
+                  <InputOTP
+                    maxLength={6}
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    pattern={REGEXP_ONLY_DIGITS}
+                    isDisabled={isPending}
+                    autoFocus
+                    isInvalid={!!fieldState.error}
+                  >
+                    <InputOTP.Group>
+                      <InputOTP.Slot index={0} />
+                      <InputOTP.Slot index={1} />
+                      <InputOTP.Slot index={2} />
+                    </InputOTP.Group>
+                    <InputOTP.Separator />
+                    <InputOTP.Group>
+                      <InputOTP.Slot index={3} />
+                      <InputOTP.Slot index={4} />
+                      <InputOTP.Slot index={5} />
+                    </InputOTP.Group>
+                  </InputOTP>
+                  <FieldError>{otpErr}</FieldError>
+                </div>
+              )}
+            />
 
             <Button
               type="submit"
               variant="primary"
               fullWidth
-              isDisabled={otp.length !== 6}
-              isPending={loading}
+              isDisabled={otpValue.length !== 6}
+              isPending={isPending}
             >
-              {({ isPending }) => isPending ? t("verifying") : t("verify")}
+              {({ isPending: ip }) => ip ? t("verifying") : t("verify")}
             </Button>
           </form>
 

@@ -1,45 +1,52 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
+import { createForgotPasswordOtpSchemas } from "@/src/features/auth/schemas/forgotPasswordOtp";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 type Step = "email" | "otp" | "password";
 
-/**
- * Three-step OTP-based password reset:
- *   1. email  — user enters their email, we send an OTP
- *   2. otp    — user enters the 6-digit code, we get back an Identity reset token
- *   3. password — user sets a new password using the reset token
- */
-export function useForgotPasswordOtp(onSuccess: () => void) {
-  const [step, setStep]           = useState<Step>("email");
-  const [email, setEmail]         = useState("");
-  const [otp, setOtp]             = useState("");
+export function useForgotPasswordOtp(
+  onSuccess: () => void,
+  messages?: { required: string; invalidEmail: string; otpLength: string; passwordMin: string },
+) {
+  const [step, setStep] = useState<Step>("email");
   const [resetToken, setResetToken] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [error, setError]         = useState<string | null>(null);
-  const [loading, setLoading]     = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Step 1: send OTP
-  async function submitEmail(e: React.FormEvent) {
-    e.preventDefault();
+  const schemas = messages ? createForgotPasswordOtpSchemas(messages) : null;
+
+  const fullSchema = z.object({
+    email: schemas?.email ?? z.string().email(),
+    otp: schemas?.otp ?? z.string().length(6),
+    newPassword: schemas?.newPassword ?? z.string().min(8),
+  });
+
+  const form = useForm({
+    resolver: zodResolver(fullSchema),
+    defaultValues: { email: "", otp: "", newPassword: "" },
+  });
+
+  async function submitEmail() {
+    const valid = await form.trigger("email");
+    if (!valid) return;
+    const email = form.getValues("email");
     setError(null);
-    setLoading(true);
     try {
       const result = await authApi.forgotPassword({ email });
       if (result.ok) setStep("otp");
       else setError(result.error);
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
   }
 
-  // Step 2: verify OTP → get reset token
-  async function submitOtp(e?: React.FormEvent) {
-    e?.preventDefault();
-    if (otp.length !== 6) return;
+  async function submitOtp() {
+    const valid = await form.trigger("otp");
+    if (!valid) return;
+    const { email, otp } = form.getValues();
     setError(null);
-    setLoading(true);
     try {
       const result = await authApi.verifyResetOtp({ email, otp });
       if (result.ok) {
@@ -48,39 +55,38 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
       } else {
         setError(result.error);
       }
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
   }
 
-  // Step 3: set new password
-  async function submitPassword(e: React.FormEvent) {
-    e.preventDefault();
+  async function submitPassword() {
+    const valid = await form.trigger("newPassword");
+    if (!valid) return;
+    const { email, newPassword } = form.getValues();
     setError(null);
-    setLoading(true);
     try {
       const result = await authApi.resetPassword({ email, token: resetToken, newPassword });
       if (result.ok) onSuccess();
       else setError(result.error);
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
   }
 
   async function resendOtp() {
+    const email = form.getValues("email");
     setError(null);
-    setLoading(true);
     try {
       await authApi.forgotPassword({ email });
-      setOtp("");
-    } finally {
-      setLoading(false);
-    }
+      form.setValue("otp", "");
+    } catch {}
   }
 
   return {
-    step, email, setEmail, otp, setOtp, newPassword, setNewPassword,
-    error, loading,
-    submitEmail, submitOtp, submitPassword, resendOtp,
+    step,
+    error,
+    form,
+    isPending: form.formState.isSubmitting,
+    submitEmail,
+    submitOtp,
+    submitPassword,
+    resendOtp,
   };
 }

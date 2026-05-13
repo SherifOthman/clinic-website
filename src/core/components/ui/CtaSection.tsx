@@ -4,23 +4,23 @@ import { getTranslations } from "next-intl/server";
 import { cacheLife } from "next/cache";
 
 interface CtaSectionProps {
-  locale: string;
   titleKey: string;
   subtitleKey: string;
   primaryHref?: string;
   secondaryHref?: string;
   primaryLabelKey?: string;
   secondaryLabelKey?: string;
+  locale: string;
 }
 
 export async function CtaSection({
-  locale,
   titleKey,
   subtitleKey,
   primaryHref,
   secondaryHref,
   primaryLabelKey = "hero.cta",
   secondaryLabelKey = "navigation.contact",
+  locale,
 }: CtaSectionProps) {
   "use cache";
   cacheLife("max");

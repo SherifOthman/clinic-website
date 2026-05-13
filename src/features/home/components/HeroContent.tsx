@@ -2,14 +2,14 @@ import { CtaButton } from "@/src/core/components/ui/CtaButton";
 import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
-interface Props {
-  locale: string;
-}
-
 /**
  * 'use cache' — pure translation output, cached per locale.
  * Locale passed as prop so getTranslations doesn't read from headers().
  */
+interface Props {
+  locale: string;
+}
+
 export async function HeroContent({ locale }: Props) {
   "use cache";
   cacheLife("max");

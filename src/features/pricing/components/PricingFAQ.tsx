@@ -4,14 +4,14 @@ import { cacheLife } from "next/cache";
 import { ChevronDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-interface Props {
-  locale: string;
-}
-
 /**
  * 'use cache' — pure translation output, cached per locale.
  * Locale passed as prop so getTranslations doesn't read from headers().
  */
+interface Props {
+  locale: string;
+}
+
 export async function PricingFAQ({ locale }: Props) {
   "use cache";
   cacheLife("max");

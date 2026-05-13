@@ -32,8 +32,9 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as any)) notFound();
   setRequestLocale(locale);
+  if (!routing.locales.includes(locale as any)) notFound();
+
   const messages = await getMessages();
   const isRTL = locale === "ar";
 
@@ -61,9 +62,9 @@ export default async function LocaleLayout({
             <Suspense fallback={<main className="min-h-screen">{children}</main>}>
               <RouterProviders>
                 <NavbarWrapper
-                  locale={locale}
                   navbar={<Navbar />}
                   footer={<Footer locale={locale} />}
+                  locale={locale}
                 >
                   {children}
                 </NavbarWrapper>

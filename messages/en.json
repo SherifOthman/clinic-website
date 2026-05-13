@@ -142,7 +142,8 @@
       "required": "This field is required",
       "invalidEmail": "Invalid email address",
       "passwordMin": "Password must be at least 8 characters",
-      "usernameMin": "Username must be at least 3 characters"
+      "usernameMin": "Username must be at least 3 characters",
+      "otpLength": "Code must be exactly 6 digits"
     }
   },
   "notFound": {

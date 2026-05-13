@@ -1,53 +1,39 @@
 "use client";
 
 import { apiFetch } from "@/src/core/utils/api";
+import { contactSchema, createContactSchema } from "@/src/features/contact/schemas/contact";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { ContactFormData } from "@/src/features/contact/schemas/contact";
 
-export interface ContactForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+export function useContactForm(
+  somethingWentWrong: string,
+  messages?: { required: string; invalidEmail: string },
+) {
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-const EMPTY_FORM: ContactForm = {
-  firstName: "", lastName: "", email: "",
-  subject: "", message: "",
-};
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(messages ? createContactSchema(messages) : contactSchema),
+    defaultValues: { firstName: "", lastName: "", email: "", subject: "", message: "" },
+  });
 
-/**
- * Encapsulates all state and logic for the contact form.
- * ContactPage only renders — no fetch or state there.
- */
-export function useContactForm(somethingWentWrong: string) {
-  const [form, setForm]       = useState<ContactForm>(EMPTY_FORM);
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent]       = useState(false);
-  const [error, setError]     = useState<string | null>(null);
-
-  function setField(field: keyof ContactForm) {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setForm((f) => ({ ...f, [field]: e.target.value }));
+  async function submit(data: ContactFormData) {
+    setError(null);
+    try {
+      const result = await apiFetch("POST", "/contact", data);
+      if (result.ok) setSent(true);
+      else setError(result.error ?? somethingWentWrong);
+    } finally {
+      form.reset();
+    }
   }
 
   function reset() {
     setSent(false);
-    setForm(EMPTY_FORM);
+    form.reset();
   }
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      const result = await apiFetch("POST", "/contact", form);
-      if (result.ok) setSent(true);
-      else setError(result.error ?? somethingWentWrong);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return { form, loading, sent, error, setField, reset, submit };
+  return { form, sent, isPending: form.formState.isSubmitting, error, reset, submit };
 }

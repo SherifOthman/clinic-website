@@ -4,15 +4,11 @@ import { getTranslations } from "next-intl/server";
 import { PlanCard } from "./PlanCard";
 
 interface PricingPlansProps {
-  locale: string;
   plans: SubscriptionPlan[];
+  locale: string;
 }
 
-/**
- * 'use cache' — plan features are translated and cached per locale.
- * Locale passed as prop so getTranslations doesn't read from headers().
- */
-export async function PricingPlans({ locale, plans }: PricingPlansProps) {
+export async function PricingPlans({ plans, locale }: PricingPlansProps) {
   "use cache";
   cacheLife("daily");
 
@@ -54,9 +50,9 @@ export async function PricingPlans({ locale, plans }: PricingPlansProps) {
             <PlanCard
               key={plan.id}
               plan={plan}
+              features={getFeatures(plan)}
               locale={locale}
               isAr={isAr}
-              features={getFeatures(plan)}
             />
           ))}
         </div>

@@ -3,12 +3,12 @@ import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
 interface PageHeroProps {
-  locale: string;
   titleKey: string;
   subtitleKey: string;
+  locale: string;
 }
 
-export async function PageHero({ locale, titleKey, subtitleKey }: PageHeroProps) {
+export async function PageHero({ titleKey, subtitleKey, locale }: PageHeroProps) {
   "use cache";
   cacheLife("max");
 

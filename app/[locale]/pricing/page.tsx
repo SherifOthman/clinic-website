@@ -1,9 +1,9 @@
 import { routing } from "@/i18n/routing";
+import { setRequestLocale } from "next-intl/server";
 import { CtaSection } from "@/src/core/components/ui/CtaSection";
 import { PageHero } from "@/src/core/components/ui/PageHero";
 import { PricingFAQ, PricingPlans } from "@/src/features/pricing/components";
 import { getSubscriptionPlans } from "@/src/core/utils/serverApi";
-import { setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

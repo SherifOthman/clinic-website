@@ -1,4 +1,5 @@
 import { routing } from "@/i18n/routing";
+import { setRequestLocale } from "next-intl/server";
 import { CtaSection } from "@/src/core/components/ui/CtaSection";
 import {
   AboutSection,
@@ -8,7 +9,6 @@ import {
   StatsSectionSkeleton,
   TestimonialsSection,
 } from "@/src/features/home/components";
-import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
 export function generateStaticParams() {

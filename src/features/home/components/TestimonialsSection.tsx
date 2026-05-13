@@ -4,10 +4,6 @@ import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { TestimonialCard } from "./TestimonialCard";
 
-interface Props {
-  locale: string;
-}
-
 /**
  * 'use cache' — testimonials fetched from API, cached per locale.
  *
@@ -17,6 +13,10 @@ interface Props {
  *
  * Pattern from: https://aurorascharff.no/posts/implementing-nextjs-16-use-cache-with-next-intl-internationalization/
  */
+interface Props {
+  locale: string;
+}
+
 export async function TestimonialsSection({ locale }: Props) {
   "use cache";
   cacheLife("daily");

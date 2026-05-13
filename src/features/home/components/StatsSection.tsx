@@ -4,10 +4,6 @@ import { Award, HeartPulse, UserCheck, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { StatItem } from "./StatItem";
 
-interface Props {
-  locale: string;
-}
-
 function fmt(n: number): string {
   if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k+`;
   if (n > 0) return `${n}+`;
@@ -21,6 +17,10 @@ function fmt(n: number): string {
  * this component's output from being cached. The parent Suspense boundary
  * catches the error and renders the fallback instead.
  */
+interface Props {
+  locale: string;
+}
+
 export async function StatsSection({ locale }: Props) {
   "use cache";
   cacheLife("daily");

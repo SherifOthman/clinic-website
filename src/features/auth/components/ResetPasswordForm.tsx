@@ -6,9 +6,11 @@ import { Alert, Button, Input, Label, TextField } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 export function ResetPasswordForm() {
   const t = useTranslations("auth.resetPassword");
+  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -16,10 +18,11 @@ export function ResetPasswordForm() {
   const email = searchParams.get("email");
   const token = searchParams.get("token");
 
-  const { newPassword, setNewPassword, error, loading, submit } = useResetPasswordForm(
+  const { form, error, isPending, submit } = useResetPasswordForm(
     token,
     email,
     () => router.push(`/${locale}/login?reset=1`),
+    { passwordMin: tErr("passwordMin") },
   );
 
   if (!email || !token) {
@@ -33,13 +36,15 @@ export function ResetPasswordForm() {
     );
   }
 
+  const newPasswordErr = form.formState.errors.newPassword?.message;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
         <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
-      <form onSubmit={submit} className="flex flex-col gap-4">
+      <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col gap-4">
         {error && (
           <Alert status="danger">
             <Alert.Indicator />
@@ -50,11 +55,23 @@ export function ResetPasswordForm() {
           <Label className="text-muted">Email</Label>
           <Input type="email" value={email} readOnly variant="secondary" className="w-full opacity-60" />
         </TextField>
-        <PasswordInput label={t("newPassword")} value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          autoComplete="new-password" required minLength={8} />
-        <Button type="submit" variant="primary" fullWidth isPending={loading}>
-          {({ isPending }) => isPending ? t("submitting") : t("submit")}
+        <Controller
+          name="newPassword"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <PasswordInput
+              label={t("newPassword")}
+              value={field.value}
+              onChange={field.onChange}
+              autoComplete="new-password"
+              required
+              minLength={8}
+              error={fieldState.error?.message}
+            />
+          )}
+        />
+        <Button type="submit" variant="primary" fullWidth isPending={isPending}>
+          {({ isPending: ip }) => ip ? t("submitting") : t("submit")}
         </Button>
       </form>
     </div>

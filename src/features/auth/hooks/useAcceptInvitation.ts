@@ -1,8 +1,12 @@
 "use client";
 
-import { invitationApi } from "@/src/features/auth/api";
 import { DASHBOARD_URL } from "@/src/core/constants/env";
+import { invitationApi } from "@/src/features/auth/api";
+import { acceptInvitationSchema, createAcceptInvitationSchema } from "@/src/features/auth/schemas/acceptInvitation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { AcceptInvitationFormData } from "@/src/features/auth/schemas/acceptInvitation";
 
 export interface InvitationDetail {
   email: string;
@@ -13,57 +17,49 @@ export interface InvitationDetail {
   isAccepted: boolean;
 }
 
-export interface AcceptInvitationForm {
-  fullName: string;
-  userName: string;
-  password: string;
-  phoneNumber: string;
-  gender: string;
-}
-
-/**
- * Encapsulates all state and logic for the accept-invitation page.
- * Fetches invitation details on mount, handles form submission.
- */
-export function useAcceptInvitation(token: string | null, invalidLabel: string, expiredLabel: string, acceptedLabel: string) {
+export function useInvitationDetail(
+  token: string | null,
+  invalidLabel: string,
+  expiredLabel: string,
+  acceptedLabel: string,
+) {
   const [invitation, setInvitation] = useState<InvitationDetail | null>(null);
-  const [loadError, setLoadError]   = useState<string | null>(null);
-  const [form, setForm]             = useState<AcceptInvitationForm>({
-    fullName: "", userName: "", password: "", phoneNumber: "", gender: "Male",
-  });
-  const [error, setError]     = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [done, setDone]       = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!token) { setLoadError(invalidLabel); return; }
+    if (!token) { setError(invalidLabel); return; }
     invitationApi.getDetail(token).then((res) => {
       if (res.ok) {
-        if (res.data.isAccepted) setLoadError(acceptedLabel);
-        else if (res.data.isExpired) setLoadError(expiredLabel);
+        if (res.data.isAccepted) setError(acceptedLabel);
+        else if (res.data.isExpired) setError(expiredLabel);
         else setInvitation(res.data);
       } else {
-        setLoadError(invalidLabel);
+        setError(invalidLabel);
       }
     });
   }, [token, invalidLabel, expiredLabel, acceptedLabel]);
 
-  function setField(field: keyof AcceptInvitationForm) {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-      setForm((f) => ({ ...f, [field]: e.target.value }));
-  }
+  return { invitation, error, isLoading: !error && !invitation };
+}
 
-  function setPhone(value: string) {
-    setForm((f) => ({ ...f, phoneNumber: value }));
-  }
+export function useAcceptInvitationForm(
+  token: string,
+  messages?: { required: string; passwordMin: string },
+) {
+  const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!token) return;
+  const form = useForm<AcceptInvitationFormData>({
+    resolver: zodResolver(messages ? createAcceptInvitationSchema(messages) : acceptInvitationSchema),
+    defaultValues: {
+      fullName: "", userName: "", password: "", phoneNumber: "", gender: "Male",
+    },
+  });
+
+  async function submit(data: AcceptInvitationFormData) {
     setError(null);
-    setLoading(true);
     try {
-      const result = await invitationApi.accept(token, form);
+      const result = await invitationApi.accept(token, data);
       if (result.ok) {
         setDone(true);
         setTimeout(() => { window.location.href = DASHBOARD_URL; }, 1500);
@@ -72,9 +68,9 @@ export function useAcceptInvitation(token: string | null, invalidLabel: string, 
         setError(firstError ?? result.error);
       }
     } finally {
-      setLoading(false);
+      form.reset();
     }
   }
 
-  return { invitation, loadError, form, error, loading, done, setField, setPhone, submit };
+  return { form, error, isPending: form.formState.isSubmitting, done, submit };
 }

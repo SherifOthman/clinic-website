@@ -1,28 +1,25 @@
 "use client";
 
 import { apiFetch } from "@/src/core/utils/api";
-import { authApi } from "@/src/features/auth/api";
 import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
+import { authApi } from "@/src/features/auth/api";
+import { loginSchema, createLoginSchema } from "@/src/features/auth/schemas/login";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { LoginFormData } from "@/src/features/auth/schemas/login";
 
-export interface LoginForm {
-  emailOrUsername: string;
-  password: string;
-}
-
-/**
- * Encapsulates all state and logic for the login page.
- * The page component only renders — no fetch or state here.
- */
-export function useLoginForm() {
-  const [form, setForm]       = useState<LoginForm>({ emailOrUsername: "", password: "" });
-  const [error, setError]     = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+export function useLoginForm(messages?: { required: string }) {
+  const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(true);
+
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(messages ? createLoginSchema(messages) : loginSchema),
+    defaultValues: { emailOrUsername: "", password: "" },
+  });
 
   const googleOAuthUrl = `${API_URL}/auth/oauth/google?returnUrl=${encodeURIComponent(DASHBOARD_URL)}`;
 
-  // Redirect to dashboard if already authenticated
   useEffect(() => {
     apiFetch("GET", "/auth/me").then((result) => {
       if (result.ok) window.location.replace(DASHBOARD_URL);
@@ -30,28 +27,21 @@ export function useLoginForm() {
     });
   }, []);
 
-  function setField(field: keyof LoginForm) {
-    return (e: React.ChangeEvent<HTMLInputElement>) =>
-      setForm((f) => ({ ...f, [field]: e.target.value }));
-  }
-
   function fillDemo(email: string, password: string) {
-    setForm({ emailOrUsername: email, password });
+    form.setValue("emailOrUsername", email);
+    form.setValue("password", password);
   }
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!form.emailOrUsername || !form.password) return;
+  async function submit(data: LoginFormData) {
     setError(null);
-    setLoading(true);
     try {
-      const result = await authApi.login(form);
+      const result = await authApi.login(data);
       if (result.ok) window.location.replace(DASHBOARD_URL);
       else setError(result.error);
     } finally {
-      setLoading(false);
+      form.reset();
     }
   }
 
-  return { form, error, loading, checking, googleOAuthUrl, setField, fillDemo, submit };
+  return { form, error, isPending: form.formState.isSubmitting, checking, googleOAuthUrl, fillDemo, submit };
 }

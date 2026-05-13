@@ -1,15 +1,20 @@
 "use client";
 
+import { FormField } from "@/src/core/components/ui/FormField";
 import { useForgotPasswordForm } from "@/src/features/auth/hooks/useForgotPasswordForm";
-import { Alert, Button, Input, Label, TextField } from "@heroui/react";
+import { Alert, Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export function ForgotPasswordForm() {
   const t = useTranslations("auth.forgotPassword");
+  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
-  const { email, setEmail, sent, error, loading, submit } = useForgotPasswordForm();
+  const { form, sent, error, isPending, submit } = useForgotPasswordForm({
+    required: tErr("required"),
+    invalidEmail: tErr("invalidEmail"),
+  });
 
   if (sent) {
     return (
@@ -24,26 +29,25 @@ export function ForgotPasswordForm() {
     );
   }
 
+  const emailErr = form.formState.errors.email?.message;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
         <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
-      <form onSubmit={submit} className="flex flex-col gap-4">
+      <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col gap-4">
         {error && (
           <Alert status="danger">
             <Alert.Indicator />
             <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
           </Alert>
         )}
-        <TextField isRequired className="flex flex-col gap-1">
-          <Label>{t("email")}</Label>
-          <Input type="email" autoComplete="email" value={email}
-            onChange={(e) => setEmail(e.target.value)} variant="secondary" className="w-full" />
-        </TextField>
-        <Button type="submit" variant="primary" fullWidth isPending={loading}>
-          {({ isPending }) => isPending ? t("sending") : t("send")}
+        <FormField label={t("email")} error={emailErr} type="email" autoComplete="email"
+          {...form.register("email")} />
+        <Button type="submit" variant="primary" fullWidth isPending={isPending}>
+          {({ isPending: ip }) => ip ? t("sending") : t("send")}
         </Button>
       </form>
       <p className="text-center text-sm">

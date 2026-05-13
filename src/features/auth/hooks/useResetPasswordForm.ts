@@ -1,33 +1,36 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
+import { resetPasswordSchema, createResetPasswordSchema } from "@/src/features/auth/schemas/resetPassword";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { ResetPasswordFormData } from "@/src/features/auth/schemas/resetPassword";
 
-/**
- * Encapsulates all state and logic for the reset-password page.
- */
 export function useResetPasswordForm(
   token: string | null,
   email: string | null,
   onSuccess: () => void,
+  messages?: { passwordMin: string },
 ) {
-  const [newPassword, setNewPassword] = useState("");
-  const [error, setError]             = useState<string | null>(null);
-  const [loading, setLoading]         = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
+  const form = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(messages ? createResetPasswordSchema(messages) : resetPasswordSchema),
+    defaultValues: { newPassword: "" },
+  });
+
+  async function submit(data: ResetPasswordFormData) {
     if (!token || !email) return;
     setError(null);
-    setLoading(true);
     try {
-      const result = await authApi.resetPassword({ token, email, newPassword });
+      const result = await authApi.resetPassword({ token, email, newPassword: data.newPassword });
       if (result.ok) onSuccess();
       else setError(result.error);
     } finally {
-      setLoading(false);
+      form.reset();
     }
   }
 
-  return { newPassword, setNewPassword, error, loading, submit };
+  return { form, error, isPending: form.formState.isSubmitting, submit };
 }

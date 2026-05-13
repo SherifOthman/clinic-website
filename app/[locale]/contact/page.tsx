@@ -1,7 +1,8 @@
 import { routing } from "@/i18n/routing";
+import { setRequestLocale } from "next-intl/server";
 import { ContactForm } from "@/src/features/contact/components/ContactForm";
 import { ContactInfoSidebar } from "@/src/features/contact/components/ContactInfoCard";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

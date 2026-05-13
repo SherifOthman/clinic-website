@@ -4,15 +4,15 @@ import { cacheLife } from "next/cache";
 import { Award, Clock, HeartHandshake, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-interface Props {
-  locale: string;
-}
-
 /**
  * About section on the home page.
  * 'use cache' — pure translation output, cached per locale.
  * Locale passed as prop so getTranslations doesn't read from headers().
  */
+interface Props {
+  locale: string;
+}
+
 export async function AboutSection({ locale }: Props) {
   "use cache";
   cacheLife("max");

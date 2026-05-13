@@ -1,34 +1,31 @@
 "use client";
 
+import { FormField } from "@/src/core/components/ui/FormField";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
 import { PhoneInput } from "@/src/core/components/ui/PhoneInput";
 import { ThemeSwitch } from "@/src/core/components/ui/ThemeSwitch";
 import { useRegisterForm } from "@/src/features/auth/hooks/useRegisterForm";
-import { Alert, Button, Input, Label, ListBox, Select, Separator, TextField } from "@heroui/react";
+import { Alert, Button, FieldError, Label, ListBox, Select, Separator } from "@heroui/react";
 import { CheckCircle2, Globe, HeartHandshake, ShieldCheck, Zap } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 export function RegisterForm() {
   const t = useTranslations("auth.register");
+  const tErr = useTranslations("auth.errors");
   const { locale } = useParams<{ locale: string }>();
   const currentLocale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const { form, error, loading, googleOAuthUrl, setField, setPhone, submit } = useRegisterForm(
-    (loc) => router.push(`/${loc}/verify-email?email=${encodeURIComponent(form.email)}`),
+  const { form, error, isPending, googleOAuthUrl, submit } = useRegisterForm(
+    (loc) => router.push(`/${loc}/verify-email?email=${encodeURIComponent(form.getValues("email"))}`),
     locale,
+    { required: tErr("required"), invalidEmail: tErr("invalidEmail"), passwordMin: tErr("passwordMin") },
   );
-
-  const handleGenderChange = (value: React.Key | null) => {
-    if (value) {
-      const e = { target: { value: String(value) } } as React.ChangeEvent<HTMLSelectElement>;
-      setField("gender")(e);
-    }
-  };
 
   const switchLocale = () => {
     const newLocale = currentLocale === "en" ? "ar" : "en";
@@ -42,9 +39,15 @@ export function RegisterForm() {
     { icon: HeartHandshake, text: t("feature4") },
   ];
 
+  const fullNameErr = form.formState.errors.fullName?.message;
+  const userNameErr = form.formState.errors.userName?.message;
+  const emailErr = form.formState.errors.email?.message;
+  const phoneErr = form.formState.errors.phoneNumber?.message;
+  const genderErr = form.formState.errors.gender?.message;
+  const passwordErr = form.formState.errors.password?.message;
+
   return (
     <div className="flex min-h-screen w-full">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-accent p-12 text-accent-foreground">
         <Link href={`/${locale}`} className="flex items-center gap-3 no-underline">
           <Image src="/logo.svg" alt="ClinicCare" width={36} height={36} priority />
@@ -69,7 +72,6 @@ export function RegisterForm() {
         <p className="text-sm opacity-60">© {new Date().getFullYear()} ClinicCare.</p>
       </div>
 
-      {/* Right panel */}
       <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center bg-background px-6 py-12">
         <div className="absolute top-4 end-4 flex items-center gap-2">
           <Button variant="ghost" size="sm" onPress={switchLocale}>
@@ -90,7 +92,7 @@ export function RegisterForm() {
             <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
 
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={form.handleSubmit(submit)} noValidate className="space-y-4">
             {error && (
               <Alert status="danger">
                 <Alert.Indicator />
@@ -98,39 +100,57 @@ export function RegisterForm() {
               </Alert>
             )}
             <div className="grid grid-cols-2 gap-3">
-              <TextField isRequired className="flex flex-col gap-1.5">
-                <Label>{t("fullName")}</Label>
-                <Input type="text" autoComplete="name" value={form.fullName}
-                  onChange={setField("fullName")} variant="secondary" className="w-full" />
-              </TextField>
-              <TextField isRequired className="flex flex-col gap-1.5">
-                <Label>{t("username")}</Label>
-                <Input type="text" autoComplete="username" value={form.userName}
-                  onChange={setField("userName")} variant="secondary" className="w-full" />
-              </TextField>
+              <FormField label={t("fullName")} error={fullNameErr} autoComplete="name"
+                {...form.register("fullName")} />
+              <FormField label={t("username")} error={userNameErr} autoComplete="username"
+                {...form.register("userName")} />
             </div>
-            <TextField isRequired className="flex flex-col gap-1.5">
-              <Label>{t("email")}</Label>
-              <Input type="email" autoComplete="email" value={form.email}
-                onChange={setField("email")} variant="secondary" className="w-full" />
-            </TextField>
-            <PhoneInput label={t("phone")} value={form.phoneNumber} onChange={setPhone}
-              required searchPlaceholder={t("searchCountry")} />
-            <Select isRequired variant="secondary" defaultValue="Male" value={form.gender}
-              onChange={handleGenderChange} placeholder={t("selectGender")} className="flex flex-col gap-1.5">
-              <Label>{t("gender")}</Label>
-              <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
-              <Select.Popover>
-                <ListBox>
-                  <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
-                  <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
-                </ListBox>
-              </Select.Popover>
-            </Select>
-            <PasswordInput label={t("password")} value={form.password}
-              onChange={setField("password")} autoComplete="new-password" required />
-            <Button type="submit" variant="primary" fullWidth isPending={loading}>
-              {({ isPending }) => isPending ? t("submitting") : t("submit")}
+            <FormField label={t("email")} error={emailErr} type="email" autoComplete="email"
+              {...form.register("email")} />
+            <Controller
+              name="phoneNumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PhoneInput label={t("phone")} value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  required searchPlaceholder={t("searchCountry")}
+                  isInvalid={!!fieldState.error} errorMessage={fieldState.error?.message} />
+              )}
+            />
+            <Controller
+              name="gender"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Select isRequired isInvalid={!!fieldState.error} variant="secondary" defaultSelectedKey="Male"
+                  selectedKey={field.value}
+                  onSelectionChange={(key) => {
+                    if (key) field.onChange(String(key));
+                  }}
+                  placeholder={t("selectGender")} className="flex flex-col gap-1.5"
+                >
+                  <Label>{t("gender")}</Label>
+                  <Select.Trigger><Select.Value /><Select.Indicator /></Select.Trigger>
+                  <Select.Popover>
+                    <ListBox>
+                      <ListBox.Item id="Male" textValue={t("male")}>{t("male")}<ListBox.ItemIndicator /></ListBox.Item>
+                      <ListBox.Item id="Female" textValue={t("female")}>{t("female")}<ListBox.ItemIndicator /></ListBox.Item>
+                    </ListBox>
+                  </Select.Popover>
+                  <FieldError>{genderErr}</FieldError>
+                </Select>
+              )}
+            />
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordInput label={t("password")} value={field.value}
+                  onChange={field.onChange} autoComplete="new-password" required
+                  error={fieldState.error?.message} />
+              )}
+            />
+            <Button type="submit" variant="primary" fullWidth isPending={isPending}>
+              {({ isPending: ip }) => ip ? t("submitting") : t("submit")}
             </Button>
           </form>
 

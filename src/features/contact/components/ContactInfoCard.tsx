@@ -11,12 +11,12 @@ interface ContactInfoItem {
   href: string;
 }
 
-interface ContactInfoSidebarProps {
+interface Props {
   locale: string;
 }
 
-export async function ContactInfoSidebar({ locale }: ContactInfoSidebarProps) {
-  const t = await getTranslations();
+export async function ContactInfoSidebar({ locale }: Props) {
+  const t = await getTranslations({ locale });
 
   const items: ContactInfoItem[] = [
     { icon: Mail,   title: t("contact.info.email.title"),   value: "sheriff.a.othman@gmail.com",    href: "mailto:sheriff.a.othman@gmail.com" },
