@@ -1,5 +1,6 @@
 "use client";
 
+import { extractApiError } from "@/src/core/utils/api";
 import { authApi } from "@/src/features/auth/api";
 import { createForgotPasswordOtpSchema } from "@/src/features/auth/schemas/forgotPasswordOtp";
 import { useValidation } from "@/src/core/hooks/useValidation";
@@ -34,7 +35,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
         setOtpSentAt(Date.now());
         setStep("otp");
       } else {
-        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setError(extractApiError(result));
       }
     } catch {}
   }
@@ -49,7 +50,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
       if (result.ok) {
         setStep("password");
       } else {
-        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setError(extractApiError(result));
       }
     } catch {}
   }
@@ -62,7 +63,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
       const { email, otp, newPassword } = form.getValues();
       const result = await authApi.resetPassword({ email, otp, newPassword });
       if (result.ok) onSuccess();
-      else setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      else setError(extractApiError(result));
     } catch {}
   }
 
@@ -74,7 +75,7 @@ export function useForgotPasswordOtp(onSuccess: () => void) {
         setOtpSentAt(Date.now());
         form.setValue("otp", "");
       } else {
-        setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setResendError(extractApiError(result));
       }
     } catch {
       setResendError("resendFailed");

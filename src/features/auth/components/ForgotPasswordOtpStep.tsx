@@ -1,8 +1,9 @@
 "use client";
 
+import { ErrorAlert } from "@/src/core/components/ui/ErrorAlert";
 import { OtpInput } from "@/src/features/auth/components/OtpInput";
 import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
-import { Alert, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
 
 interface Props {
   otp: string;
@@ -36,12 +37,7 @@ export function ForgotPasswordOtpStep({
         </p>
       </div>
 
-      {error && (
-        <Alert status="danger">
-          <Alert.Indicator />
-          <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
-        </Alert>
-      )}
+      {error && <ErrorAlert message={tErr(error)} />}
 
       <form onSubmit={(e) => { e.preventDefault(); submitOtp(); }} noValidate className="flex flex-col items-center gap-6">
         <OtpInput
@@ -66,12 +62,7 @@ export function ForgotPasswordOtpStep({
         </Button>
       </form>
 
-      {resendError && (
-        <Alert status="danger">
-          <Alert.Indicator />
-          <Alert.Content><Alert.Description>{tErr(resendError)}</Alert.Description></Alert.Content>
-        </Alert>
-      )}
+      {resendError && <ErrorAlert message={tErr(resendError)} />}
 
       <p className="text-center text-sm text-muted">
         {t("noCode")}{" "}

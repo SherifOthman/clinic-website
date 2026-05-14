@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { RegisterFormData } from "@/src/features/auth/schemas/register";
+import { extractApiError } from "@/src/core/utils/api";
 import { useTranslations } from "next-intl";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,7 +63,7 @@ export function useRegisterForm(
       if (result.problem.errors) {
         setError(null);
       } else {
-        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setError(extractApiError(result));
       }
     }
   }

@@ -60,3 +60,8 @@ export async function apiFetch<T = void>(
     };
   }
 }
+
+export function extractApiError(result: ApiResult): string {
+  if (result.ok) return "";
+  return result.problem.code ?? result.problem.detail ?? result.problem.title;
+}

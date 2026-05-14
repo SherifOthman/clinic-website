@@ -1,7 +1,8 @@
 "use client";
 
+import { ErrorAlert } from "@/src/core/components/ui/ErrorAlert";
 import { FormField } from "@/src/core/components/ui/FormField";
-import { Alert, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
@@ -30,12 +31,7 @@ export function ForgotPasswordEmailStep({ form, error, isPending, submitEmail, t
         <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
 
-      {error && (
-        <Alert status="danger">
-          <Alert.Indicator />
-          <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
-        </Alert>
-      )}
+      {error && <ErrorAlert message={tErr(error)} />}
 
       <form onSubmit={(e) => { e.preventDefault(); submitEmail(); }} noValidate className="flex flex-col gap-4">
         <FormField label={t("email")} error={emailErr} type="email" autoComplete="email"

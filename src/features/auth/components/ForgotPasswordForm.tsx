@@ -1,8 +1,9 @@
 "use client";
 
+import { ErrorAlert } from "@/src/core/components/ui/ErrorAlert";
 import { FormField } from "@/src/core/components/ui/FormField";
 import { useForgotPasswordForm } from "@/src/features/auth/hooks/useForgotPasswordForm";
-import { Alert, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -34,12 +35,7 @@ export function ForgotPasswordForm() {
         <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
       </div>
       <form onSubmit={form.handleSubmit(submit)} noValidate className="flex flex-col gap-4">
-        {error && (
-          <Alert status="danger">
-            <Alert.Indicator />
-            <Alert.Content><Alert.Description>{error}</Alert.Description></Alert.Content>
-          </Alert>
-        )}
+        {error && <ErrorAlert message={error} />}
         <FormField label={t("email")} error={emailErr} type="email" autoComplete="email"
           {...form.register("email")} />
         <Button type="submit" variant="primary" fullWidth isPending={isPending}>

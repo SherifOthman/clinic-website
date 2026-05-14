@@ -1,7 +1,8 @@
 "use client";
 
+import { ErrorAlert } from "@/src/core/components/ui/ErrorAlert";
 import { PasswordInput } from "@/src/core/components/ui/PasswordInput";
-import { Alert, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
 import type { Control } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import type { z } from "zod";
@@ -26,12 +27,7 @@ export function ForgotPasswordNewPasswordStep({ control, error, isPending, submi
         <p className="mt-1 text-sm text-muted">{t("newPasswordSubtitle")}</p>
       </div>
 
-      {error && (
-        <Alert status="danger">
-          <Alert.Indicator />
-          <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
-        </Alert>
-      )}
+      {error && <ErrorAlert message={tErr(error)} />}
 
       <form onSubmit={(e) => { e.preventDefault(); submitPassword(); }} noValidate className="flex flex-col gap-4">
         <Controller

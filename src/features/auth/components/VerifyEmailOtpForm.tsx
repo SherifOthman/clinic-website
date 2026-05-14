@@ -1,9 +1,12 @@
 "use client";
 
 import { authApi } from "@/src/features/auth/api";
+import { extractApiError } from "@/src/core/utils/api";
+import { ErrorAlert } from "@/src/core/components/ui/ErrorAlert";
+import { maskEmail } from "@/src/core/utils/string";
 import { useOtpTimer, formatMs } from "@/src/core/hooks/useOtpTimer";
 import { OtpInput } from "@/src/features/auth/components/OtpInput";
-import { Alert, Button, Card } from "@heroui/react";
+import { Button, Card } from "@heroui/react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -40,7 +43,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
     try {
       const result = await authApi.verifyEmailOtp({ email, otp });
       if (result.ok) setVerified(true);
-      else setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+      else setError(extractApiError(result));
     } finally {
       setOtp("");
       setIsPending(false);
@@ -56,7 +59,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
         setOtpSentAt(Date.now());
         setOtp("");
       } else {
-        setResendError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setResendError(extractApiError(result));
       }
     } catch {
       setResendError("resendFailed");
@@ -88,9 +91,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
     );
   }
 
-  const maskedEmail = email
-    ? email.replace(/(.{2}).+(@.+)/, "$1***$2")
-    : "your email";
+  const maskedEmail = maskEmail(email);
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">
@@ -105,12 +106,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
             </p>
           </div>
 
-          {error && (
-            <Alert status="danger">
-              <Alert.Indicator />
-              <Alert.Content><Alert.Description>{tErr(error)}</Alert.Description></Alert.Content>
-            </Alert>
-          )}
+          {error && <ErrorAlert message={tErr(error)} />}
 
           <form onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate className="flex flex-col items-center gap-6">
             <OtpInput
@@ -135,12 +131,7 @@ export function VerifyEmailOtpForm({ email }: Props) {
             </Button>
           </form>
 
-          {resendError && (
-            <Alert status="danger">
-              <Alert.Indicator />
-              <Alert.Content><Alert.Description>{tErr(resendError)}</Alert.Description></Alert.Content>
-            </Alert>
-          )}
+          {resendError && <ErrorAlert message={tErr(resendError)} />}
 
           <p className="text-center text-sm text-muted">
             {t("noCode")}{" "}

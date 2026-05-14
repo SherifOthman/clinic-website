@@ -1,5 +1,6 @@
 "use client";
 
+import { maskEmail } from "@/src/core/utils/string";
 import { useForgotPasswordOtp } from "@/src/features/auth/hooks/useForgotPasswordOtp";
 import { Card } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
@@ -18,7 +19,7 @@ export function ForgotPasswordOtpForm() {
     useForgotPasswordOtp(() => router.push(`/${currentLocale}/login?reset=1`));
 
   const email = form.watch("email");
-  const maskedEmail = email.replace(/(.{2}).+(@.+)/, "$1***$2");
+  const maskedEmail = maskEmail(email);
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-6 py-12">

@@ -1,6 +1,6 @@
 "use client";
 
-import { apiFetch } from "@/src/core/utils/api";
+import { apiFetch, extractApiError } from "@/src/core/utils/api";
 import { DASHBOARD_URL, API_URL } from "@/src/core/constants/env";
 import { authApi } from "@/src/features/auth/api";
 import { createLoginSchema } from "@/src/features/auth/schemas/login";
@@ -46,7 +46,7 @@ export function useLoginForm() {
         const email = result.problem.detail ?? data.emailOrUsername;
         window.location.replace(`/${locale}/verify-email?email=${encodeURIComponent(email)}`);
       } else {
-        setError(result.problem.code ?? result.problem.detail ?? result.problem.title);
+        setError(extractApiError(result));
       }
     } finally {
       form.reset();
